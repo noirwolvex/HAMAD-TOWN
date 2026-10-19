@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5fbff">
+  <meta name="description" content="معرض يتجدد بصور الأنشطة والفعاليات والمشروعات واللحظات التي نفخر بمشاركتها مع مجتمعنا.">
+  <title>معرض الصور | مدرسة مدينة حمد</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="language.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body data-page="gallery">
+  <div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="الصفحة الرئيسية لمدرسة مدينة حمد">
+      <span class="brand-mark"><span>H</span><i></i></span>
+      <span class="brand-copy"><strong>مدينة حمد</strong><small>المدرسة · ننمو معًا</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false"><span></span><span></span></button>
+    <nav class="main-nav" id="mainNav" aria-label="القائمة الرئيسية">
+      <a href="story.html"><span class="nav-icon" aria-hidden="true">⌂</span> قصتنا</a>
+      <a href="achievements.html"><span class="nav-icon" aria-hidden="true">✦</span> الإنجازات</a>
+      <a href="school-life.html"><span class="nav-icon" aria-hidden="true">✳</span> الحياة المدرسية</a>
+      <a href="stories.html"><span class="nav-icon" aria-hidden="true">▤</span> القصص</a>
+      <a href="gallery.html"><span class="nav-icon" aria-hidden="true">▧</span> معرض الصور</a>
+    </nav>
+    <div class="header-actions"><button class="language-toggle" id="languageToggle" type="button" aria-label="تغيير اللغة إلى الإنجليزية" lang="en">English</button><a class="nav-cta" href="admin.html">بوابة المدرسة <span>↗</span></a></div>
+  </header>
+  <main class="inner-page-main">
+    <section class="section-shell standalone-hero">
+      <a class="back-home-link" href="index.html"><span aria-hidden="true">←</span> العودة إلى الصفحة الرئيسية</a>
+      <div class="standalone-hero-grid">
+        <div class="standalone-hero-copy reveal">
+          <div class="eyebrow"><span class="live-dot"></span> ذكريات تجمعنا</div>
+          <h1>مدرستنا كما نعيشها،<br><em>لحظةً بلحظة.</em></h1>
+          <p class="standalone-description">معرض يتجدد بصور الأنشطة والفعاليات والمشروعات واللحظات التي نفخر بمشاركتها مع مجتمعنا.</p>
+          <div class="standalone-hero-actions"><a class="button button-dark" href="story.html">استكشف القسم التالي <span>↗</span></a></div>
+        </div>
+        <div class="standalone-hero-art reveal reveal-delay"><div class="standalone-icon-wrap"><span class="standalone-icon">▧</span><span class="standalone-orbit orbit-a"></span><span class="standalone-orbit orbit-b"></span><span class="standalone-float float-one">✦</span><span class="standalone-float float-two">✳</span></div><span class="standalone-art-caption">مدرسة مدينة حمد · ننمو معًا</span></div>
+      </div>
+    </section>
+    <section class="section-shell standalone-content">
+      <div class="content-page-heading"><span class="mini-label">لحظات من حياة المدرسة</span><a class="underlined-link" href="admin.html">أضف صورة <span>↗</span></a></div>
+      <div class="gallery-grid gallery-grid-page" id="galleryGrid" aria-live="polite"><div class="loading-state">جارٍ تحميل الصور…</div></div>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-main section-shell"><a class="brand brand-footer" href="index.html"><span class="brand-mark"><span>H</span><i></i></span><span class="brand-copy"><strong>مدينة حمد</strong><small>المدرسة · ننمو معًا</small></span></a><p>نحتفي بمجتمعنا.<br>ونلهم خطواتنا القادمة.</p><div class="footer-links"><a href="story.html">قصتنا</a><a href="achievements.html">الإنجازات</a><a href="school-life.html">الحياة المدرسية</a><a href="stories.html">القصص</a><a href="gallery.html">معرض الصور</a><a href="admin.html">بوابة المدرسة ↗</a></div></div>
+    <div class="footer-bottom section-shell"><span>© <span id="yearNow"></span> مدرسة مدينة حمد</span><span>صُنع بفخر من أجل مجتمع مدرستنا <b>✦</b></span></div>
+  </footer>
+  <div class="toast" id="siteToast" role="status" aria-live="polite"></div>
+</body>
+</html>
