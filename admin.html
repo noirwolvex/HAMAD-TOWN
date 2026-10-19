@@ -56,9 +56,11 @@
           <form id="contentForm">
             <input type="hidden" id="contentId">
             <div class="form-row"><label>نوع المحتوى<select id="contentKind" required><option value="achievement">إنجاز طالب</option><option value="award">جائزة / تكريم</option><option value="activity">نشاط / نادٍ</option><option value="story">قصة المدرسة</option><option value="teacher">تسليط الضوء على معلم</option><option value="student">تسليط الضوء على طالب</option><option value="event">فعالية مدرسية</option><option value="gallery">صورة للمعرض</option></select></label><label>السنة / التاريخ<input id="contentYear" maxlength="80" placeholder="مثال: العام الدراسي ٢٠٢٦"></label></div>
-            <label>العنوان <span class="required-star">*</span><input id="contentTitle" maxlength="140" placeholder="اكتب عنوانًا لهذه اللحظة" required></label>
-            <label>تصنيف قصير<input id="contentEyebrow" maxlength="80" placeholder="مثال: إنجاز طلابي"></label>
-            <label>القصة / الوصف <span class="required-star">*</span><textarea id="contentDescription" rows="4" maxlength="800" placeholder="اكتب ما حدث ولماذا يستحق الاحتفاء…" required></textarea><span class="field-hint">اكتب بوضوح وودّ، واحرص على خصوصية الطلاب.</span></label>
+            <label>العنوان بالعربية <span class="required-star">*</span><input id="contentTitle" maxlength="140" placeholder="اكتب العنوان بالعربية." required></label>
+            <label>العنوان بالإنجليزية <span class="required-star">*</span><input id="contentTitleEn" maxlength="140" placeholder="اكتب العنوان بالإنجليزية" required></label>
+            <div class="form-row"><label>التصنيف بالعربية<input id="contentEyebrow" maxlength="80" placeholder="أضف تصنيفًا بالعربية (اختياري)"></label><label>التصنيف بالإنجليزية<input id="contentEyebrowEn" maxlength="80" placeholder="أضف تصنيفًا بالإنجليزية (اختياري)"></label></div>
+            <label>الوصف بالعربية <span class="required-star">*</span><textarea id="contentDescription" rows="4" maxlength="800" placeholder="اكتب القصة بالعربية…" required></textarea><span class="field-hint">اكتب بوضوح وودّ، واحرص على خصوصية الطلاب.</span></label>
+            <label>الوصف بالإنجليزية <span class="required-star">*</span><textarea id="contentDescriptionEn" rows="4" maxlength="800" placeholder="اكتب الترجمة الإنجليزية…" required></textarea><span class="field-hint">احرص على دقة النصين وحماية خصوصية الطلاب.</span></label>
             <div class="image-upload-block">
               <label>صورة</label>
               <div class="image-entry"><input id="contentImageUrl" type="url" placeholder="ألصق رابط الصورة (اختياري)" aria-label="رابط الصورة"><label class="upload-button" for="contentImageFile">＋ رفع صورة</label><input id="contentImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden></div>
