@@ -264,7 +264,7 @@
     "Could not read the shared content library.": "تعذّرت قراءة مكتبة المحتوى المشتركة.",
     "Could not delete this entry.": "تعذّر حذف هذا المحتوى.",
     "Please select a supported image file.": "يرجى اختيار ملف صورة مدعوم.",
-    "Could not read the selected image.": "تعذّرت قراءة الصورة المحددة.",
+    "Could not read the selected image.": "تعذّرت قراءة ملف الصورة.",
     "Draft": "مسودة",
     "Featured": "مميّز",
     "English": "English",
@@ -376,7 +376,7 @@
     const walker = document.createTreeWalker(start, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         const parent = node.parentElement;
-        if (!parent || parent.closest("script, style, noscript, textarea, input, select option, #languageToggle")) return NodeFilter.FILTER_REJECT;
+        if (!parent || parent.closest("script, style, noscript, textarea, input, #languageToggle")) return NodeFilter.FILTER_REJECT;
         return NodeFilter.FILTER_ACCEPT;
       }
     });
