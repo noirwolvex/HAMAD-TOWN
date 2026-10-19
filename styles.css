@@ -414,3 +414,17 @@ html[dir="rtl"] .avatar-stack { direction:ltr; }
   html[dir="rtl"] .note-award { right:-6px; }
   html[dir="rtl"] .note-star { left:-6px; }
 }
+
+@media (max-width:720px) {
+  .site-header { gap:6px; }
+  .brand-copy small { display:none; }
+  .nav-cta { font-size:9px; padding:8px 7px; gap:5px; }
+  .nav-cta span { font-size:14px; }
+  .menu-toggle { width:36px; padding:8px; flex-shrink:0; }
+}
+@media (max-width:420px) {
+  .site-header { width:calc(100% - 24px); gap:5px; }
+  .header-actions { gap:4px; }
+  .language-toggle { min-width:52px; padding:0 6px; }
+  .nav-cta { font-size:8px; padding:8px 6px; }
+}
