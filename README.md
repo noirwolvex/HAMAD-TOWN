@@ -15,7 +15,7 @@ Demo imagery and example stories are placeholders. Replace them with school-appr
 
 ## Run the site locally
 
-Because the site uses JavaScript modules from external services, open it through a local web server rather than directly as a `file://` URL. From this folder, for example:
+For predictable behavior with local assets and external fonts/images, serve the folder through a local web server rather than opening files directly. From this folder, for example:
 
 ```bash
 python -m http.server 8000
