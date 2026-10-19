@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,12 +8,13 @@
   <title>School Portal — Hamad Town School</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="admin.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
   <script src="app.js" defer></script>
+  <script src="language.js" defer></script>
   <script src="admin.js" defer></script>
 </head>
 <body class="admin-body">
@@ -22,7 +23,7 @@
       <span class="brand-mark"><span>H</span><i></i></span>
       <span class="brand-copy"><strong>HAMAD TOWN</strong><small>SCHOOL · GROW TOGETHER</small></span>
     </a>
-    <div class="admin-header-right"><span class="portal-mark"><span class="portal-dot"></span> SCHOOL PORTAL</span><a class="portal-home-link" href="index.html">View website <span>↗</span></a><button id="signOutBtn" class="button button-outline sign-out-btn" type="button" hidden>Sign out</button></div>
+    <div class="admin-header-right"><button class="language-toggle" id="languageToggle" type="button" aria-label="Switch language to English" lang="en">English</button><span class="portal-mark"><span class="portal-dot"></span> SCHOOL PORTAL</span><a class="portal-home-link" href="index.html">View website <span>↗</span></a><button id="signOutBtn" class="button button-outline sign-out-btn" type="button" hidden>Sign out</button></div>
   </header>
 
   <main class="admin-main">
