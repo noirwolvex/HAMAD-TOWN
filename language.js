@@ -27,7 +27,6 @@
     "Both Arabic and English versions will be published.": "سيتم نشر النسختين العربية والإنجليزية.",
     "Please complete both Arabic and English titles and descriptions.": "يرجى إكمال العناوين والأوصاف باللغتين العربية والإنجليزية.",
     "Switch language to English": "تغيير اللغة إلى الإنجليزية",
-    "تغيير اللغة إلى العربية": "تغيير اللغة إلى العربية",
     "Discover the stories, achievements, activities and bright future of Hamad Town School.": "اكتشف قصص مدرسة مدينة حمد وإنجازاتها وأنشطتها ومستقبلها المشرق.",
     "Hamad Town School home": "الصفحة الرئيسية لمدرسة مدينة حمد",
     "Open navigation": "فتح القائمة",
@@ -170,7 +169,7 @@
     "Use your authorised school administrator account. Public visitors cannot manage school content.": "استخدم حساب إدارة المدرسة المعتمد. لا يستطيع زوّار الموقع إدارة محتوى المدرسة.",
     "Email address": "البريد الإلكتروني",
     "Password": "كلمة المرور",
-    "Your password": "كلمة المرور",
+    "Your password": "أدخل كلمة المرور",
     "Sign in securely": "تسجيل الدخول بأمان",
     "Demo mode — changes stay in this browser.": "الوضع التجريبي — تُحفَظ التغييرات في هذا المتصفح فقط.",
     "This preview saves content and uploaded images in this browser only. To publish content for every visitor, connect Supabase and apply": "تحفظ هذه النسخة التجريبية المحتوى والصور المرفوعة في هذا المتصفح فقط. لنشر المحتوى لجميع الزوار، اربط Supabase وطبّق",
@@ -294,7 +293,7 @@
       "Share what happened and why it matters…": "اكتب ما حدث ولماذا يستحق الاحتفاء…",
       "Paste an image URL (optional)": "ألصق رابط الصورة (اختياري)",
       "admin@school.example": "admin@school.example",
-      "Your password": "كلمة المرور",
+      "Your password": "أدخل كلمة المرور",
       "Find a story…": "ابحث عن قصة…"
     },
     "alt": {
