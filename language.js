@@ -6,6 +6,12 @@
     "HAMAD TOWN": "مدينة حمد",
     "SCHOOL · GROW TOGETHER": "المدرسة · ننمو معًا",
     "Hamad Town School — A Place to Shine": "مدرسة مدينة حمد — حيث يتألّق الجميع",
+    "School Portal — Hamad Town School": "بوابة المدرسة — مدرسة مدينة حمد",
+    "Hamad Town School content publishing portal.": "بوابة نشر محتوى مدرسة مدينة حمد.",
+    "Sign out": "تسجيل الخروج",
+    "HAMAD TOWN SCHOOL · CONTENT PORTAL": "مدرسة مدينة حمد · بوابة المحتوى",
+    "Switch language to English": "تغيير اللغة إلى الإنجليزية",
+    "تغيير اللغة إلى العربية": "تغيير اللغة إلى العربية",
     "Discover the stories, achievements, activities and bright future of Hamad Town School.": "اكتشف قصص مدرسة مدينة حمد وإنجازاتها وأنشطتها ومستقبلها المشرق.",
     "Hamad Town School home": "الصفحة الرئيسية لمدرسة مدينة حمد",
     "Open navigation": "فتح القائمة",
@@ -292,7 +298,9 @@
     const trimmed = original.trim();
     if (!trimmed) return;
     const translated = currentLanguage === "ar" ? translations[trimmed] : null;
-    const next = translated || original;
+    const leading = (original.match(/^\\s*/) || [""])[0];
+    const trailing = (original.match(/\\s*$/) || [""])[0];
+    const next = translated ? leading + translated + trailing : original;
     if (node.nodeValue !== next) node.nodeValue = next;
   }
 
