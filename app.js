@@ -80,6 +80,12 @@
       eyebrow: "SCHOOL COMMUNITY", description: "A community built on connection.",
       image_url: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=85",
       featured: true, published: true, order_index: 11
+    },
+    {
+      id: "seed-gallery-4", kind: "gallery", title: "Curiosity in action",
+      eyebrow: "DISCOVERY & TEAMWORK", description: "Every project brings a new possibility.",
+      image_url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85",
+      featured: true, published: true, order_index: 12
     }
   ];
   window.HAMAD_SEED_ITEMS = seedItems;
