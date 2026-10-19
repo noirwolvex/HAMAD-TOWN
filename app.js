@@ -186,7 +186,8 @@
   function renderAchievements(items) {
     const container = document.getElementById("achievementGrid");
     if (!container) return;
-    const selected = items.filter(item => ["achievement", "award"].includes(item.kind)).slice(0, 3);
+    const all = items.filter(item => ["achievement", "award"].includes(item.kind));
+    const selected = document.body.dataset.page === "achievements" ? all : all.slice(0, 3);
     container.innerHTML = selected.length ? selected.map(cardMarkup).join("") :
       '<div class="empty-state">Our next highlight could be here. Check back soon.</div>';
   }
@@ -194,7 +195,8 @@
   function renderActivities(items) {
     const container = document.getElementById("activityList");
     if (!container) return;
-    const activities = items.filter(item => ["activity", "event"].includes(item.kind)).slice(0, 4);
+    const all = items.filter(item => ["activity", "event"].includes(item.kind));
+    const activities = document.body.dataset.page === "school-life" ? all : all.slice(0, 4);
     container.innerHTML = activities.length ? activities.map(item => {
       const image = safeImage(item.image_url);
       const icon = image
@@ -207,7 +209,8 @@
   function renderStories(items) {
     const container = document.getElementById("storyGrid");
     if (!container) return;
-    const stories = items.filter(item => ["story", "student", "teacher"].includes(item.kind)).slice(0, 2);
+    const all = items.filter(item => ["story", "student", "teacher"].includes(item.kind));
+    const stories = document.body.dataset.page === "stories" ? all : all.slice(0, 2);
     container.innerHTML = stories.length ? stories.map(item => {
       const image = safeImage(item.image_url) || "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80";
       return `<article class="story-card"><img src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy"><div class="story-card-copy"><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><h3>${escapeHtml(displayText(item, "title"))}</h3><p>${escapeHtml(displayText(item, "description"))}</p></div></article>`;
@@ -217,8 +220,12 @@
   function renderGallery(items) {
     const container = document.getElementById("galleryGrid");
     if (!container) return;
-    const entries = items.filter(item => item.kind === "gallery").slice(0, 4);
-    if (!entries.length) return;
+    const all = items.filter(item => item.kind === "gallery");
+    const entries = document.body.dataset.page === "gallery" ? all : all.slice(0, 4);
+    if (!entries.length) {
+      container.innerHTML = '<div class="empty-state">No gallery photos have been published yet.</div>';
+      return;
+    }
     const classes = ["gallery-tile-tall", "", "gallery-tile-blue", ""];
     container.innerHTML = entries.map((item, index) => {
       const image = safeImage(item.image_url);
@@ -226,7 +233,7 @@
         return `<figure class="gallery-tile gallery-tile-blue"><div class="gallery-note"><span>✳</span><b>${escapeHtml(item.title)}</b><small>${escapeHtml(item.eyebrow || "HAMAD TOWN SCHOOL")}</small></div></figure>`;
       }
       const title = displayText(item, "title");
-      return `<figure class="gallery-tile ${classes[index] || ""}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : '<div class="gallery-note"><span>✦</span><b>A moment to remember</b></div>'}<figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
+      return `<figure class="gallery-tile ${classes[index % classes.length] || ""}">${image ? `<img src="${escapeHtml(title ? image : image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>✦</span><b>${escapeHtml(title)}</b></div>`}<figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
     }).join("");
   }
 
@@ -268,7 +275,9 @@
     if (year) year.textContent = new Date().getFullYear();
     setupMenu();
     setupReveal();
-    if (!document.getElementById("achievementGrid")) return;
+    const hasContentContainer = ["achievementGrid", "activityList", "storyGrid", "galleryGrid"]
+      .some(id => document.getElementById(id));
+    if (!hasContentContainer) return;
     let currentItems = [];
     let itemsLoaded = false;
     window.addEventListener("hamad-language-change", () => {
