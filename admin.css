@@ -165,3 +165,26 @@
   .record-actions button { padding: 5px 6px; }
   .admin-footer { padding: 15px 12px; flex-direction: column; justify-content: center; gap: 6px; text-align: center; }
 }
+
+/* Arabic RTL layout and typography for the school portal */
+html[lang="ar"] .admin-body, html[lang="ar"] .admin-body button, html[lang="ar"] .admin-body input, html[lang="ar"] .admin-body select, html[lang="ar"] .admin-body textarea { font-family:"Noto Sans Arabic","DM Sans",sans-serif; }
+html[lang="ar"] .admin-body h1, html[lang="ar"] .admin-body h2, html[lang="ar"] .admin-body h3 { font-family:"Tajawal","Manrope",sans-serif; }
+html[dir="rtl"] .admin-header, html[dir="rtl"] .admin-header-right, html[dir="rtl"] .admin-footer { direction:rtl; }
+html[dir="rtl"] .portal-welcome, html[dir="rtl"] .panel-heading, html[dir="rtl"] .metric-card, html[dir="rtl"] .library-footer, html[dir="rtl"] .privacy-note { direction:rtl; }
+html[dir="rtl"] .portal-welcome h1, html[dir="rtl"] .portal-welcome p, html[dir="rtl"] .panel-heading, html[dir="rtl"] #contentForm label, html[dir="rtl"] .login-form label, html[dir="rtl"] .record-copy, html[dir="rtl"] .privacy-note p, html[dir="rtl"] .backend-login { text-align:right; }
+html[dir="rtl"] #contentForm input:not([type="checkbox"]):not([type="file"]), html[dir="rtl"] #contentForm select, html[dir="rtl"] #contentForm textarea, html[dir="rtl"] .login-form input, html[dir="rtl"] .library-tools input, html[dir="rtl"] .library-tools select { text-align:right; }
+html[dir="rtl"] .image-entry, html[dir="rtl"] .form-actions, html[dir="rtl"] .admin-header-right, html[dir="rtl"] .record-item { direction:rtl; }
+html[dir="rtl"] .check-control { text-align:right; }
+html[dir="rtl"] .check-control > input { margin-right:0; margin-left:0; }
+html[dir="rtl"] .search-box { padding-left:0; padding-right:10px; }
+html[dir="rtl"] .library-tools .search-box input { padding-right:0; }
+html[dir="rtl"] .record-status { flex-direction:row-reverse; }
+html[dir="rtl"] .demo-banner { direction:rtl; text-align:right; }
+html[dir="rtl"] .demo-banner a { margin-left:0; }
+html[dir="rtl"] .admin-footer { letter-spacing:0; }
+html[dir="rtl"] .library-tools .search-box { flex-direction:row; }
+@media (max-width:520px) {
+  html[dir="rtl"] .welcome-spark { right:auto; left:-11px; }
+  html[dir="rtl"] .demo-banner a { margin-right:33px; margin-left:0; }
+  html[dir="rtl"] .admin-header-right { gap:7px; }
+}
