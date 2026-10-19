@@ -150,7 +150,9 @@
     pendingImageData = "";
     previewUrl = record.image_url || "";
     renderImagePreview(previewUrl);
-    setMessage("Editing: " + (record.title || "Untitled entry"));
+    const editingPrefix = window.HamadI18n?.t("Editing:") || "Editing:";
+    const untitled = window.HamadI18n?.t("Untitled entry") || "Untitled entry";
+    setMessage(editingPrefix + " " + (record.title || untitled));
     $("contentForm").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -206,7 +208,12 @@
 
   async function deleteRecord(id) {
     const record = items.find(item => String(item.id) === String(id));
-    if (!record || !window.confirm('Delete "' + (record.title || "this entry") + '"? This cannot be undone.')) return;
+    const isArabic = window.HamadI18n?.getLanguage() === "ar";
+    const entryLabel = record?.title || (isArabic ? "هذا المحتوى" : "this entry");
+    const confirmText = isArabic
+      ? 'هل تريد حذف "' + entryLabel + '"؟ لا يمكن التراجع عن هذا الإجراء.'
+      : 'Delete "' + entryLabel + '"? This cannot be undone.';
+    if (!record || !window.confirm(confirmText)) return;
     try {
       if (supabaseClient) {
         if (!currentSession) throw new Error("Please sign in before deleting content.");
@@ -228,7 +235,8 @@
   async function loadBackendItems() {
     const { data, error } = await supabaseClient.from("school_content").select("*").order("order_index", { ascending: true });
     if (error) {
-      setMessage("Could not read the shared content library. Check the database setup and admin permissions. " + error.message, true);
+      const readErrorPrefix = window.HamadI18n?.t("Could not read the shared content library.") || "Could not read the shared content library.";
+      setMessage(readErrorPrefix + " " + error.message, true);
       items = [];
     } else {
       items = data || [];
