@@ -350,6 +350,11 @@
     "Add a photo": "أضف صورة",
     "Loading photos…": "جارٍ تحميل الصور…",
     "No gallery photos have been published yet.": "لم تُنشر صور في المعرض بعد.",
+    "FUTURE-READY LEARNING": "تعليم يصنع المستقبل",
+    "EXPLORE · LEARN": "اكتشف · تعلّم",
+    "Curiosity builds the future": "فضول يصنع المستقبل",
+    "IDEAS → IMPACT": "من الفكرة إلى الأثر",
+    "Every idea opens a new horizon": "كل فكرة تفتح أفقًا جديدًا",
   };
 
   const attributeTranslations = {
