@@ -220,6 +220,8 @@
     "A thoughtful school story.": "قصة مدرسية بمسؤولية.",
     "Please publish only approved photos and information. Avoid private contact details, student addresses, sensitive personal information, and unapproved identifying details about children.": "يرجى نشر الصور والمعلومات المعتمدة فقط. تجنّب معلومات الاتصال الخاصة وعناوين الطلاب والمعلومات الحساسة وأي تفاصيل تعريفية عن الأطفال دون موافقة.",
     "Return to the public website ↗": "العودة إلى الموقع الرئيسي ↗",
+    "School portal ↗": "بوابة المدرسة ↗",
+    "Setup guide ↗": "دليل الإعداد ↗",
     "Loading the content library…": "جارٍ تحميل مكتبة المحتوى…",
     "Editing:": "قيد التعديل:",
     "Untitled entry": "عنصر بلا عنوان",
