@@ -26,6 +26,7 @@
     "Write the English translation…": "اكتب الترجمة الإنجليزية…",
     "Keep both language versions accurate and respect student privacy.": "احرص على دقة النصين وحماية خصوصية الطلاب.",
     "Both Arabic and English versions will be published.": "سيتم نشر النسختين العربية والإنجليزية.",
+    "Please complete both Arabic and English titles and descriptions.": "يرجى إكمال العناوين والأوصاف باللغتين العربية والإنجليزية.",
     "Switch language to English": "تغيير اللغة إلى الإنجليزية",
     "تغيير اللغة إلى العربية": "تغيير اللغة إلى العربية",
     "Discover the stories, achievements, activities and bright future of Hamad Town School.": "اكتشف قصص مدرسة مدينة حمد وإنجازاتها وأنشطتها ومستقبلها المشرق.",
@@ -426,7 +427,7 @@
     const toggle = document.getElementById("languageToggle");
     if (toggle) {
       toggle.textContent = currentLanguage === "ar" ? "English" : "العربية";
-      toggle.setAttribute("aria-label", currentLanguage === "ar" ? "Switch language to English" : "تغيير اللغة إلى العربية");
+      toggle.setAttribute("aria-label", currentLanguage === "ar" ? "تغيير اللغة إلى الإنجليزية" : "Switch language to Arabic");
       toggle.setAttribute("lang", currentLanguage === "ar" ? "en" : "ar");
     }
     document.documentElement.classList.toggle("language-ar", currentLanguage === "ar");
