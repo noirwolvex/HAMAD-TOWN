@@ -263,11 +263,28 @@
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", window.HamadI18n?.t(open ? "Close navigation" : "Open navigation") || (open ? "Close navigation" : "Open navigation"));
     });
-    nav.querySelectorAll("a").forEach(link => link.addEventListener("click", () => {
-      nav.classList.remove("open");
-      toggle.setAttribute("aria-expanded", "false");
-      toggle.setAttribute("aria-label", window.HamadI18n?.t("Open navigation") || "Open navigation");
-    }));
+    const pageHref = ({
+      home: "index.html",
+      story: "story.html",
+      achievements: "achievements.html",
+      "school-life": "school-life.html",
+      stories: "stories.html",
+      gallery: "gallery.html"
+    })[document.body.dataset.page || "home"];
+    nav.querySelectorAll("a").forEach(link => {
+      if (link.getAttribute("href") === pageHref) {
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.classList.remove("active");
+        link.removeAttribute("aria-current");
+      }
+      link.addEventListener("click", () => {
+        nav.classList.remove("open");
+        toggle.setAttribute("aria-expanded", "false");
+        toggle.setAttribute("aria-label", window.HamadI18n?.t("Open navigation") || "Open navigation");
+      });
+    });
   }
 
   document.addEventListener("DOMContentLoaded", async () => {
