@@ -180,7 +180,7 @@
     const imageHtml = image
       ? `<div class="content-card-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`
       : `<div class="content-card-media content-card-placeholder"><span>${kindSymbol(item.kind)}</span><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`;
-    return `<article class="content-card"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(item.eyebrow || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p></div></div></article>`;
+    return `<article class="content-card"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p></div></div></article>`;
   }
 
   function renderAchievements(items) {
