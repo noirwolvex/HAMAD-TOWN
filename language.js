@@ -298,8 +298,8 @@
     const trimmed = original.trim();
     if (!trimmed) return;
     const translated = currentLanguage === "ar" ? translations[trimmed] : null;
-    const leading = (original.match(/^\\s*/) || [""])[0];
-    const trailing = (original.match(/\\s*$/) || [""])[0];
+    const leading = (original.match(/^\s*/) || [""])[0];
+    const trailing = (original.match(/\s*$/) || [""])[0];
     const next = translated ? leading + translated + trailing : original;
     if (node.nodeValue !== next) node.nodeValue = next;
   }
