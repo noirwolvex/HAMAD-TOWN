@@ -428,3 +428,156 @@ html[dir="rtl"] .avatar-stack { direction:ltr; }
   .language-toggle { min-width:52px; padding:0 6px; }
   .nav-cta { font-size:8px; padding:8px 6px; }
 }
+
+
+/* Independent section pages and icon-based navigation */
+.main-nav a { display:inline-flex; align-items:center; gap:7px; }
+.main-nav .nav-icon { display:inline-grid; place-items:center; width:25px; height:25px; flex:0 0 25px; border-radius:8px; background:#eef9ff; color:#348ab5; font-size:15px; line-height:1; transition:transform .2s,background .2s; }
+.main-nav a:nth-child(2) .nav-icon { background:#fff5d9; color:#ad8428; }
+.main-nav a:nth-child(3) .nav-icon { background:#edf9f2; color:#4f9b7b; }
+.main-nav a:nth-child(4) .nav-icon { background:#f1efff; color:#7d70c0; }
+.main-nav a:nth-child(5) .nav-icon { background:#fff0e8; color:#bd7957; }
+.main-nav a:hover .nav-icon { transform:translateY(-2px) rotate(-5deg); }
+.button-icon { display:inline-grid; place-items:center; width:22px; height:22px; border-radius:8px; background:rgba(255,255,255,.13); font-size:13px !important; }
+.directory-section { padding-top:76px; padding-bottom:104px; }
+.section-directory-grid { display:grid; grid-template-columns:repeat(6,minmax(0,1fr)); gap:17px; }
+.section-link-card { grid-column:span 2; display:flex; flex-direction:column; min-height:230px; position:relative; overflow:hidden; padding:24px; border:1px solid #e5edf3; border-radius:23px; background:#fff; box-shadow:0 9px 26px rgba(31,71,100,.035); transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease; }
+.section-link-card:nth-child(4) { grid-column:2 / span 2; }
+.section-link-card:nth-child(5) { grid-column:4 / span 2; }
+.section-link-card::after { content:""; position:absolute; width:135px; height:135px; border:1px solid rgba(70,159,204,.14); border-radius:50%; bottom:-78px; left:-36px; box-shadow:0 0 0 22px rgba(70,159,204,.035),0 0 0 45px rgba(70,159,204,.025); }
+.section-link-card:hover { transform:translateY(-6px); box-shadow:0 20px 42px rgba(31,71,100,.1); border-color:#cfe6f3; }
+.section-link-icon { display:grid; place-items:center; width:51px; height:51px; border-radius:17px; background:#eaf8ff; color:#3d97c3; font-size:25px; margin-bottom:20px; }
+.section-link-achievements .section-link-icon { background:#fff4d4; color:#b1872b; }
+.section-link-life .section-link-icon { background:#eaf8ef; color:#4a9a77; }
+.section-link-stories .section-link-icon { background:#f0edff; color:#8376c7; }
+.section-link-gallery .section-link-icon { background:#fff0e6; color:#b77955; }
+.section-link-number { direction:ltr; align-self:flex-start; font:800 8px var(--font-display); color:#9aabba; letter-spacing:1.25px; margin-bottom:7px; }
+.section-link-card h3 { margin:0 0 7px; font:800 23px/1.3 "Tajawal","Manrope",sans-serif; letter-spacing:-.5px; }
+.section-link-card p { max-width:280px; color:#7c8c9d; font-size:11px; line-height:1.85; margin:0; }
+.section-link-go { position:absolute; bottom:21px; left:22px; display:grid; place-items:center; width:33px; height:33px; border:1px solid #e5edf3; border-radius:50%; font-size:18px; background:rgba(255,255,255,.82); transition:transform .2s; }
+.section-link-card:hover .section-link-go { transform:translate(-3px,-3px); }
+.section-link-story { background:linear-gradient(145deg,#fff 45%,#f1faff); }
+.section-link-achievements { background:linear-gradient(145deg,#fff 45%,#fff9e7); }
+.section-link-life { background:linear-gradient(145deg,#fff 45%,#f0fbf5); }
+.section-link-stories { background:linear-gradient(145deg,#fff 45%,#f7f5ff); }
+.section-link-gallery { background:linear-gradient(145deg,#fff 45%,#fff5ef); }
+html[dir="rtl"] .section-link-go { left:auto; right:22px; }
+html[dir="rtl"] .section-link-card { text-align:right; }
+.inner-page-main { min-height:58vh; }
+.standalone-hero { padding-top:42px; padding-bottom:39px; position:relative; }
+.back-home-link { display:inline-flex; gap:9px; align-items:center; color:#7a8d9f; font-size:11px; font-weight:800; margin-bottom:37px; transition:color .2s; }
+.back-home-link:hover { color:#2187b9; }
+.back-home-link span { font-size:17px; }
+.standalone-hero-grid { display:grid; grid-template-columns:1.1fr .9fr; align-items:center; gap:55px; min-height:330px; }
+.standalone-hero-copy { position:relative; z-index:2; padding-bottom:14px; }
+.standalone-hero-copy .eyebrow { margin-bottom:21px; }
+.standalone-hero h1 { font:800 clamp(42px,5.5vw,66px)/1.22 "Tajawal","Manrope",sans-serif; letter-spacing:-2.1px; margin:0 0 18px; }
+.standalone-hero h1 em { font-style:normal; position:relative; z-index:0; }
+.standalone-hero h1 em::after { content:""; position:absolute; z-index:-1; left:0; right:0; height:11px; bottom:4px; background:var(--gold); opacity:.8; transform:rotate(-1.5deg); }
+.standalone-description { max-width:540px; color:#738498; font-size:13px; line-height:2; margin:0 0 24px; }
+.standalone-hero-actions { display:flex; flex-wrap:wrap; gap:12px; }
+.standalone-hero-art { min-height:320px; display:flex; flex-direction:column; justify-content:center; align-items:center; position:relative; }
+.standalone-icon-wrap { position:relative; width:285px; height:285px; display:grid; place-items:center; }
+.standalone-icon { display:grid; place-items:center; width:147px; height:147px; border-radius:47px 47px 47px 16px; color:#1f6589; background:linear-gradient(145deg,#d9f3ff,#aee2f8); font:500 75px/1 "Tajawal",sans-serif; box-shadow:0 23px 45px rgba(63,149,192,.15); transform:rotate(-7deg); }
+.standalone-icon-wrap::before { content:""; position:absolute; width:195px; height:195px; border:1px solid rgba(82,176,218,.35); border-radius:50%; }
+.standalone-icon-wrap::after { content:""; position:absolute; width:240px; height:240px; border:1px dashed rgba(82,176,218,.28); border-radius:50%; transform:rotate(24deg) scaleY(.74); }
+.standalone-orbit { position:absolute; border:1px solid rgba(241,198,95,.5); border-radius:50%; width:220px; height:220px; transform:rotate(-31deg) scaleY(.7); }
+.standalone-float { position:absolute; z-index:3; display:grid; place-items:center; width:50px; height:50px; border:4px solid #fff; border-radius:17px; box-shadow:0 10px 22px rgba(31,71,100,.1); font-size:24px; }
+.float-one { top:40px; right:28px; background:#fff1c9; color:#ac8428; animation:float 4.5s ease-in-out infinite; }
+.float-two { bottom:39px; left:27px; background:#e0f7eb; color:#4e9a78; animation:float 5.5s ease-in-out infinite; }
+.standalone-art-caption { color:#99a7b5; font-size:9px; font-weight:800; letter-spacing:.8px; }
+.standalone-content { padding-top:38px; padding-bottom:100px; }
+.content-page-heading { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:25px; }
+.content-page-heading .mini-label { color:#8194a5; }
+.content-page-heading .underlined-link { margin:0; }
+.story-values { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:17px; }
+.story-principle { min-height:255px; padding:25px; border:1px solid #e3edf3; border-radius:23px; background:#fff; }
+.story-principle .principle-icon { display:grid; place-items:center; width:48px; height:48px; border-radius:16px; margin-bottom:22px; font-size:23px; background:#e9f7ff; color:#398fb8; }
+.principle-gold { background:linear-gradient(145deg,#fff,#fffbef); }
+.principle-gold .principle-icon { background:#fff1c9; color:#ae8428; }
+.principle-lilac { background:linear-gradient(145deg,#fff,#f9f7ff); }
+.principle-lilac .principle-icon { background:#f0edff; color:#8172c8; }
+.story-principle .mini-label { color:#91a0af; }
+.story-principle h2 { font:800 24px/1.35 "Tajawal","Manrope",sans-serif; margin:10px 0 11px; letter-spacing:-.4px; }
+.story-principle p { color:#758699; font-size:12px; line-height:1.95; margin:0; }
+.story-note { display:grid; grid-template-columns:80px 1fr; gap:20px; padding:28px; margin-bottom:90px; border:1px solid #e2edf3; border-radius:25px; background:linear-gradient(115deg,#f3fbff,#fff); align-items:start; }
+.story-note-icon { width:65px; height:65px; display:grid; place-items:center; background:#fff0c6; color:#ad8428; border-radius:21px; font-size:28px; }
+.story-note .section-kicker { margin:4px 0 15px; }
+.story-note h2 { font:800 31px/1.35 "Tajawal","Manrope",sans-serif; margin:0 0 9px; letter-spacing:-.8px; }
+.story-note h2 em { position:relative; font-style:normal; z-index:0; }
+.story-note h2 em::after { content:""; position:absolute; height:9px; background:var(--gold); left:0; right:0; bottom:1px; z-index:-1; }
+.story-note p { color:#76899b; font-size:12px; line-height:1.9; max-width:720px; }
+.story-note .button { margin-top:3px; }
+.activity-list-page { max-width:900px; margin-inline:auto; }
+.activity-list-page .activity-row { padding:20px; margin-bottom:11px; border:1px solid #e4edf3; border-radius:17px; background:#fff; grid-template-columns:62px 1fr 25px; }
+.activity-list-page .activity-icon { width:62px; height:62px; }
+.activity-list-page .activity-row h3 { font-size:16px; }
+.activity-list-page .activity-row p { font-size:12px; }
+.life-page-banner { display:grid; grid-template-columns:.9fr 1.1fr; align-items:center; gap:32px; margin-bottom:44px; padding:16px; border:1px solid #e3edf3; border-radius:25px; background:#f3faff; }
+.life-page-banner img { width:100%; height:260px; object-fit:cover; border-radius:18px; }
+.life-page-banner > div { padding:12px; }
+.life-page-banner .mini-label { color:#879db0; }
+.life-page-banner h2 { font:800 28px/1.45 "Tajawal","Manrope",sans-serif; letter-spacing:-.7px; margin:12px 0 9px; }
+.life-page-banner p { color:#7e8d9d; font-size:12px; line-height:1.9; margin:0; }
+.gallery-grid-page { grid-template-columns:repeat(3,minmax(0,1fr)); grid-template-rows:none; grid-auto-rows:230px; }
+.gallery-grid-page .gallery-tile-tall { grid-row:span 2; }
+.gallery-grid-page .gallery-tile { min-height:220px; }
+.gallery-grid-page .gallery-tile-blue { min-height:220px; }
+.stories-section-page { background:#fffbf1; }
+.content-card-link { height:100%; }
+.standalone-content .loading-state { margin:10px 0; }
+@media (max-width:980px) {
+ .section-directory-grid { gap:12px; }
+ .section-link-card { min-height:220px; padding:20px; }
+ .standalone-hero-grid { gap:25px; }
+ .standalone-icon-wrap { transform:scale(.9); }
+ .gallery-grid-page { grid-template-columns:repeat(2,minmax(0,1fr)); }
+ .story-values { gap:12px; }
+ .story-principle { padding:20px; }
+}
+@media (max-width:720px) {
+ .main-nav a { gap:9px; }
+ .directory-section { padding-top:65px; padding-bottom:76px; }
+ .section-directory-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px; }
+ .section-link-card, .section-link-card:nth-child(4), .section-link-card:nth-child(5) { grid-column:auto; min-height:215px; padding:17px; border-radius:18px; }
+ .section-link-card:nth-child(5) { grid-column:1 / -1; min-height:180px; }
+ .section-link-icon { width:44px; height:44px; border-radius:14px; font-size:22px; margin-bottom:16px; }
+ .section-link-card h3 { font-size:21px; }
+ .section-link-card p { font-size:10px; }
+ .section-link-go { bottom:14px; left:14px; width:29px; height:29px; }
+ html[dir="rtl"] .section-link-go { left:auto; right:14px; }
+ .standalone-hero { padding-top:28px; padding-bottom:25px; }
+ .back-home-link { margin-bottom:22px; }
+ .standalone-hero-grid { grid-template-columns:1fr; gap:8px; }
+ .standalone-hero h1 { font-size:clamp(41px,10vw,57px); letter-spacing:-1.5px; }
+ .standalone-description { font-size:12px; }
+ .standalone-hero-art { min-height:255px; margin-top:3px; }
+ .standalone-icon-wrap { transform:scale(.77); margin:-20px 0; }
+ .standalone-art-caption { margin-top:0; }
+ .standalone-content { padding-top:22px; padding-bottom:70px; }
+ .content-page-heading { align-items:flex-start; flex-direction:column; gap:10px; }
+ .story-values { grid-template-columns:1fr; }
+ .story-principle { min-height:auto; padding:22px; }
+ .story-principle .principle-icon { margin-bottom:14px; }
+ .story-principle h2 { font-size:22px; }
+ .story-note { grid-template-columns:1fr; margin-bottom:60px; padding:21px; gap:12px; }
+ .story-note h2 { font-size:26px; }
+ .life-page-banner { grid-template-columns:1fr; gap:16px; }
+ .life-page-banner img { height:220px; }
+ .life-page-banner > div { padding:4px 6px 8px; }
+ .life-page-banner h2 { font-size:25px; }
+ .activity-list-page .activity-row { grid-template-columns:49px 1fr 18px; gap:12px; padding:13px; }
+ .activity-list-page .activity-icon { width:49px; height:49px; }
+ .gallery-grid-page { grid-template-columns:1fr 1fr; grid-auto-rows:175px; gap:10px; }
+ .gallery-grid-page .gallery-tile-tall { grid-row:span 2; grid-column:auto; }
+}
+@media (max-width:420px) {
+ .section-directory-grid { gap:9px; }
+ .section-link-card, .section-link-card:nth-child(4), .section-link-card:nth-child(5) { padding:13px; min-height:205px; }
+ .section-link-card:nth-child(5) { grid-column:1 / -1; min-height:165px; }
+ .section-link-number { font-size:7px; letter-spacing:.7px; }
+ .section-link-card h3 { font-size:19px; }
+ .standalone-icon-wrap { transform:scale(.68); margin:-37px 0; }
+ .gallery-grid-page { grid-auto-rows:150px; }
+ .gallery-grid-page .gallery-tile { min-height:150px; }
+}
