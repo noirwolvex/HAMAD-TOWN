@@ -150,9 +150,7 @@
     pendingImageData = "";
     previewUrl = record.image_url || "";
     renderImagePreview(previewUrl);
-    const editingPrefix = window.HamadI18n?.t("Editing:") || "Editing:";
-    const untitled = window.HamadI18n?.t("Untitled entry") || "Untitled entry";
-    setMessage(editingPrefix + " " + (record.title || untitled));
+    setMessage("Editing: " + (record.title || "Untitled entry"));
     $("contentForm").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -235,8 +233,7 @@
   async function loadBackendItems() {
     const { data, error } = await supabaseClient.from("school_content").select("*").order("order_index", { ascending: true });
     if (error) {
-      const readErrorPrefix = window.HamadI18n?.t("Could not read the shared content library.") || "Could not read the shared content library.";
-      setMessage(readErrorPrefix + " " + error.message, true);
+      setMessage("Could not read the shared content library. " + error.message, true);
       items = [];
     } else {
       items = data || [];
