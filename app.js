@@ -82,6 +82,7 @@
       featured: true, published: true, order_index: 11
     }
   ];
+  window.HAMAD_SEED_ITEMS = seedItems;
 
   const escapeHtml = (value = "") => String(value).replace(/[&<>"']/g, char => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
@@ -239,6 +240,7 @@
     if (year) year.textContent = new Date().getFullYear();
     setupMenu();
     setupReveal();
+    if (!document.getElementById("achievementGrid")) return;
     try {
       const items = await loadItems();
       renderAchievements(items);
