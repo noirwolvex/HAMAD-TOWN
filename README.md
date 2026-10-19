@@ -4,6 +4,8 @@ A responsive school-story website made with plain HTML, CSS and JavaScript. The 
 
 **Language:** Arabic is the default language with a right-to-left layout. Use the **English / العربية** toggle in the website header or school portal to switch languages; the selected language is remembered in the current browser.
 
+New school content is entered in both Arabic and English from the admin portal. The public website displays the matching title, category label and description for the selected language. Existing database records remain available with fallback text; run the updated `supabase/schema.sql` to add the bilingual columns to an existing Supabase project.
+
 ## What is included
 
 - `index.html` — public school website.
