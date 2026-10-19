@@ -177,7 +177,7 @@
     pendingImageData = "";
     previewUrl = record.image_url || "";
     renderImagePreview(previewUrl);
-    setMessage("Editing: " + (record.title || "Untitled entry"));
+    setMessage("Editing: " + (displayText(record, "title") || "Untitled entry"));
     $("contentForm").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
@@ -234,7 +234,7 @@
   async function deleteRecord(id) {
     const record = items.find(item => String(item.id) === String(id));
     const isArabic = window.HamadI18n?.getLanguage() === "ar";
-    const entryLabel = record?.title || (isArabic ? "هذا المحتوى" : "this entry");
+    const entryLabel = (record && displayText(record, "title")) || (isArabic ? "هذا المحتوى" : "this entry");
     const confirmText = isArabic
       ? 'هل تريد حذف "' + entryLabel + '"؟ لا يمكن التراجع عن هذا الإجراء.'
       : 'Delete "' + entryLabel + '"? This cannot be undone.';
