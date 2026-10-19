@@ -8,9 +8,15 @@ create table if not exists public.school_content (
   id uuid primary key default gen_random_uuid(),
   kind text not null check (kind in ('achievement', 'award', 'activity', 'story', 'teacher', 'student', 'event', 'gallery')),
   title text not null,
+  title_ar text not null default '',
+  title_en text not null default '',
   eyebrow text not null default '',
+  eyebrow_ar text not null default '',
+  eyebrow_en text not null default '',
   year text not null default '',
   description text not null default '',
+  description_ar text not null default '',
+  description_en text not null default '',
   image_url text not null default '',
   featured boolean not null default false,
   published boolean not null default false,
@@ -18,6 +24,25 @@ create table if not exists public.school_content (
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now()
 );
+
+-- Add bilingual fields on existing installations as well as fresh projects.
+alter table public.school_content add column if not exists title_ar text not null default '';
+alter table public.school_content add column if not exists title_en text not null default '';
+alter table public.school_content add column if not exists eyebrow_ar text not null default '';
+alter table public.school_content add column if not exists eyebrow_en text not null default '';
+alter table public.school_content add column if not exists description_ar text not null default '';
+alter table public.school_content add column if not exists description_en text not null default '';
+
+-- Preserve existing records while providing fallback text in both languages.
+update public.school_content
+set title_ar = coalesce(nullif(title_ar, ''), title),
+    title_en = coalesce(nullif(title_en, ''), title),
+    eyebrow_ar = coalesce(nullif(eyebrow_ar, ''), eyebrow),
+    eyebrow_en = coalesce(nullif(eyebrow_en, ''), eyebrow),
+    description_ar = coalesce(nullif(description_ar, ''), description),
+    description_en = coalesce(nullif(description_en, ''), description)
+where title_ar = '' or title_en = '' or eyebrow_ar = '' or eyebrow_en = ''
+   or description_ar = '' or description_en = '';
 
 create table if not exists public.school_admins (
   user_id uuid primary key references auth.users(id) on delete cascade,
