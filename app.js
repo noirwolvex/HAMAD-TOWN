@@ -230,10 +230,10 @@
     container.innerHTML = entries.map((item, index) => {
       const image = safeImage(item.image_url);
       if (index === 2 && !image) {
-        return `<figure class="gallery-tile gallery-tile-blue"><div class="gallery-note"><span>✳</span><b>${escapeHtml(item.title)}</b><small>${escapeHtml(item.eyebrow || "HAMAD TOWN SCHOOL")}</small></div></figure>`;
+        return `<figure class="gallery-tile gallery-tile-blue"><div class="gallery-note"><span>✳</span><b>${escapeHtml(displayText(item, "title"))}</b><small>${escapeHtml(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL")}</small></div></figure>`;
       }
       const title = displayText(item, "title");
-      return `<figure class="gallery-tile ${classes[index % classes.length] || ""}">${image ? `<img src="${escapeHtml(title ? image : image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>✦</span><b>${escapeHtml(title)}</b></div>`}<figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
+      return `<figure class="gallery-tile ${classes[index % classes.length] || ""}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>✦</span><b>${escapeHtml(title)}</b></div>`}<figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
     }).join("");
   }
 
