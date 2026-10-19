@@ -11,6 +11,22 @@
     "Sign out": "تسجيل الخروج",
     "HAMAD TOWN SCHOOL · CONTENT PORTAL": "مدرسة مدينة حمد · بوابة المحتوى",
     "Switch language to English": "تغيير اللغة إلى الإنجليزية",
+    "Switch language to Arabic": "تغيير اللغة إلى العربية",
+    "Arabic title": "العنوان بالعربية",
+    "English title": "العنوان بالإنجليزية",
+    "Arabic category label": "التصنيف بالعربية",
+    "English category label": "التصنيف بالإنجليزية",
+    "Arabic description": "الوصف بالعربية",
+    "English description": "الوصف بالإنجليزية",
+    "Write the title in Arabic.": "اكتب العنوان بالعربية.",
+    "Write the English title": "اكتب العنوان بالإنجليزية",
+    "Add an Arabic label (optional)": "أضف تصنيفًا بالعربية (اختياري)",
+    "Add an English label (optional)": "أضف تصنيفًا بالإنجليزية (اختياري)",
+    "Write the story in Arabic…": "اكتب القصة بالعربية…",
+    "Write the English translation…": "اكتب الترجمة الإنجليزية…",
+    "Keep both language versions accurate and respect student privacy.": "احرص على دقة النصين وحماية خصوصية الطلاب.",
+    "Both Arabic and English versions will be published.": "سيتم نشر النسختين العربية والإنجليزية.",
+    "Switch language to English": "تغيير اللغة إلى الإنجليزية",
     "تغيير اللغة إلى العربية": "تغيير اللغة إلى العربية",
     "Discover the stories, achievements, activities and bright future of Hamad Town School.": "اكتشف قصص مدرسة مدينة حمد وإنجازاتها وأنشطتها ومستقبلها المشرق.",
     "Hamad Town School home": "الصفحة الرئيسية لمدرسة مدينة حمد",
@@ -436,7 +452,9 @@
     window.HamadI18n = {
       getLanguage: () => currentLanguage,
       setLanguage: applyLanguage,
-      t: key => currentLanguage === "ar" ? (translations[key] || key) : key
+      t: key => currentLanguage === "ar" ? (translations[key] || key) : key,
+      toArabic: key => translations[key] || key,
+      toEnglish: key => reverseTranslations[key] || key
     };
   }
 
