@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5fbff">
+  <meta name="description" content="Hamad Town School content publishing portal.">
+  <title>School Portal — Hamad Town School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="app.js" defer></script>
+  <script src="admin.js" defer></script>
+</head>
+<body class="admin-body">
+  <header class="admin-header">
+    <a class="brand" href="index.html" aria-label="Back to Hamad Town School website">
+      <span class="brand-mark"><span>H</span><i></i></span>
+      <span class="brand-copy"><strong>HAMAD TOWN</strong><small>SCHOOL · GROW TOGETHER</small></span>
+    </a>
+    <div class="admin-header-right"><span class="portal-mark"><span class="portal-dot"></span> SCHOOL PORTAL</span><a class="portal-home-link" href="index.html">View website <span>↗</span></a><button id="signOutBtn" class="button button-outline sign-out-btn" type="button" hidden>Sign out</button></div>
+  </header>
+
+  <main class="admin-main">
+    <section class="portal-welcome">
+      <div><div class="section-kicker"><span>CMS</span> CONTENT MANAGEMENT</div><h1>Make the good news <em>visible.</em></h1><p>Add the moments, people and achievements that tell the story of Hamad Town School.</p></div>
+      <div class="welcome-spark" aria-hidden="true">✳</div>
+    </section>
+
+    <section class="backend-login panel" id="backendLogin" hidden>
+      <span class="portal-icon">⌁</span><h2>Sign in to publish</h2>
+      <p>Use your authorised school administrator account. Public visitors cannot manage school content.</p>
+      <form id="loginForm" class="login-form">
+        <label>Email address<input id="loginEmail" type="email" autocomplete="username" placeholder="admin@school.example" required></label>
+        <label>Password<input id="loginPassword" type="password" autocomplete="current-password" placeholder="Your password" required></label>
+        <button class="button button-dark" type="submit">Sign in securely <span>→</span></button>
+        <p id="loginMessage" class="form-message" role="status"></p>
+      </form>
+    </section>
+
+    <div id="adminWorkspace" hidden>
+      <section class="demo-banner" id="demoBanner"><span class="demo-banner-icon">i</span><div><strong>Demo mode — changes stay in this browser.</strong><p>This preview saves content and uploaded images in this browser only. To publish content for every visitor, connect Supabase and apply <code>supabase/schema.sql</code>.</p></div><a href="README.md">Setup guide ↗</a></section>
+      <section class="admin-metrics" aria-label="Content summary">
+        <article class="metric-card"><span class="metric-icon metric-blue">▤</span><div><span>Total entries</span><strong id="totalCount">0</strong></div></article>
+        <article class="metric-card"><span class="metric-icon metric-gold">✦</span><div><span>Published</span><strong id="publishedCount">0</strong></div></article>
+        <article class="metric-card"><span class="metric-icon metric-purple">◷</span><div><span>Drafts</span><strong id="draftCount">0</strong></div></article>
+      </section>
+      <div class="admin-columns">
+        <section class="editor-panel panel">
+          <div class="panel-heading"><div><span class="mini-label">CONTENT EDITOR</span><h2 id="editorTitle">Add a new story</h2></div><span class="editor-step">01 <i>/</i> 02</span></div>
+          <form id="contentForm">
+            <input type="hidden" id="contentId">
+            <div class="form-row"><label>Content type<select id="contentKind" required><option value="achievement">Student achievement</option><option value="award">Award / recognition</option><option value="activity">Activity / club</option><option value="story">School story</option><option value="teacher">Teacher spotlight</option><option value="student">Student spotlight</option><option value="event">School event</option><option value="gallery">Gallery photo</option></select></label><label>Year / date label<input id="contentYear" maxlength="80" placeholder="e.g. Academic year 2026"></label></div>
+            <label>Title <span class="required-star">*</span><input id="contentTitle" maxlength="140" placeholder="Give this moment a title" required></label>
+            <label>Short label<input id="contentEyebrow" maxlength="80" placeholder="e.g. STUDENT ACHIEVEMENT"></label>
+            <label>Story / description <span class="required-star">*</span><textarea id="contentDescription" rows="4" maxlength="800" placeholder="Share what happened and why it matters…" required></textarea><span class="field-hint">Keep it warm, clear and respectful of student privacy.</span></label>
+            <div class="image-upload-block">
+              <label>Photo or image</label>
+              <div class="image-entry"><input id="contentImageUrl" type="url" placeholder="Paste an image URL (optional)" aria-label="Image URL"><label class="upload-button" for="contentImageFile">＋ Upload photo</label><input id="contentImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden></div>
+              <div class="image-preview" id="imagePreview"><span>▧</span><p>Image preview will appear here</p></div>
+              <span class="field-hint">JPG, PNG, WEBP or GIF. Use school-approved photos and confirm permission before publishing.</span>
+            </div>
+            <div class="form-row form-row-options"><label class="check-control"><input id="contentFeatured" type="checkbox" checked><span><b>Featured highlight</b><small>Prioritise this entry in the content list.</small></span></label><label class="check-control"><input id="contentPublished" type="checkbox" checked><span><b>Publish to website</b><small>Drafts stay hidden from visitors.</small></span></label></div>
+            <div class="form-actions"><button class="button button-dark" id="saveContentBtn" type="submit">Save content <span>↗</span></button><button class="button button-outline" id="resetFormBtn" type="button">Clear form</button></div>
+            <p class="form-message" id="formMessage" role="status"></p>
+          </form>
+        </section>
+
+        <section class="content-manager panel">
+          <div class="panel-heading manager-heading"><div><span class="mini-label">YOUR SCHOOL'S STORY</span><h2>Content library <span class="entry-count" id="libraryCount">0</span></h2></div><button class="icon-button" id="exportBtn" type="button" title="Export all content as JSON" aria-label="Export content as JSON">⇩</button></div>
+          <div class="library-tools"><label class="search-box"><span>⌕</span><input id="searchContent" type="search" placeholder="Find a story…" aria-label="Search content"></label><select id="filterKind" aria-label="Filter by content type"><option value="all">All content</option><option value="achievement">Achievements</option><option value="award">Awards</option><option value="activity">Activities</option><option value="story">Stories</option><option value="teacher">Teachers</option><option value="student">Students</option><option value="event">Events</option><option value="gallery">Gallery</option></select></div>
+          <div class="record-list" id="recordList" aria-live="polite"><div class="loading-state">Loading the content library…</div></div>
+          <div class="library-footer"><span><span class="portal-dot"></span> Content saved in current mode</span><span id="saveStatus">Ready</span></div>
+        </section>
+      </div>
+      <section class="privacy-note"><span>✦</span><p><strong>A thoughtful school story.</strong> Please publish only approved photos and information. Avoid private contact details, student addresses, sensitive personal information, and unapproved identifying details about children.</p></section>
+    </div>
+  </main>
+
+  <div class="admin-toast" id="adminToast" role="status" aria-live="polite"></div>
+  <footer class="admin-footer"><span>HAMAD TOWN SCHOOL · CONTENT PORTAL</span><a href="index.html">Return to the public website ↗</a></footer>
+</body>
+</html>
