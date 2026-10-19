@@ -50,14 +50,37 @@
     $("saveContentBtn").innerHTML = value ? "Saving…" : 'Save content <span>↗</span>';
   }
 
+  function normalizeRecord(item) {
+    const title = item.title || "";
+    const description = item.description || "";
+    const eyebrow = item.eyebrow || item.label || "";
+    const toArabic = value => window.HamadI18n?.toArabic(value) || value;
+    const toEnglish = value => window.HamadI18n?.toEnglish(value) || value;
+    return {
+      ...item,
+      title_ar: item.title_ar || toArabic(title),
+      title_en: item.title_en || toEnglish(title),
+      description_ar: item.description_ar || toArabic(description),
+      description_en: item.description_en || toEnglish(description),
+      eyebrow_ar: item.eyebrow_ar || toArabic(eyebrow),
+      eyebrow_en: item.eyebrow_en || toEnglish(eyebrow)
+    };
+  }
+
+  function displayText(item, field) {
+    const arabic = item[field + "_ar"] || item[field] || "";
+    const english = item[field + "_en"] || item[field] || arabic;
+    return window.HamadI18n?.getLanguage() === "en" ? (english || arabic) : (arabic || english);
+  }
+
   function readDemoItems() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored !== null) return JSON.parse(stored);
+      if (stored !== null) return JSON.parse(stored).map(normalizeRecord);
     } catch (error) {
       console.warn("Cannot read local school content.", error);
     }
-    return (window.HAMAD_SEED_ITEMS || []).map(item => ({ ...item }));
+    return (window.HAMAD_SEED_ITEMS || []).map(item => normalizeRecord({ ...item }));
   }
 
   function updateMetrics() {
@@ -88,7 +111,7 @@
     const kind = $("filterKind").value;
     const filtered = items.filter(item => {
       const matchesKind = kind === "all" || (item.kind || item.category) === kind;
-      const haystack = [item.title, item.description, item.eyebrow, item.year, item.kind].join(" ").toLowerCase();
+      const haystack = [item.title, item.title_ar, item.title_en, item.description, item.description_ar, item.description_en, item.eyebrow, item.eyebrow_ar, item.eyebrow_en, item.year, item.kind].join(" ").toLowerCase();
       return matchesKind && haystack.includes(q);
     });
 
@@ -107,10 +130,11 @@
       const image = img
         ? '<div class="record-thumb"><img src="' + escapeHtml(img) + '" alt="" loading="lazy"></div>'
         : '<div class="record-thumb">✦</div>';
-      const description = String(item.description || "").slice(0, 125);
+      const description = String(displayText(item, "description") || "").slice(0, 125);
+      const title = displayText(item, "title") || "Untitled entry";
       return '<article class="record-item">' + image +
         '<div class="record-copy"><span class="record-type">' + escapeHtml(kinds[kindKey] || kindKey) + '</span>' +
-        '<h3>' + escapeHtml(item.title || "Untitled entry") + '</h3><p>' + escapeHtml(description) + '</p>' + status + '</div>' +
+        '<h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(description) + '</p>' + status + '</div>' +
         '<div class="record-actions"><button type="button" data-action="edit" data-id="' + escapeHtml(item.id) + '">Edit</button>' +
         '<button type="button" class="delete-record" data-action="delete" data-id="' + escapeHtml(item.id) + '">Delete</button></div></article>';
     }).join("");
@@ -139,9 +163,12 @@
     $("contentId").value = record.id || "";
     $("contentKind").value = record.kind || record.category || "story";
     $("contentYear").value = record.year || "";
-    $("contentTitle").value = record.title || "";
-    $("contentEyebrow").value = record.eyebrow || "";
-    $("contentDescription").value = record.description || "";
+    $("contentTitle").value = record.title_ar || record.title || "";
+    $("contentTitleEn").value = record.title_en || record.title || "";
+    $("contentEyebrow").value = record.eyebrow_ar || record.eyebrow || "";
+    $("contentEyebrowEn").value = record.eyebrow_en || record.eyebrow || "";
+    $("contentDescription").value = record.description_ar || record.description || "";
+    $("contentDescriptionEn").value = record.description_en || record.description || "";
     $("contentImageUrl").value = record.image_url || record.imageUrl || "";
     $("contentFeatured").checked = record.featured !== false;
     $("contentPublished").checked = record.published !== false;
@@ -236,7 +263,7 @@
       setMessage("Could not read the shared content library. " + error.message, true);
       items = [];
     } else {
-      items = data || [];
+      items = (data || []).map(normalizeRecord);
     }
     renderRecords();
   }
@@ -284,10 +311,12 @@
     $("contentForm").addEventListener("submit", async event => {
       event.preventDefault();
       if (busy) return;
-      const title = $("contentTitle").value.trim();
-      const description = $("contentDescription").value.trim();
-      if (!title || !description) {
-        setMessage("Please add both a title and a description.", true);
+      const titleAr = $("contentTitle").value.trim();
+      const titleEn = $("contentTitleEn").value.trim();
+      const descriptionAr = $("contentDescription").value.trim();
+      const descriptionEn = $("contentDescriptionEn").value.trim();
+      if (!titleAr || !titleEn || !descriptionAr || !descriptionEn) {
+        setMessage("Please complete both Arabic and English titles and descriptions.", true);
         return;
       }
       if (supabaseClient && !currentSession) {
@@ -300,13 +329,24 @@
         const imageUrl = await uploadImageIfNeeded();
         const id = $("contentId").value || "demo-" + Date.now();
         const existing = items.find(item => String(item.id) === String(id));
+        const kind = $("contentKind").value;
+        const defaultTypeEnglish = kinds[kind] || "School story";
+        const defaultTypeArabic = window.HamadI18n?.toArabic(defaultTypeEnglish) || defaultTypeEnglish;
+        const eyebrowAr = $("contentEyebrow").value.trim() || defaultTypeArabic;
+        const eyebrowEn = $("contentEyebrowEn").value.trim() || defaultTypeEnglish;
         const record = {
           id,
-          kind: $("contentKind").value,
-          title,
-          eyebrow: $("contentEyebrow").value.trim() || kinds[$("contentKind").value].toUpperCase(),
+          kind,
+          title: titleAr,
+          title_ar: titleAr,
+          title_en: titleEn,
+          eyebrow: eyebrowAr,
+          eyebrow_ar: eyebrowAr,
+          eyebrow_en: eyebrowEn,
           year: $("contentYear").value.trim(),
-          description,
+          description: descriptionAr,
+          description_ar: descriptionAr,
+          description_en: descriptionEn,
           image_url: imageUrl,
           featured: $("contentFeatured").checked,
           published: $("contentPublished").checked,
@@ -391,6 +431,7 @@
     setupImageInputs();
     setupForm();
     setupAuth();
+    window.addEventListener("hamad-language-change", renderRecords);
 
     if (!supabaseClient) {
       showWorkspace(true);
