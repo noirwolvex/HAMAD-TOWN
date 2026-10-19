@@ -322,7 +322,13 @@
     const original = originalText.get(node);
     const trimmed = original.trim();
     if (!trimmed) return;
-    const translated = currentLanguage === "ar" ? translations[trimmed] : null;
+    let translated = currentLanguage === "ar" ? translations[trimmed] : null;
+    if (currentLanguage === "ar" && !translated && trimmed.startsWith("Editing: ")) {
+      translated = "قيد التعديل: " + trimmed.slice("Editing: ".length);
+    }
+    if (currentLanguage === "ar" && !translated && trimmed.startsWith("Could not read the shared content library. ")) {
+      translated = "تعذّرت قراءة مكتبة المحتوى المشتركة. " + trimmed.slice("Could not read the shared content library. ".length);
+    }
     const leading = (original.match(/^\s*/) || [""])[0];
     const trailing = (original.match(/\s*$/) || [""])[0];
     const next = translated ? leading + translated + trailing : original;
