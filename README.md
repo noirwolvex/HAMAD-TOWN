@@ -8,9 +8,15 @@ New school content is entered in both Arabic and English from the admin portal. 
 
 ## What is included
 
-- `index.html` — public school website.
-- `styles.css` — responsive design system, motion, cards, layouts and mobile navigation.
-- `app.js` — renders achievements, awards, activities, school stories and gallery entries.
+- `index.html` — Arabic-first homepage and icon-based section directory.
+- `story.html` — the school's identity, values and story.
+- `achievements.html` — the dedicated achievements and awards page.
+- `school-life.html` — the dedicated school activities, clubs and events page.
+- `stories.html` — stories from students, teachers and the school community.
+- `gallery.html` — the dedicated school photo gallery.
+- `language.js` — Arabic/English switcher, RTL/LTR layout handling and translations.
+- `styles.css` — responsive design system, motion, icon cards, page layouts and mobile navigation.
+- `app.js` — renders published achievements, activities, stories and gallery entries on their own pages.
 - `admin.html`, `admin.css`, `admin.js` — content editor, image preview/upload, drafts, publish toggles, filters, editing/deleting and JSON export.
 - `config.js` — optional Supabase project configuration.
 - `supabase/schema.sql` — database tables, admin allow-list, row-level security and image bucket policies.
