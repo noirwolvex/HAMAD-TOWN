@@ -303,6 +303,16 @@
     }
   };
 
+  const reverseTranslations = Object.fromEntries(
+    Object.entries(translations).map(([english, arabic]) => [arabic, english])
+  );
+  const reverseAttributeTranslations = Object.fromEntries(
+    Object.entries(attributeTranslations).map(([name, dictionary]) => [
+      name,
+      Object.fromEntries(Object.entries(dictionary).map(([english, arabic]) => [arabic, english]))
+    ])
+  );
+
   const originalText = new WeakMap();
   const originalAttrs = new WeakMap();
   let currentLanguage = "ar";
@@ -322,7 +332,7 @@
     const original = originalText.get(node);
     const trimmed = original.trim();
     if (!trimmed) return;
-    let translated = currentLanguage === "ar" ? translations[trimmed] : null;
+    let translated = currentLanguage === "ar" ? translations[trimmed] : reverseTranslations[trimmed];
     if (currentLanguage === "ar" && !translated && trimmed.startsWith("Editing: ")) {
       translated = "قيد التعديل: " + trimmed.slice("Editing: ".length);
     }
@@ -342,7 +352,10 @@
     const original = attrs[name];
     if (original === null) return;
     const dictionary = attributeTranslations[name] || {};
-    const next = currentLanguage === "ar" ? (dictionary[original] || translations[original] || original) : original;
+    const reverseDictionary = reverseAttributeTranslations[name] || {};
+    const next = currentLanguage === "ar"
+      ? (dictionary[original] || translations[original] || original)
+      : (reverseDictionary[original] || reverseTranslations[original] || original);
     if (el.getAttribute(name) !== next) el.setAttribute(name, next);
   }
 
@@ -379,18 +392,19 @@
     try { localStorage.setItem(STORAGE_KEY, currentLanguage); } catch (_) {}
     const title = document.querySelector("title");
     if (title) {
-      const enTitle = title.dataset.englishTitle || title.textContent.trim();
-      title.dataset.englishTitle = enTitle;
+      const sourceTitle = title.dataset.sourceTitle || title.textContent.trim();
+      title.dataset.sourceTitle = sourceTitle;
       title.textContent = currentLanguage === "ar"
-        ? (translations[enTitle] || enTitle)
-        : enTitle;
+        ? (translations[sourceTitle] || sourceTitle)
+        : (reverseTranslations[sourceTitle] || sourceTitle);
     }
     const description = document.querySelector('meta[name="description"]');
     if (description) {
-      if (!description.dataset.englishContent) description.dataset.englishContent = description.content;
+      if (!description.dataset.sourceContent) description.dataset.sourceContent = description.content;
+      const sourceContent = description.dataset.sourceContent;
       description.content = currentLanguage === "ar"
-        ? (translations[description.dataset.englishContent] || description.dataset.englishContent)
-        : description.dataset.englishContent;
+        ? (translations[sourceContent] || sourceContent)
+        : (reverseTranslations[sourceContent] || sourceContent);
     }
     translateTree(document);
     const toggle = document.getElementById("languageToggle");
