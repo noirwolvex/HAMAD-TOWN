@@ -99,15 +99,34 @@
     return /^(https:\/\/|data:image\/|\.\/|\/)/i.test(url) ? url : "";
   };
 
-  const normalize = row => ({
-    ...row,
-    kind: row.kind || row.category || "story",
-    description: row.description || "",
-    image_url: row.image_url || row.imageUrl || "",
-    eyebrow: row.eyebrow || row.label || (row.kind || "SCHOOL STORY").replace(/[-_]/g, " "),
-    year: row.year || "",
-    published: row.published !== false
-  });
+  const normalize = row => {
+    const kind = row.kind || row.category || "story";
+    const title = row.title || "";
+    const description = row.description || "";
+    const eyebrow = row.eyebrow || row.label || kind.replace(/[-_]/g, " ");
+    return {
+      ...row,
+      kind,
+      title_ar: row.title_ar || window.HamadI18n?.toArabic(title) || title,
+      title_en: row.title_en || window.HamadI18n?.toEnglish(title) || title,
+      description_ar: row.description_ar || window.HamadI18n?.toArabic(description) || description,
+      description_en: row.description_en || window.HamadI18n?.toEnglish(description) || description,
+      eyebrow_ar: row.eyebrow_ar || window.HamadI18n?.toArabic(eyebrow) || eyebrow,
+      eyebrow_en: row.eyebrow_en || window.HamadI18n?.toEnglish(eyebrow) || eyebrow,
+      description,
+      image_url: row.image_url || row.imageUrl || "",
+      eyebrow,
+      year: row.year || "",
+      published: row.published !== false
+    };
+  };
+
+  const displayText = (item, field) => {
+    const isEnglish = window.HamadI18n?.getLanguage() === "en";
+    const arabic = item[field + "_ar"] || item[field] || "";
+    const english = item[field + "_en"] || item[field] || arabic;
+    return isEnglish ? (english || arabic) : (arabic || english);
+  };
 
   function readLocalItems() {
     try {
@@ -155,11 +174,13 @@
 
   function cardMarkup(item) {
     const kind = escapeHtml(item.kind);
+    const title = displayText(item, "title");
+    const description = displayText(item, "description");
     const image = safeImage(item.image_url);
     const imageHtml = image
-      ? `<div class="content-card-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(item.title)}" loading="lazy"><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`
+      ? `<div class="content-card-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`
       : `<div class="content-card-media content-card-placeholder"><span>${kindSymbol(item.kind)}</span><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`;
-    return `<article class="content-card"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(item.eyebrow || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div></div></article>`;
+    return `<article class="content-card"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(item.eyebrow || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p></div></div></article>`;
   }
 
   function renderAchievements(items) {
@@ -179,7 +200,7 @@
       const icon = image
         ? `<span class="activity-icon"><img src="${escapeHtml(image)}" alt="" loading="lazy"></span>`
         : `<span class="activity-icon">${kindSymbol(item.kind)}</span>`;
-      return `<article class="activity-row">${icon}<div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div><span class="activity-arrow" aria-hidden="true">↗</span></article>`;
+      return `<article class="activity-row">${icon}<div><h3>${escapeHtml(displayText(item, "title"))}</h3><p>${escapeHtml(displayText(item, "description"))}</p></div><span class="activity-arrow" aria-hidden="true">↗</span></article>`;
     }).join("") : '<div class="empty-state">School activities and events will appear here.</div>';
   }
 
@@ -189,7 +210,7 @@
     const stories = items.filter(item => ["story", "student", "teacher"].includes(item.kind)).slice(0, 2);
     container.innerHTML = stories.length ? stories.map(item => {
       const image = safeImage(item.image_url) || "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80";
-      return `<article class="story-card"><img src="${escapeHtml(image)}" alt="${escapeHtml(item.title)}" loading="lazy"><div class="story-card-copy"><span class="mini-label">${escapeHtml(item.eyebrow || kindLabel(item.kind))}</span><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.description)}</p></div></article>`;
+      return `<article class="story-card"><img src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy"><div class="story-card-copy"><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><h3>${escapeHtml(displayText(item, "title"))}</h3><p>${escapeHtml(displayText(item, "description"))}</p></div></article>`;
     }).join("") : '<div class="empty-state">New stories from our community will be shared here.</div>';
   }
 
@@ -204,7 +225,8 @@
       if (index === 2 && !image) {
         return `<figure class="gallery-tile gallery-tile-blue"><div class="gallery-note"><span>✳</span><b>${escapeHtml(item.title)}</b><small>${escapeHtml(item.eyebrow || "HAMAD TOWN SCHOOL")}</small></div></figure>`;
       }
-      return `<figure class="gallery-tile ${classes[index] || ""}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(item.title)}" loading="lazy">` : '<div class="gallery-note"><span>✦</span><b>A moment to remember</b></div>'}<figcaption>${escapeHtml(item.title)} <span>↗</span></figcaption></figure>`;
+      const title = displayText(item, "title");
+      return `<figure class="gallery-tile ${classes[index] || ""}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : '<div class="gallery-note"><span>✦</span><b>A moment to remember</b></div>'}<figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
     }).join("");
   }
 
@@ -247,8 +269,19 @@
     setupMenu();
     setupReveal();
     if (!document.getElementById("achievementGrid")) return;
+    let currentItems = [];
+    let itemsLoaded = false;
+    window.addEventListener("hamad-language-change", () => {
+      if (!itemsLoaded) return;
+      renderAchievements(currentItems);
+      renderActivities(currentItems);
+      renderStories(currentItems);
+      renderGallery(currentItems);
+    });
     try {
       const items = await loadItems();
+      currentItems = items;
+      itemsLoaded = true;
       renderAchievements(items);
       renderActivities(items);
       renderStories(items);
