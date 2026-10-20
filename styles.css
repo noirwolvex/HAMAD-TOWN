@@ -969,3 +969,59 @@ html[dir="rtl"] .future-chip { direction: rtl; text-align: right; }
 /* Editable Our story cards share the public-site design tokens. */
 .story-note[hidden] { display:none !important; }
 .about-principle-image { width:100%; height:132px; object-fit:cover; border-radius:15px; margin-bottom:15px; }
+
+
+/* Seamless, direction-aware ticker loop: both halves have identical content. */
+.ticker-track {
+  width: max-content;
+  min-width: max-content;
+  gap: 0;
+  animation: ticker-loop 32s linear infinite;
+  will-change: transform;
+}
+.ticker-group {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 29px;
+  padding-inline-end: 29px;
+  white-space: nowrap;
+}
+@keyframes ticker-loop {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+html[dir="rtl"] .ticker-track {
+  animation-name: ticker-loop-rtl;
+}
+@keyframes ticker-loop-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+@media (max-width: 720px) {
+  .ticker-group { gap: 20px; padding-inline-end: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track {
+    animation: none !important;
+    transform: none !important;
+    width: 100%;
+    min-width: 0;
+    white-space: normal;
+  }
+  .ticker-group {
+    flex-wrap: wrap;
+    justify-content: center;
+    white-space: normal;
+    padding: 12px 0;
+  }
+  .ticker-group[aria-hidden="true"] { display: none; }
+  .ticker {
+    height: auto;
+    min-height: 61px;
+    transform: none;
+  }
+}
