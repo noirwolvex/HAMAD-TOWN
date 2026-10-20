@@ -1025,3 +1025,20 @@ html[dir="rtl"] .ticker-track {
     transform: none;
   }
 }
+
+
+/* RTL section-card arrows: bottom-left placement and mirrored arrow direction. */
+html[dir="rtl"] .section-link-go {
+  left: 22px;
+  right: auto;
+  transform: scaleX(-1);
+}
+html[dir="rtl"] .section-link-card:hover .section-link-go {
+  transform: scaleX(-1) translate(-3px, -3px);
+}
+@media (max-width: 720px) {
+  html[dir="rtl"] .section-link-go {
+    left: 14px;
+    right: auto;
+  }
+}
