@@ -128,6 +128,7 @@
     } catch (error) {
       console.warn("Cannot read local school content.", error);
     }
+    try { localStorage.setItem("hamad-town-about-content-migrated-v1", "done"); } catch (_) {}
     return (window.HAMAD_SEED_ITEMS || []).map(item => normalizeRecord({ ...item }));
   }
 
