@@ -22,10 +22,46 @@
   })[char]);
 
   const kinds = {
-    achievement: "Achievement", award: "Award", activity: "Activity",
-    story: "School story", teacher: "Teacher spotlight", student: "Student spotlight",
-    event: "School event", gallery: "Gallery photo"
+    about: "School identity", achievement: "Student achievement", award: "Award",
+    activity: "Activity", story: "School story", teacher: "Teacher spotlight",
+    student: "Student spotlight", event: "School event", gallery: "Gallery photo"
   };
+  const sectionLabels = {
+    "our-story": "Our story", achievements: "Achievements",
+    "school-life": "School life", stories: "Stories", gallery: "Gallery"
+  };
+  const sectionKinds = {
+    "our-story": ["about"],
+    achievements: ["achievement", "award"],
+    "school-life": ["activity", "event"],
+    stories: ["story", "teacher", "student"],
+    gallery: ["gallery"]
+  };
+  const kindSections = {
+    about: "our-story", achievement: "achievements", award: "achievements",
+    activity: "school-life", event: "school-life", story: "stories",
+    teacher: "stories", student: "stories", gallery: "gallery"
+  };
+
+  function sectionForKind(kind) {
+    return kindSections[kind] || "stories";
+  }
+
+  function sectionForItem(item) {
+    const candidate = item.section || sectionForKind(item.kind || item.category || "story");
+    return Object.prototype.hasOwnProperty.call(sectionKinds, candidate) ? candidate : sectionForKind(item.kind || item.category || "story");
+  }
+
+  function populateKindOptions(section, selectedKind) {
+    const select = $("contentKind");
+    if (!select) return;
+    const allowed = sectionKinds[section] || sectionKinds.achievements;
+    const current = selectedKind || select.value;
+    select.innerHTML = allowed.map(kind =>
+      '<option value="' + escapeHtml(kind) + '">' + escapeHtml(kinds[kind] || kind) + '</option>'
+    ).join("");
+    select.value = allowed.includes(current) ? current : allowed[0];
+  }
 
   function showToast(message) {
     const toast = $("adminToast");
@@ -58,6 +94,7 @@
     const toEnglish = value => window.HamadI18n?.toEnglish(value) || value;
     return {
       ...item,
+      section: item.section || sectionForKind(item.kind || item.category || "story"),
       title_ar: item.title_ar || toArabic(title),
       title_en: item.title_en || toEnglish(title),
       description_ar: item.description_ar || toArabic(description),
@@ -76,7 +113,18 @@
   function readDemoItems() {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored !== null) return JSON.parse(stored).map(normalizeRecord);
+      if (stored !== null) {
+        const records = JSON.parse(stored);
+        const migrationKey = "hamad-town-about-content-migrated-v1";
+        if (!localStorage.getItem(migrationKey)) {
+          const existingIds = new Set(records.map(item => String(item.id)));
+          const defaults = (window.HAMAD_SEED_ITEMS || []).filter(item => item.section === "our-story");
+          records.push(...defaults.filter(item => !existingIds.has(String(item.id))).map(item => ({ ...item })));
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(records));
+          localStorage.setItem(migrationKey, "done");
+        }
+        return records.map(normalizeRecord);
+      }
     } catch (error) {
       console.warn("Cannot read local school content.", error);
     }
@@ -109,10 +157,12 @@
     const container = $("recordList");
     const q = $("searchContent").value.trim().toLowerCase();
     const kind = $("filterKind").value;
+    const section = $("filterSection").value;
     const filtered = items.filter(item => {
       const matchesKind = kind === "all" || (item.kind || item.category) === kind;
-      const haystack = [item.title, item.title_ar, item.title_en, item.description, item.description_ar, item.description_en, item.eyebrow, item.eyebrow_ar, item.eyebrow_en, item.year, item.kind].join(" ").toLowerCase();
-      return matchesKind && haystack.includes(q);
+      const matchesSection = section === "all" || sectionForItem(item) === section;
+      const haystack = [item.title, item.title_ar, item.title_en, item.description, item.description_ar, item.description_en, item.eyebrow, item.eyebrow_ar, item.eyebrow_en, item.year, item.kind, item.section].join(" ").toLowerCase();
+      return matchesKind && matchesSection && haystack.includes(q);
     });
 
     if (!filtered.length) {
@@ -133,7 +183,7 @@
       const description = String(displayText(item, "description") || "").slice(0, 125);
       const title = displayText(item, "title") || "Untitled entry";
       return '<article class="record-item">' + image +
-        '<div class="record-copy"><span class="record-type">' + escapeHtml(kinds[kindKey] || kindKey) + '</span>' +
+        '<div class="record-copy"><span class="record-type">' + escapeHtml(sectionLabels[sectionForItem(item)] || "Stories") + ' · ' + escapeHtml(kinds[kindKey] || kindKey) + '</span>' +
         '<h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(description) + '</p>' + status + '</div>' +
         '<div class="record-actions"><button type="button" data-action="edit" data-id="' + escapeHtml(item.id) + '">Edit</button>' +
         '<button type="button" class="delete-record" data-action="delete" data-id="' + escapeHtml(item.id) + '">Delete</button></div></article>';
@@ -144,7 +194,8 @@
   function resetForm() {
     $("contentForm").reset();
     $("contentId").value = "";
-    $("contentKind").value = "achievement";
+    $("contentSection").value = "achievements";
+    populateKindOptions("achievements", "achievement");
     $("contentFeatured").checked = true;
     $("contentPublished").checked = true;
     $("editorTitle").textContent = "Add a new story";
@@ -161,7 +212,10 @@
     const record = items.find(item => String(item.id) === String(id));
     if (!record) return;
     $("contentId").value = record.id || "";
-    $("contentKind").value = record.kind || record.category || "story";
+    const recordKind = record.kind || record.category || "story";
+    const recordSection = sectionForItem(record);
+    $("contentSection").value = recordSection;
+    populateKindOptions(recordSection, recordKind);
     $("contentYear").value = record.year || "";
     $("contentTitle").value = record.title_ar || record.title || "";
     $("contentTitleEn").value = record.title_en || record.title || "";
@@ -336,6 +390,7 @@
         const eyebrowEn = $("contentEyebrowEn").value.trim() || defaultTypeEnglish;
         const record = {
           id,
+          section: $("contentSection").value,
           kind,
           title: titleAr,
           title_ar: titleAr,
@@ -366,8 +421,10 @@
       }
     });
 
+    $("contentSection").addEventListener("change", () => populateKindOptions($("contentSection").value));
     $("resetFormBtn").addEventListener("click", resetForm);
     $("searchContent").addEventListener("input", renderRecords);
+    $("filterSection").addEventListener("change", renderRecords);
     $("filterKind").addEventListener("change", renderRecords);
     $("recordList").addEventListener("click", event => {
       const button = event.target.closest("button[data-action]");
@@ -429,6 +486,7 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     setupImageInputs();
+    populateKindOptions($("contentSection").value || "achievements", "achievement");
     setupForm();
     setupAuth();
     window.addEventListener("hamad-language-change", renderRecords);
