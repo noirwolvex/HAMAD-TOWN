@@ -6,7 +6,8 @@ create extension if not exists pgcrypto;
 
 create table if not exists public.school_content (
   id uuid primary key default gen_random_uuid(),
-  kind text not null check (kind in ('achievement', 'award', 'activity', 'story', 'teacher', 'student', 'event', 'gallery')),
+  kind text not null check (kind in ('about', 'achievement', 'award', 'activity', 'story', 'teacher', 'student', 'event', 'gallery')),
+  section text not null default '',
   title text not null,
   title_ar text not null default '',
   title_en text not null default '',
@@ -26,12 +27,40 @@ create table if not exists public.school_content (
 );
 
 -- Add bilingual fields on existing installations as well as fresh projects.
+alter table public.school_content add column if not exists section text not null default '';
 alter table public.school_content add column if not exists title_ar text not null default '';
 alter table public.school_content add column if not exists title_en text not null default '';
 alter table public.school_content add column if not exists eyebrow_ar text not null default '';
 alter table public.school_content add column if not exists eyebrow_en text not null default '';
 alter table public.school_content add column if not exists description_ar text not null default '';
 alter table public.school_content add column if not exists description_en text not null default '';
+
+-- Allow the dedicated Our story content type and preserve legacy records.
+alter table public.school_content drop constraint if exists school_content_kind_check;
+alter table public.school_content
+  add constraint school_content_kind_check
+  check (kind in ('about', 'achievement', 'award', 'activity', 'story', 'teacher', 'student', 'event', 'gallery'));
+
+-- Assign existing records to their public section while preserving their content and IDs.
+update public.school_content
+set section = case kind
+  when 'about' then 'our-story'
+  when 'achievement' then 'achievements'
+  when 'award' then 'achievements'
+  when 'activity' then 'school-life'
+  when 'event' then 'school-life'
+  when 'story' then 'stories'
+  when 'teacher' then 'stories'
+  when 'student' then 'stories'
+  when 'gallery' then 'gallery'
+  else 'stories'
+end
+where section = '';
+
+alter table public.school_content drop constraint if exists school_content_section_check;
+alter table public.school_content
+  add constraint school_content_section_check
+  check (section in ('', 'our-story', 'achievements', 'school-life', 'stories', 'gallery'));
 
 -- Preserve existing records while providing fallback text in both languages.
 update public.school_content
@@ -43,6 +72,37 @@ set title_ar = coalesce(nullif(title_ar, ''), title),
     description_en = coalesce(nullif(description_en, ''), description)
 where title_ar = '' or title_en = '' or eyebrow_ar = '' or eyebrow_en = ''
    or description_ar = '' or description_en = '';
+
+-- Seed editable Our story cards with stable IDs; re-running this script does not overwrite edits.
+insert into public.school_content
+  (id, kind, section, title, title_ar, title_en, eyebrow, eyebrow_ar, eyebrow_en,
+   year, description, description_ar, description_en, image_url, featured, published, order_index)
+values
+  ('10000000-0000-4000-8000-000000000001', 'about', 'our-story', 'Our vision', 'رؤيتنا', 'Our vision',
+   'OUR VISION', 'رؤيتنا', 'OUR VISION', '',
+   'نطمح إلى بيئة تعليمية تشجّع التفكير والإبداع، وتساعد كل طالب على اكتشاف إمكاناته وبناء ثقته بنفسه.',
+   'نطمح إلى بيئة تعليمية تشجّع التفكير والإبداع، وتساعد كل طالب على اكتشاف إمكاناته وبناء ثقته بنفسه.',
+   'We aspire to create a learning environment that encourages thinking and creativity, helping every student discover their potential and build confidence.',
+   '', true, true, 1),
+  ('10000000-0000-4000-8000-000000000002', 'about', 'our-story', 'Our mission', 'رسالتنا', 'Our mission',
+   'OUR MISSION', 'رسالتنا', 'OUR MISSION', '',
+   'نعزّز التعاون بين الطلاب والمعلمين والأسر، ونحتفي بالاجتهاد والسلوك الإيجابي وكل خطوة نحو التقدّم.',
+   'نعزّز التعاون بين الطلاب والمعلمين والأسر، ونحتفي بالاجتهاد والسلوك الإيجابي وكل خطوة نحو التقدّم.',
+   'We encourage collaboration among students, teachers and families, celebrating effort, positive character and every step forward.',
+   '', true, true, 2),
+  ('10000000-0000-4000-8000-000000000003', 'about', 'our-story', 'Our values', 'قيمنا', 'Our values',
+   'CURIOSITY · RESPECT · GROWTH', 'فضول · احترام · نمو', 'CURIOSITY · RESPECT · GROWTH', '',
+   'نؤمن بأن الأسئلة بداية الاكتشاف، وأن اللطف والاحترام يجعلان مجتمعنا أقوى، وأن كل تجربة فرصة للتعلّم.',
+   'نؤمن بأن الأسئلة بداية الاكتشاف، وأن اللطف والاحترام يجعلان مجتمعنا أقوى، وأن كل تجربة فرصة للتعلّم.',
+   'We believe questions begin discovery, kindness and respect make our community stronger, and every experience is an opportunity to learn.',
+   '', true, true, 3),
+  ('10000000-0000-4000-8000-000000000004', 'about', 'our-story', 'Our journey continues', 'رحلتنا مستمرة', 'Our journey continues',
+   'EVERY STUDENT IS PART OF THE STORY', 'كل طالب جزء من الحكاية', 'EVERY STUDENT IS PART OF THE STORY', '',
+   'مدرسة مدينة حمد مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.',
+   'مدرسة مدينة حمد مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.',
+   'Hamad Town School is a community built around knowledge, curiosity and respect. We believe every student can grow and help shape a bright future.',
+   '', true, true, 4)
+on conflict (id) do nothing;
 
 create table if not exists public.school_admins (
   user_id uuid primary key references auth.users(id) on delete cascade,
