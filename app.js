@@ -82,10 +82,42 @@
       featured: true, published: true, order_index: 11
     },
     {
-      id: "seed-gallery-4", kind: "gallery", title: "Curiosity in action",
+      id: "seed-gallery-4", kind: "gallery", section: "gallery", title: "Curiosity in action",
       eyebrow: "DISCOVERY & TEAMWORK", description: "Every project brings a new possibility.",
       image_url: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=85",
       featured: true, published: true, order_index: 12
+    },
+    {
+      id: "seed-about-vision", kind: "about", section: "our-story",
+      title: "Our vision", title_ar: "رؤيتنا", title_en: "Our vision",
+      eyebrow: "OUR VISION", eyebrow_ar: "رؤيتنا", eyebrow_en: "OUR VISION",
+      description_ar: "نطمح إلى بيئة تعليمية تشجّع التفكير والإبداع، وتساعد كل طالب على اكتشاف إمكاناته وبناء ثقته بنفسه.",
+      description_en: "We aspire to create a learning environment that encourages thinking and creativity, helping every student discover their potential and build confidence.",
+      image_url: "", featured: true, published: true, order_index: 1
+    },
+    {
+      id: "seed-about-mission", kind: "about", section: "our-story",
+      title: "Our mission", title_ar: "رسالتنا", title_en: "Our mission",
+      eyebrow: "OUR MISSION", eyebrow_ar: "رسالتنا", eyebrow_en: "OUR MISSION",
+      description_ar: "نعزّز التعاون بين الطلاب والمعلمين والأسر، ونحتفي بالاجتهاد والسلوك الإيجابي وكل خطوة نحو التقدّم.",
+      description_en: "We encourage collaboration among students, teachers and families, celebrating effort, positive character and every step forward.",
+      image_url: "", featured: true, published: true, order_index: 2
+    },
+    {
+      id: "seed-about-values", kind: "about", section: "our-story",
+      title: "Our values", title_ar: "قيمنا", title_en: "Our values",
+      eyebrow: "CURIOSITY · RESPECT · GROWTH", eyebrow_ar: "فضول · احترام · نمو", eyebrow_en: "CURIOSITY · RESPECT · GROWTH",
+      description_ar: "نؤمن بأن الأسئلة بداية الاكتشاف، وأن اللطف والاحترام يجعلان مجتمعنا أقوى، وأن كل تجربة فرصة للتعلّم.",
+      description_en: "We believe questions begin discovery, kindness and respect make our community stronger, and every experience is an opportunity to learn.",
+      image_url: "", featured: true, published: true, order_index: 3
+    },
+    {
+      id: "seed-about-journey", kind: "about", section: "our-story",
+      title: "Our journey continues", title_ar: "رحلتنا مستمرة", title_en: "Our journey continues",
+      eyebrow: "EVERY STUDENT IS PART OF THE STORY", eyebrow_ar: "كل طالب جزء من الحكاية", eyebrow_en: "EVERY STUDENT IS PART OF THE STORY",
+      description_ar: "مدرسة مدينة حمد مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.",
+      description_en: "Hamad Town School is a community built around knowledge, curiosity and respect. We believe every student can grow and help shape a bright future.",
+      image_url: "", featured: true, published: true, order_index: 4
     }
   ];
   window.HAMAD_SEED_ITEMS = seedItems;
@@ -99,6 +131,12 @@
     return /^(https:\/\/|data:image\/|\.\/|\/)/i.test(url) ? url : "";
   };
 
+  const inferSection = kind => ({
+    about: "our-story", achievement: "achievements", award: "achievements",
+    activity: "school-life", event: "school-life", story: "stories",
+    teacher: "stories", student: "stories", gallery: "gallery"
+  }[kind] || "");
+
   const normalize = row => {
     const kind = row.kind || row.category || "story";
     const title = row.title || "";
@@ -107,6 +145,7 @@
     return {
       ...row,
       kind,
+      section: row.section || inferSection(kind),
       title_ar: row.title_ar || window.HamadI18n?.toArabic(title) || title,
       title_en: row.title_en || window.HamadI18n?.toEnglish(title) || title,
       description_ar: row.description_ar || window.HamadI18n?.toArabic(description) || description,
@@ -162,13 +201,13 @@
   }
 
   const kindLabel = kind => ({
-    achievement: "Achievement", award: "Award", activity: "School life",
-    story: "Our story", teacher: "Teacher spotlight", student: "Student spotlight",
-    event: "School event", gallery: "School gallery"
+    about: "School identity", achievement: "Achievement", award: "Award",
+    activity: "School life", story: "Our story", teacher: "Teacher spotlight",
+    student: "Student spotlight", event: "School event", gallery: "School gallery"
   }[kind] || "School highlight");
 
   const kindSymbol = kind => ({
-    activity: "✳", event: "◷", student: "✦", teacher: "✧",
+    about: "⌂", activity: "✳", event: "◷", student: "✦", teacher: "✧",
     achievement: "↗", award: "✦", story: "◎", gallery: "▧"
   }[kind] || "✦");
 
@@ -183,10 +222,26 @@
     return `<article class="content-card"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p></div></div></article>`;
   }
 
+  function renderAboutContent(items) {
+    const container = document.getElementById("storyContentGrid");
+    if (!container) return;
+    const entries = items.filter(item => item.section === "our-story" || (!item.section && item.kind === "about"));
+    if (!entries.length) return;
+
+    const fallbackNote = document.getElementById("storyNoteFallback");
+    if (fallbackNote) fallbackNote.hidden = true;
+    const classes = ["principle-blue", "principle-gold", "principle-lilac"];
+    container.innerHTML = entries.map((item, index) => {
+      const image = safeImage(item.image_url);
+      const icon = ["✧", "✦", "✳", "⌂"][index % 4];
+      return `<article class="story-principle ${classes[index % classes.length]} reveal is-visible">${image ? `<img class="about-principle-image" src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy">` : ""}<span class="principle-icon">${icon}</span><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || "OUR SCHOOL")}</span><h2>${escapeHtml(displayText(item, "title"))}</h2><p>${escapeHtml(displayText(item, "description"))}</p></article>`;
+    }).join("");
+  }
+
   function renderAchievements(items) {
     const container = document.getElementById("achievementGrid");
     if (!container) return;
-    const all = items.filter(item => ["achievement", "award"].includes(item.kind));
+    const all = items.filter(item => item.section === "achievements" || (!item.section && ["achievement", "award"].includes(item.kind)));
     const selected = document.body.dataset.page === "achievements" ? all : all.slice(0, 3);
     container.innerHTML = selected.length ? selected.map(cardMarkup).join("") :
       '<div class="empty-state">Our next highlight could be here. Check back soon.</div>';
@@ -195,7 +250,7 @@
   function renderActivities(items) {
     const container = document.getElementById("activityList");
     if (!container) return;
-    const all = items.filter(item => ["activity", "event"].includes(item.kind));
+    const all = items.filter(item => item.section === "school-life" || (!item.section && ["activity", "event"].includes(item.kind)));
     const activities = document.body.dataset.page === "school-life" ? all : all.slice(0, 4);
     container.innerHTML = activities.length ? activities.map(item => {
       const image = safeImage(item.image_url);
@@ -209,7 +264,7 @@
   function renderStories(items) {
     const container = document.getElementById("storyGrid");
     if (!container) return;
-    const all = items.filter(item => ["story", "student", "teacher"].includes(item.kind));
+    const all = items.filter(item => item.section === "stories" || (!item.section && ["story", "student", "teacher"].includes(item.kind)));
     const stories = document.body.dataset.page === "stories" ? all : all.slice(0, 2);
     container.innerHTML = stories.length ? stories.map(item => {
       const image = safeImage(item.image_url) || "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80";
@@ -220,7 +275,7 @@
   function renderGallery(items) {
     const container = document.getElementById("galleryGrid");
     if (!container) return;
-    const all = items.filter(item => item.kind === "gallery");
+    const all = items.filter(item => item.section === "gallery" || (!item.section && item.kind === "gallery"));
     const entries = document.body.dataset.page === "gallery" ? all : all.slice(0, 4);
     if (!entries.length) {
       container.innerHTML = '<div class="empty-state">No gallery photos have been published yet.</div>';
@@ -292,13 +347,14 @@
     if (year) year.textContent = new Date().getFullYear();
     setupMenu();
     setupReveal();
-    const hasContentContainer = ["achievementGrid", "activityList", "storyGrid", "galleryGrid"]
+    const hasContentContainer = ["storyContentGrid", "achievementGrid", "activityList", "storyGrid", "galleryGrid"]
       .some(id => document.getElementById(id));
     if (!hasContentContainer) return;
     let currentItems = [];
     let itemsLoaded = false;
     window.addEventListener("hamad-language-change", () => {
       if (!itemsLoaded) return;
+      renderAboutContent(currentItems);
       renderAchievements(currentItems);
       renderActivities(currentItems);
       renderStories(currentItems);
@@ -308,6 +364,7 @@
       const items = await loadItems();
       currentItems = items;
       itemsLoaded = true;
+      renderAboutContent(items);
       renderAchievements(items);
       renderActivities(items);
       renderStories(items);
