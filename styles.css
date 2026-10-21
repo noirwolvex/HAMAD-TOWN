@@ -1066,3 +1066,162 @@ body[data-page="home"] .section-link-card:hover > .section-link-go {
     height: 29px;
   }
 }
+
+
+/* Large image-and-text feature cards in the Our story section. */
+.story-values .story-feature-card {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, .96fr) minmax(0, 1.04fr);
+  min-height: 430px;
+  overflow: hidden;
+  padding: 13px;
+  border: 1px solid #dceaf3;
+  border-radius: 30px;
+  background: linear-gradient(120deg, #f1faff 0%, #fff 54%, #fff9e9 100%);
+  box-shadow: 0 20px 60px rgba(34,77,112,.09);
+}
+.story-feature-media {
+  position: relative;
+  min-width: 0;
+  min-height: 405px;
+  overflow: hidden;
+  border-radius: 21px;
+  background: linear-gradient(145deg,#bceaff,#edf9ff 58%,#f1c65f);
+  isolation: isolate;
+}
+.story-feature-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s cubic-bezier(.2,.8,.2,1);
+}
+.story-feature-card:hover .story-feature-media img { transform: scale(1.045); }
+.story-feature-media::after {
+  content: "";
+  position: absolute;
+  inset: 25% 0 0;
+  z-index: 1;
+  background: linear-gradient(180deg,transparent,rgba(15,37,57,.62));
+  pointer-events: none;
+}
+.story-feature-media-tag {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 18px;
+  max-width: calc(100% - 36px);
+  padding: 9px 13px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 999px;
+  background: rgba(15,37,57,.4);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  backdrop-filter: blur(12px);
+}
+.story-feature-placeholder {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  min-height: 405px;
+  place-items: center;
+  color: #fff;
+  font-size: 90px;
+  text-shadow: 0 12px 35px rgba(20,38,61,.2);
+}
+.story-feature-copy {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  min-width: 0;
+  padding: clamp(28px, 4.5vw, 62px);
+}
+.story-feature-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  max-width: 100%;
+  color: #4b9cc2;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+.story-feature-kicker::before {
+  content: "";
+  width: 23px;
+  height: 2px;
+  background: var(--gold);
+}
+.story-feature-copy h2 {
+  max-width: 560px;
+  margin: 18px 0 17px;
+  color: var(--ink);
+  font: 800 clamp(30px, 3.6vw, 48px)/1.22 "Tajawal","Manrope",sans-serif;
+  letter-spacing: -1px;
+}
+.story-feature-copy p {
+  max-width: 550px;
+  margin: 0;
+  color: #718397;
+  font-size: 14px;
+  line-height: 2;
+}
+.story-feature-year {
+  display: inline-flex;
+  margin-top: 24px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #fff2ce;
+  color: #9b7627;
+  font-size: 10px;
+  font-weight: 800;
+}
+.story-feature-accent {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-top: 30px;
+  border-radius: 14px;
+  background: #e7f7ff;
+  color: #318cb7;
+  font-size: 22px;
+}
+html[dir="rtl"] .story-feature-copy { text-align: right; align-items: flex-start; }
+html[dir="ltr"] .story-feature-copy { text-align: left; align-items: flex-start; }
+@media (max-width: 900px) {
+  .story-values .story-feature-card { min-height: 355px; }
+  .story-feature-media, .story-feature-placeholder { min-height: 335px; }
+  .story-feature-copy { padding: 28px; }
+  .story-feature-copy h2 { font-size: clamp(26px, 4vw, 38px); }
+  .story-feature-copy p { font-size: 12px; }
+}
+@media (max-width: 720px) {
+  .story-values .story-feature-card {
+    grid-template-columns: minmax(0,1fr);
+    min-height: 0;
+    gap: 0;
+    padding: 9px;
+    border-radius: 23px;
+  }
+  .story-feature-media, .story-feature-placeholder {
+    min-height: 260px;
+    height: 260px;
+    border-radius: 16px;
+  }
+  .story-feature-copy { padding: 25px 17px 21px; }
+  .story-feature-copy h2 { margin: 12px 0; font-size: 30px; }
+  .story-feature-copy p { font-size: 12px; line-height: 1.9; }
+  .story-feature-accent { margin-top: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-feature-media img { transition: none; }
+}
