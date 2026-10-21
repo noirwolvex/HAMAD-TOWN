@@ -447,11 +447,42 @@
     renderRecords();
   }
 
-  function showWorkspace(isDemo) {
+  function showWorkspace() {
     $("backendLogin").hidden = true;
     $("adminWorkspace").hidden = false;
-    $("demoBanner").hidden = !isDemo;
-    $("signOutBtn").hidden = isDemo;
+    $("demoBanner").hidden = true;
+    $("signOutBtn").hidden = false;
+  }
+
+  function showLogin(message = "", error = false) {
+    $("adminWorkspace").hidden = true;
+    $("backendLogin").hidden = false;
+    $("demoBanner").hidden = true;
+    $("signOutBtn").hidden = true;
+    if (message) setMessage(message, error, "loginMessage");
+  }
+
+  async function activateAdminSession(session) {
+    if (!session || !supabaseClient) {
+      currentSession = null;
+      showLogin();
+      return false;
+    }
+
+    const { data: isAdmin, error } = await supabaseClient.rpc("is_school_admin");
+    if (error) throw error;
+    if (isAdmin !== true) {
+      await supabaseClient.auth.signOut();
+      currentSession = null;
+      items = [];
+      showLogin("هذا الحساب غير مخوّل لإدارة محتوى المدرسة.", true);
+      return false;
+    }
+
+    currentSession = session;
+    showWorkspace();
+    await loadBackendItems();
+    return true;
   }
 
   function setupImageInputs() {
@@ -593,39 +624,54 @@
   }
 
   function setupAuth() {
-    $("loginForm").addEventListener("submit", async event => {
+    const loginForm = $("loginForm");
+    const submit = loginForm.querySelector('button[type="submit"]');
+
+    if (!supabaseClient) {
+      loginForm.querySelectorAll("input, button").forEach(control => { control.disabled = true; });
+      showLogin("يلزم إعداد Supabase أولًا لإتاحة تسجيل الدخول الآمن. أضف Project URL و anon/public key في config.js ثم طبّق supabase/schema.sql.");
+      return;
+    }
+
+    loginForm.addEventListener("submit", async event => {
       event.preventDefault();
       setMessage("", false, "loginMessage");
-      if (!supabaseClient) return;
       const email = $("loginEmail").value.trim();
       const password = $("loginPassword").value;
-      const submit = $("loginForm").querySelector('button[type="submit"]');
       submit.disabled = true;
-      submit.textContent = "Signing in…";
+      submit.textContent = "جارٍ التحقق…";
       try {
         const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        currentSession = data.session;
-        showWorkspace(false);
-        await loadBackendItems();
-        showToast("Signed in. Database permissions control what you can publish.");
+        const authorized = await activateAdminSession(data.session);
+        if (authorized) showToast("تم تسجيل الدخول إلى بوابة إدارة المدرسة.");
       } catch (error) {
-        setMessage(error.message || "Sign-in failed.", true, "loginMessage");
+        currentSession = null;
+        showLogin("تعذّر تسجيل الدخول أو التحقق من صلاحيات الإدارة. تحقق من بيانات الحساب وإضافته إلى قائمة مديري المدرسة.", true);
       } finally {
         submit.disabled = false;
-        submit.innerHTML = 'Sign in securely <span>→</span>';
+        submit.innerHTML = 'تسجيل الدخول بأمان <span>→</span>';
       }
     });
 
     $("signOutBtn").addEventListener("click", async () => {
-      if (!supabaseClient) return;
-      await supabaseClient.auth.signOut();
-      currentSession = null;
-      items = [];
-      $("adminWorkspace").hidden = true;
-      $("backendLogin").hidden = false;
-      $("signOutBtn").hidden = true;
-      setMessage("You have been signed out.", false, "loginMessage");
+      try {
+        const { error } = await supabaseClient.auth.signOut();
+        if (error) throw error;
+        currentSession = null;
+        items = [];
+        showLogin("تم تسجيل الخروج.");
+      } catch (error) {
+        showToast("تعذّر تسجيل الخروج. حاول مرة أخرى.");
+      }
+    });
+
+    supabaseClient.auth.onAuthStateChange(event => {
+      if (event === "SIGNED_OUT") {
+        currentSession = null;
+        items = [];
+        showLogin();
+      }
     });
   }
 
@@ -639,26 +685,16 @@
     setupAuth();
     window.addEventListener("hamad-language-change", renderRecords);
 
-    if (!supabaseClient) {
-      showWorkspace(true);
-      items = readDemoItems();
-      renderRecords();
-      return;
-    }
+    if (!supabaseClient) return;
 
-    $("backendLogin").hidden = false;
-    $("adminWorkspace").hidden = true;
-    $("demoBanner").hidden = true;
+    showLogin();
     try {
       const { data, error } = await supabaseClient.auth.getSession();
       if (error) throw error;
-      currentSession = data.session;
-      if (currentSession) {
-        showWorkspace(false);
-        await loadBackendItems();
-      }
+      if (data.session) await activateAdminSession(data.session);
     } catch (error) {
-      setMessage("Could not verify the current session: " + error.message, true, "loginMessage");
+      currentSession = null;
+      showLogin("تعذّر التحقق من جلسة الدخول. حدّث الصفحة وحاول مرة أخرى.", true);
     }
   });
 })();
