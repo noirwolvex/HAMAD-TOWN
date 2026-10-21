@@ -63,6 +63,16 @@
     select.value = allowed.includes(current) ? current : allowed[0];
   }
 
+  function syncLayoutControl(selectedLayout) {
+    const field = $("contentLayoutField");
+    const select = $("contentLayout");
+    if (!field || !select) return;
+    const supportsLayout = $("contentSection").value === "our-story";
+    field.hidden = !supportsLayout;
+    if (supportsLayout && selectedLayout) select.value = selectedLayout;
+    if (!supportsLayout) select.value = "standard";
+  }
+
   function showToast(message) {
     const toast = $("adminToast");
     if (!toast) return;
@@ -95,6 +105,7 @@
     return {
       ...item,
       section: item.section || sectionForKind(item.kind || item.category || "story"),
+      layout: item.layout === "feature" ? "feature" : "standard",
       title_ar: item.title_ar || toArabic(title),
       title_en: item.title_en || toEnglish(title),
       description_ar: item.description_ar || toArabic(description),
@@ -197,6 +208,7 @@
     $("contentId").value = "";
     $("contentSection").value = "achievements";
     populateKindOptions("achievements", "achievement");
+    syncLayoutControl("standard");
     $("contentFeatured").checked = true;
     $("contentPublished").checked = true;
     $("editorTitle").textContent = "Add a new story";
@@ -217,6 +229,7 @@
     const recordSection = sectionForItem(record);
     $("contentSection").value = recordSection;
     populateKindOptions(recordSection, recordKind);
+    syncLayoutControl(record.layout || "standard");
     $("contentYear").value = record.year || "";
     $("contentTitle").value = record.title_ar || record.title || "";
     $("contentTitleEn").value = record.title_en || record.title || "";
@@ -370,6 +383,12 @@
       const titleEn = $("contentTitleEn").value.trim();
       const descriptionAr = $("contentDescription").value.trim();
       const descriptionEn = $("contentDescriptionEn").value.trim();
+      const layout = $("contentSection").value === "our-story" ? $("contentLayout").value : "standard";
+      const hasImage = Boolean($("contentImageUrl").value.trim() || pendingImageFile);
+      if (layout === "feature" && !hasImage) {
+        setMessage("Please add a photo for the large image-and-text card.", true);
+        return;
+      }
       if (!titleAr || !titleEn || !descriptionAr || !descriptionEn) {
         setMessage("Please complete both Arabic and English titles and descriptions.", true);
         return;
@@ -392,6 +411,7 @@
         const record = {
           id,
           section: $("contentSection").value,
+          layout,
           kind,
           title: titleAr,
           title_ar: titleAr,
@@ -422,7 +442,10 @@
       }
     });
 
-    $("contentSection").addEventListener("change", () => populateKindOptions($("contentSection").value));
+    $("contentSection").addEventListener("change", () => {
+      populateKindOptions($("contentSection").value);
+      syncLayoutControl("standard");
+    });
     $("resetFormBtn").addEventListener("click", resetForm);
     $("searchContent").addEventListener("input", renderRecords);
     $("filterSection").addEventListener("change", renderRecords);
@@ -488,6 +511,7 @@
   document.addEventListener("DOMContentLoaded", async () => {
     setupImageInputs();
     populateKindOptions($("contentSection").value || "achievements", "achievement");
+    syncLayoutControl("standard");
     setupForm();
     setupAuth();
     window.addEventListener("hamad-language-change", renderRecords);
