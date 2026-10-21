@@ -207,7 +207,7 @@
       const matchesSection = section === "all" || sectionForItem(item) === section;
       const haystack = [item.title, item.title_ar, item.title_en, item.description, item.description_ar, item.description_en, item.eyebrow, item.eyebrow_ar, item.eyebrow_en, item.year, item.kind, item.section, item.recipient_ar, item.recipient_en,
         item.achievement_event_ar, item.achievement_event_en, item.achievement_result_ar, item.achievement_result_en,
-        item.achievement_organization_ar, item.achievement_organization_en,
+        item.achievement_organization_ar, item.achievement_organization_en, item.achievement_date,
         item.achievement_highlights_ar, item.achievement_highlights_en].join(" ").toLowerCase();
       return matchesKind && matchesSection && haystack.includes(q);
     });
