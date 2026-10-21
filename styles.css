@@ -1027,18 +1027,18 @@ html[dir="rtl"] .ticker-track {
 }
 
 
-/* RTL section-card arrows: bottom-left placement and mirrored arrow direction. */
+/* RTL section-card arrows: bottom-right placement. */
 html[dir="rtl"] .section-link-go {
-  left: 22px;
-  right: auto;
-  transform: scaleX(-1);
+  left: auto;
+  right: 22px;
+  transform: none;
 }
 html[dir="rtl"] .section-link-card:hover .section-link-go {
-  transform: scaleX(-1) translate(-3px, -3px);
+  transform: translate(3px, -3px);
 }
 @media (max-width: 720px) {
   html[dir="rtl"] .section-link-go {
-    left: 14px;
-    right: auto;
+    left: auto;
+    right: 14px;
   }
 }
