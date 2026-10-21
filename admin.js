@@ -73,6 +73,38 @@
     if (!supportsLayout) select.value = "standard";
   }
 
+  function syncAchievementFields() {
+    const field = $("achievementDetailsFields");
+    if (!field) return;
+    field.hidden = !($("contentSection").value === "achievements" &&
+      ["achievement", "award"].includes($("contentKind").value));
+  }
+
+  function readAchievementFields() {
+    if ($("contentSection").value !== "achievements") {
+      return {
+        recipient_ar: "", recipient_en: "",
+        achievement_event_ar: "", achievement_event_en: "",
+        achievement_result_ar: "", achievement_result_en: "",
+        achievement_organization_ar: "", achievement_organization_en: "",
+        achievement_date: "", achievement_highlights_ar: "", achievement_highlights_en: ""
+      };
+    }
+    return {
+      recipient_ar: $("achievementRecipient").value.trim(),
+      recipient_en: $("achievementRecipientEn").value.trim(),
+      achievement_event_ar: $("achievementEvent").value.trim(),
+      achievement_event_en: $("achievementEventEn").value.trim(),
+      achievement_result_ar: $("achievementResult").value.trim(),
+      achievement_result_en: $("achievementResultEn").value.trim(),
+      achievement_organization_ar: $("achievementOrganization").value.trim(),
+      achievement_organization_en: $("achievementOrganizationEn").value.trim(),
+      achievement_date: $("achievementDate").value,
+      achievement_highlights_ar: $("achievementHighlights").value.trim(),
+      achievement_highlights_en: $("achievementHighlightsEn").value.trim()
+    };
+  }
+
   function showToast(message) {
     const toast = $("adminToast");
     if (!toast) return;
@@ -173,7 +205,10 @@
     const filtered = items.filter(item => {
       const matchesKind = kind === "all" || (item.kind || item.category) === kind;
       const matchesSection = section === "all" || sectionForItem(item) === section;
-      const haystack = [item.title, item.title_ar, item.title_en, item.description, item.description_ar, item.description_en, item.eyebrow, item.eyebrow_ar, item.eyebrow_en, item.year, item.kind, item.section].join(" ").toLowerCase();
+      const haystack = [item.title, item.title_ar, item.title_en, item.description, item.description_ar, item.description_en, item.eyebrow, item.eyebrow_ar, item.eyebrow_en, item.year, item.kind, item.section, item.recipient_ar, item.recipient_en,
+        item.achievement_event_ar, item.achievement_event_en, item.achievement_result_ar, item.achievement_result_en,
+        item.achievement_organization_ar, item.achievement_organization_en,
+        item.achievement_highlights_ar, item.achievement_highlights_en].join(" ").toLowerCase();
       return matchesKind && matchesSection && haystack.includes(q);
     });
 
@@ -209,6 +244,10 @@
     $("contentSection").value = "achievements";
     populateKindOptions("achievements", "achievement");
     syncLayoutControl("standard");
+    ["achievementRecipient", "achievementRecipientEn", "achievementEvent", "achievementEventEn",
+      "achievementResult", "achievementResultEn", "achievementOrganization", "achievementOrganizationEn",
+      "achievementDate", "achievementHighlights", "achievementHighlightsEn"].forEach(id => { $(id).value = ""; });
+    syncAchievementFields();
     $("contentFeatured").checked = true;
     $("contentPublished").checked = true;
     $("editorTitle").textContent = "Add a new story";
@@ -230,6 +269,18 @@
     $("contentSection").value = recordSection;
     populateKindOptions(recordSection, recordKind);
     syncLayoutControl(record.layout || "standard");
+    syncAchievementFields();
+    $("achievementRecipient").value = record.recipient_ar || "";
+    $("achievementRecipientEn").value = record.recipient_en || "";
+    $("achievementEvent").value = record.achievement_event_ar || "";
+    $("achievementEventEn").value = record.achievement_event_en || "";
+    $("achievementResult").value = record.achievement_result_ar || "";
+    $("achievementResultEn").value = record.achievement_result_en || "";
+    $("achievementOrganization").value = record.achievement_organization_ar || "";
+    $("achievementOrganizationEn").value = record.achievement_organization_en || "";
+    $("achievementDate").value = record.achievement_date || "";
+    $("achievementHighlights").value = record.achievement_highlights_ar || "";
+    $("achievementHighlightsEn").value = record.achievement_highlights_en || "";
     $("contentYear").value = record.year || "";
     $("contentTitle").value = record.title_ar || record.title || "";
     $("contentTitleEn").value = record.title_en || record.title || "";
@@ -404,6 +455,7 @@
         const id = $("contentId").value || "demo-" + Date.now();
         const existing = items.find(item => String(item.id) === String(id));
         const kind = $("contentKind").value;
+        const achievementFields = readAchievementFields();
         const defaultTypeEnglish = kinds[kind] || "School story";
         const defaultTypeArabic = window.HamadI18n?.toArabic(defaultTypeEnglish) || defaultTypeEnglish;
         const eyebrowAr = $("contentEyebrow").value.trim() || defaultTypeArabic;
@@ -413,6 +465,7 @@
           section: $("contentSection").value,
           layout,
           kind,
+          ...achievementFields,
           title: titleAr,
           title_ar: titleAr,
           title_en: titleEn,
@@ -445,7 +498,9 @@
     $("contentSection").addEventListener("change", () => {
       populateKindOptions($("contentSection").value);
       syncLayoutControl("standard");
+      syncAchievementFields();
     });
+    $("contentKind").addEventListener("change", syncAchievementFields);
     $("resetFormBtn").addEventListener("click", resetForm);
     $("searchContent").addEventListener("input", renderRecords);
     $("filterSection").addEventListener("change", renderRecords);
@@ -512,6 +567,7 @@
     setupImageInputs();
     populateKindOptions($("contentSection").value || "achievements", "achievement");
     syncLayoutControl("standard");
+    syncAchievementFields();
     setupForm();
     setupAuth();
     window.addEventListener("hamad-language-change", renderRecords);
