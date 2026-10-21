@@ -146,6 +146,7 @@
       ...row,
       kind,
       section: row.section || inferSection(kind),
+      layout: row.layout === "feature" ? "feature" : "standard",
       title_ar: row.title_ar || window.HamadI18n?.toArabic(title) || title,
       title_en: row.title_en || window.HamadI18n?.toEnglish(title) || title,
       description_ar: row.description_ar || window.HamadI18n?.toArabic(description) || description,
@@ -231,11 +232,31 @@
     const fallbackNote = document.getElementById("storyNoteFallback");
     if (fallbackNote) fallbackNote.hidden = true;
     const classes = ["principle-blue", "principle-gold", "principle-lilac"];
-    container.innerHTML = entries.map((item, index) => {
+    const featuredEntries = entries.filter(item => item.layout === "feature");
+    const standardEntries = entries.filter(item => item.layout !== "feature");
+    const featuredMarkup = featuredEntries.map(item => {
+      const image = safeImage(item.image_url);
+      const title = displayText(item, "title");
+      const eyebrow = displayText(item, "eyebrow") || "OUR SCHOOL";
+      return `<article class="story-feature-card reveal is-visible">
+        <div class="story-feature-media">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="story-feature-placeholder" aria-hidden="true">✦</div>`}
+          <span class="story-feature-media-tag">${escapeHtml(eyebrow)}</span>
+        </div>
+        <div class="story-feature-copy">
+          <span class="story-feature-kicker">${escapeHtml(eyebrow)}</span>
+          <h2>${escapeHtml(title)}</h2>
+          <p>${escapeHtml(displayText(item, "description"))}</p>
+          ${item.year ? `<span class="story-feature-year">${escapeHtml(item.year)}</span>` : ""}
+          <span class="story-feature-accent" aria-hidden="true">✳</span>
+        </div>
+      </article>`;
+    }).join("");
+    const standardMarkup = standardEntries.map((item, index) => {
       const image = safeImage(item.image_url);
       const icon = ["✧", "✦", "✳", "⌂"][index % 4];
       return `<article class="story-principle ${classes[index % classes.length]} reveal is-visible">${image ? `<img class="about-principle-image" src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy">` : ""}<span class="principle-icon">${icon}</span><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || "OUR SCHOOL")}</span><h2>${escapeHtml(displayText(item, "title"))}</h2><p>${escapeHtml(displayText(item, "description"))}</p></article>`;
     }).join("");
+    container.innerHTML = featuredMarkup + standardMarkup;
   }
 
   function renderAchievements(items) {
