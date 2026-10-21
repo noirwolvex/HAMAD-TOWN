@@ -1409,3 +1409,32 @@ html[dir="ltr"] .story-feature-copy { text-align: left; align-items: flex-start;
   .content-detail-backdrop,.content-detail-dialog { animation:none !important; }
   .content-detail-close,.activity-row.is-openable-card,.content-card,.story-card { transition:none !important; }
 }
+
+
+/* Achievement cards show key details at a glance; the modal reveals the full record. */
+.achievement-card-facts { display:flex; flex-wrap:wrap; gap:7px; margin-top:14px; }
+.achievement-card-facts > span {
+  display:flex; flex-direction:column; gap:3px; min-width:0; max-width:100%;
+  padding:7px 9px; border:1px solid #e2edf4; border-radius:10px;
+  background:linear-gradient(135deg,#f3fbff,#fff);
+}
+.achievement-card-facts small { color:#8a9bab; font-size:8px; font-weight:800; }
+.achievement-card-facts b {
+  overflow:hidden; color:#314d65; font-size:10px; font-weight:800;
+  text-overflow:ellipsis; white-space:nowrap;
+}
+.content-detail-extra[hidden] { display:none !important; }
+.content-detail-extra {
+  width:100%; margin-top:22px; padding:17px 18px;
+  border-inline-start:3px solid var(--gold); border-radius:0 13px 13px 0;
+  background:linear-gradient(110deg,#f0f9ff,#fffaf0);
+}
+.content-detail-extra h3 { margin:0 0 7px; color:#405e74; font:800 13px "Tajawal","Manrope",sans-serif; }
+.content-detail-extra p { color:#708398; font-size:12px; line-height:1.9; }
+.content-detail-meta-item {
+  display:flex !important; flex-direction:column !important; align-items:flex-start !important;
+  gap:5px !important; min-width:105px; max-width:100%; padding:10px 13px !important;
+  border:1px solid #e1ecf3; border-radius:12px !important; background:rgba(255,255,255,.9);
+}
+.content-detail-meta-item small { color:#8b9aaa; font-size:9px; font-weight:800; }
+.content-detail-meta-item b { color:#36536a; font-size:11px; line-height:1.6; font-weight:800; overflow-wrap:anywhere; }
