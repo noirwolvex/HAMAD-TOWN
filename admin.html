@@ -58,6 +58,30 @@
             <div class="form-row"><label>Section to publish to<select id="contentSection" required><option value="our-story">Our story</option><option value="achievements" selected>Achievements</option><option value="school-life">School life</option><option value="stories">Stories</option><option value="gallery">Gallery</option></select></label><label>نوع المحتوى<select id="contentKind" required><option value="achievement">Student achievement</option><option value="award">Award / recognition</option><option value="activity">Activity / club</option><option value="story">School story</option><option value="teacher">Teacher spotlight</option><option value="student">Student spotlight</option><option value="event">School event</option><option value="gallery">Gallery photo</option><option value="about">School identity</option></select></label></div>
             <div class="form-row"><label>السنة / التاريخ<input id="contentYear" maxlength="80" placeholder="مثال: العام الدراسي ٢٠٢٦"></label><span class="field-hint section-target-hint">Select the section where this item should appear.</span></div>
             <div class="form-row" id="contentLayoutField" hidden><label>شكل البطاقة في صفحة قصتنا<select id="contentLayout"><option value="standard">بطاقة عادية</option><option value="feature">بطاقة كبيرة بصورة ونص</option></select></label><span class="field-hint">اختر البطاقة الكبيرة لتظهر بصورة كبيرة ونص بجانبها في صفحة قصتنا. يتطلب هذا النمط صورة.</span></div>
+            <div class="achievement-extra-fields" id="achievementDetailsFields" hidden>
+              <div class="achievement-extra-heading"><span class="mini-label">تفاصيل الإنجاز</span><p>أضف معلومات تساعد الزوار على فهم الإنجاز والجهد الذي يقف وراءه. جميع هذه الخانات اختيارية.</p></div>
+              <div class="form-row">
+                <label>اسم الطالب / الفريق بالعربية<input id="achievementRecipient" maxlength="180" placeholder="اسم الطالب أو الفريق"></label>
+                <label>اسم الطالب / الفريق بالإنجليزية<input id="achievementRecipientEn" maxlength="180" placeholder="Student or team name"></label>
+              </div>
+              <div class="form-row">
+                <label>المسابقة / مجال الإنجاز بالعربية<input id="achievementEvent" maxlength="180" placeholder="اسم المسابقة أو المشروع"></label>
+                <label>المسابقة / مجال الإنجاز بالإنجليزية<input id="achievementEventEn" maxlength="180" placeholder="Competition or project name"></label>
+              </div>
+              <div class="form-row">
+                <label>النتيجة / المركز بالعربية<input id="achievementResult" maxlength="180" placeholder="مثال: المركز الأول"></label>
+                <label>النتيجة / المركز بالإنجليزية<input id="achievementResultEn" maxlength="180" placeholder="e.g. First place"></label>
+              </div>
+              <div class="form-row">
+                <label>الجهة المنظمة بالعربية<input id="achievementOrganization" maxlength="180" placeholder="اسم الجهة أو المؤسسة"></label>
+                <label>الجهة المنظمة بالإنجليزية<input id="achievementOrganizationEn" maxlength="180" placeholder="Organizer or institution"></label>
+              </div>
+              <label>تاريخ الإنجاز<input id="achievementDate" type="date"><span class="field-hint">يمكن تركه فارغًا إذا لم يتوفر تاريخ دقيق.</span></label>
+              <div class="form-row">
+                <label>تفاصيل إضافية بالعربية<textarea id="achievementHighlights" rows="3" maxlength="1600" placeholder="ما الذي حققه الطالب أو الفريق؟ وما الذي يميّز هذا الإنجاز؟"></textarea></label>
+                <label>تفاصيل إضافية بالإنجليزية<textarea id="achievementHighlightsEn" rows="3" maxlength="1600" placeholder="What did the student or team accomplish?"></textarea></label>
+              </div>
+            </div>
             <label>العنوان بالعربية <span class="required-star">*</span><input id="contentTitle" maxlength="140" placeholder="اكتب العنوان بالعربية." required></label>
             <label>العنوان بالإنجليزية <span class="required-star">*</span><input id="contentTitleEn" maxlength="140" placeholder="اكتب العنوان بالإنجليزية" required></label>
             <div class="form-row"><label>التصنيف بالعربية<input id="contentEyebrow" maxlength="80" placeholder="أضف تصنيفًا بالعربية (اختياري)"></label><label>التصنيف بالإنجليزية<input id="contentEyebrowEn" maxlength="80" placeholder="أضف تصنيفًا بالإنجليزية (اختياري)"></label></div>
