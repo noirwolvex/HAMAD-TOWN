@@ -27,6 +27,22 @@ create table if not exists public.school_content (
   achievement_date text not null default '',
   achievement_highlights_ar text not null default '',
   achievement_highlights_en text not null default '',
+  activity_date text not null default '',
+  activity_time text not null default '',
+  activity_location_ar text not null default '',
+  activity_location_en text not null default '',
+  activity_organizer_ar text not null default '',
+  activity_organizer_en text not null default '',
+  activity_audience_ar text not null default '',
+  activity_audience_en text not null default '',
+  activity_duration_ar text not null default '',
+  activity_duration_en text not null default '',
+  activity_goals_ar text not null default '',
+  activity_goals_en text not null default '',
+  activity_outcomes_ar text not null default '',
+  activity_outcomes_en text not null default '',
+  activity_details_ar text not null default '',
+  activity_details_en text not null default '',
   description text not null default '',
   description_ar text not null default '',
   description_en text not null default '',
@@ -58,6 +74,22 @@ alter table public.school_content add column if not exists achievement_organizat
 alter table public.school_content add column if not exists achievement_date text not null default '';
 alter table public.school_content add column if not exists achievement_highlights_ar text not null default '';
 alter table public.school_content add column if not exists achievement_highlights_en text not null default '';
+alter table public.school_content add column if not exists activity_date text not null default '';
+alter table public.school_content add column if not exists activity_time text not null default '';
+alter table public.school_content add column if not exists activity_location_ar text not null default '';
+alter table public.school_content add column if not exists activity_location_en text not null default '';
+alter table public.school_content add column if not exists activity_organizer_ar text not null default '';
+alter table public.school_content add column if not exists activity_organizer_en text not null default '';
+alter table public.school_content add column if not exists activity_audience_ar text not null default '';
+alter table public.school_content add column if not exists activity_audience_en text not null default '';
+alter table public.school_content add column if not exists activity_duration_ar text not null default '';
+alter table public.school_content add column if not exists activity_duration_en text not null default '';
+alter table public.school_content add column if not exists activity_goals_ar text not null default '';
+alter table public.school_content add column if not exists activity_goals_en text not null default '';
+alter table public.school_content add column if not exists activity_outcomes_ar text not null default '';
+alter table public.school_content add column if not exists activity_outcomes_en text not null default '';
+alter table public.school_content add column if not exists activity_details_ar text not null default '';
+alter table public.school_content add column if not exists activity_details_en text not null default '';
 
 -- Restrict card layouts to the options supported by the public renderer.
 alter table public.school_content drop constraint if exists school_content_layout_check;
