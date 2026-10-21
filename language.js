@@ -226,6 +226,7 @@
     "Paste an image URL (optional)": "ألصق رابط الصورة (اختياري)",
     "Image URL": "رابط الصورة",
     "＋ Upload photo": "＋ رفع صورة",
+    "Upload photo": "رفع صورة",
     "Image preview will appear here": "ستظهر معاينة الصورة هنا",
     "JPG, PNG, WEBP or GIF. Use school-approved photos and confirm permission before publishing.": "الصيغ المدعومة: JPG وPNG وWEBP وGIF. استخدم صورًا معتمدة من المدرسة وتأكد من الإذن قبل النشر.",
     "Featured highlight": "إبراز المحتوى",
