@@ -126,6 +126,11 @@
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[char]);
 
+  const contentById = new Map();
+  let detailModal = null;
+  let lastOpenedCard = null;
+  let previousBodyOverflow = "";
+
   const safeImage = value => {
     const url = String(value || "").trim();
     return /^(https:\/\/|data:image\/|\.\/|\/)/i.test(url) ? url : "";
@@ -220,7 +225,7 @@
     const imageHtml = image
       ? `<div class="content-card-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`
       : `<div class="content-card-media content-card-placeholder"><span>${kindSymbol(item.kind)}</span><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`;
-    return `<article class="content-card"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p></div></div></article>`;
+    return `<article class="content-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p><span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Open details ↗" : "افتح التفاصيل ↗"}</span></div></div></article>`;
   }
 
   function renderAboutContent(items) {
@@ -278,7 +283,8 @@
       const icon = image
         ? `<span class="activity-icon"><img src="${escapeHtml(image)}" alt="" loading="lazy"></span>`
         : `<span class="activity-icon">${kindSymbol(item.kind)}</span>`;
-      return `<article class="activity-row">${icon}<div><h3>${escapeHtml(displayText(item, "title"))}</h3><p>${escapeHtml(displayText(item, "description"))}</p></div><span class="activity-arrow" aria-hidden="true">↗</span></article>`;
+      const title = displayText(item, "title");
+      return `<article class="activity-row is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${icon}<div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(displayText(item, "description"))}</p></div><span class="activity-arrow" aria-hidden="true">↗</span></article>`;
     }).join("") : '<div class="empty-state">School activities and events will appear here.</div>';
   }
 
@@ -289,7 +295,8 @@
     const stories = document.body.dataset.page === "stories" ? all : all.slice(0, 2);
     container.innerHTML = stories.length ? stories.map(item => {
       const image = safeImage(item.image_url) || "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80";
-      return `<article class="story-card"><img src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy"><div class="story-card-copy"><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><h3>${escapeHtml(displayText(item, "title"))}</h3><p>${escapeHtml(displayText(item, "description"))}</p></div></article>`;
+      const title = displayText(item, "title");
+      return `<article class="story-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><div class="story-card-copy"><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(displayText(item, "description"))}</p><span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Read story ↗" : "اقرأ القصة ↗"}</span></div></article>`;
     }).join("") : '<div class="empty-state">New stories from our community will be shared here.</div>';
   }
 
@@ -306,11 +313,133 @@
     container.innerHTML = entries.map((item, index) => {
       const image = safeImage(item.image_url);
       if (index === 2 && !image) {
-        return `<figure class="gallery-tile gallery-tile-blue"><div class="gallery-note"><span>✳</span><b>${escapeHtml(displayText(item, "title"))}</b><small>${escapeHtml(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL")}</small></div></figure>`;
+        const title = displayText(item, "title");
+        return `<figure class="gallery-tile gallery-tile-blue is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="gallery-note"><span>✳</span><b>${escapeHtml(title)}</b><small>${escapeHtml(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL")}</small></div><figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
       }
       const title = displayText(item, "title");
-      return `<figure class="gallery-tile ${classes[index % classes.length] || ""}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>✦</span><b>${escapeHtml(title)}</b></div>`}<figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
+      return `<figure class="gallery-tile ${classes[index % classes.length] || ""} is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>✦</span><b>${escapeHtml(title)}</b></div>`}<figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
     }).join("");
+  }
+
+  function ensureDetailModal() {
+    if (detailModal) return detailModal;
+    const modal = document.createElement("div");
+    modal.className = "content-detail-modal";
+    modal.id = "contentDetailModal";
+    modal.hidden = true;
+    modal.innerHTML = `
+      <div class="content-detail-backdrop" data-detail-close></div>
+      <section class="content-detail-dialog" role="dialog" aria-modal="true" aria-labelledby="contentDetailTitle" aria-describedby="contentDetailDescription" tabindex="-1">
+        <button class="content-detail-close" type="button" data-detail-close aria-label="Close details" title="Close details">×</button>
+        <div class="content-detail-media" id="contentDetailMedia"></div>
+        <div class="content-detail-copy">
+          <span class="content-detail-kicker" id="contentDetailKicker"></span>
+          <h2 id="contentDetailTitle"></h2>
+          <p id="contentDetailDescription"></p>
+          <div class="content-detail-meta" id="contentDetailMeta"></div>
+        </div>
+      </section>`;
+    document.body.appendChild(modal);
+    detailModal = modal;
+
+    modal.addEventListener("click", event => {
+      if (event.target.matches("[data-detail-close]")) closeContentDetails();
+    });
+    document.addEventListener("keydown", event => {
+      if (detailModal?.hidden) return;
+      if (event.key === "Escape") {
+        event.preventDefault();
+        closeContentDetails();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = [...detailModal.querySelectorAll('button:not([disabled]), [href], [tabindex]:not([tabindex="-1"])')]
+        .filter(element => !element.hidden && element.getAttribute("aria-hidden") !== "true");
+      if (!focusable.length) {
+        event.preventDefault();
+        detailModal.querySelector(".content-detail-dialog")?.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    });
+    return detailModal;
+  }
+
+  function openContentDetails(item, sourceCard) {
+    if (!item) return;
+    const modal = ensureDetailModal();
+    const image = safeImage(item.image_url);
+    const title = displayText(item, "title") || (window.HamadI18n?.getLanguage() === "en" ? "School story" : "قصة المدرسة");
+    const eyebrow = displayText(item, "eyebrow") || kindLabel(item.kind);
+    const description = displayText(item, "description") || "";
+    const isEnglish = window.HamadI18n?.getLanguage() === "en";
+    modal.querySelector("#contentDetailKicker").textContent = eyebrow;
+    modal.querySelector("#contentDetailTitle").textContent = title;
+    modal.querySelector("#contentDetailDescription").textContent = description;
+
+    const media = modal.querySelector("#contentDetailMedia");
+    media.innerHTML = image
+      ? '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(title) + '">'
+      : '<div class="content-detail-placeholder" aria-hidden="true">' + escapeHtml(kindSymbol(item.kind)) + '</div>';
+
+    const meta = [];
+    if (item.kind) meta.push(kindLabel(item.kind));
+    if (item.year) meta.push(item.year);
+    modal.querySelector("#contentDetailMeta").innerHTML = meta
+      .map(value => '<span>' + escapeHtml(value) + '</span>')
+      .join("");
+
+    const closeButton = modal.querySelector(".content-detail-close");
+    const closeLabel = isEnglish ? "Close details" : "إغلاق التفاصيل";
+    closeButton.setAttribute("aria-label", closeLabel);
+    closeButton.title = closeLabel;
+    lastOpenedCard = sourceCard || document.activeElement;
+    previousBodyOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    modal.hidden = false;
+    document.documentElement.classList.add("content-detail-open");
+    closeButton.focus();
+  }
+
+  function closeContentDetails() {
+    if (!detailModal || detailModal.hidden) return;
+    detailModal.hidden = true;
+    document.body.style.overflow = previousBodyOverflow;
+    document.documentElement.classList.remove("content-detail-open");
+    if (lastOpenedCard?.isConnected) lastOpenedCard.focus();
+    lastOpenedCard = null;
+  }
+
+  function setupContentDetails() {
+    ensureDetailModal();
+    document.addEventListener("click", event => {
+      const close = event.target.closest("[data-detail-close]");
+      if (close) {
+        closeContentDetails();
+        return;
+      }
+      const card = event.target.closest("[data-open-content]");
+      if (!card) return;
+      const item = contentById.get(String(card.dataset.contentId || ""));
+      if (!item) return;
+      openContentDetails(item, card);
+    });
+    document.addEventListener("keydown", event => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const card = event.target.closest?.("[data-open-content]");
+      if (!card || detailModal && !detailModal.hidden) return;
+      event.preventDefault();
+      const item = contentById.get(String(card.dataset.contentId || ""));
+      if (item) openContentDetails(item, card);
+    });
   }
 
   function setupReveal() {
@@ -368,6 +497,7 @@
     if (year) year.textContent = new Date().getFullYear();
     setupMenu();
     setupReveal();
+    setupContentDetails();
     const hasContentContainer = ["storyContentGrid", "achievementGrid", "activityList", "storyGrid", "galleryGrid"]
       .some(id => document.getElementById(id));
     if (!hasContentContainer) return;
@@ -384,6 +514,10 @@
     try {
       const items = await loadItems();
       currentItems = items;
+      contentById.clear();
+      items.forEach(item => {
+        if (item.id !== undefined && item.id !== null) contentById.set(String(item.id), item);
+      });
       itemsLoaded = true;
       renderAboutContent(items);
       renderAchievements(items);
