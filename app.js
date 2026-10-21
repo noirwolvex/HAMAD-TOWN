@@ -126,6 +126,9 @@
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[char]);
 
+  const iconMarkup = (name, className = "ui-icon") =>
+    '<svg class="' + className + '" aria-hidden="true" focusable="false"><use href="icons.svg#i-' + name + '"></use></svg>';
+
   const contentById = new Map();
   let detailModal = null;
   let lastOpenedCard = null;
@@ -212,10 +215,11 @@
     student: "Student spotlight", event: "School event", gallery: "School gallery"
   }[kind] || "School highlight");
 
-  const kindSymbol = kind => ({
-    about: "⌂", activity: "✳", event: "◷", student: "✦", teacher: "✧",
-    achievement: "↗", award: "✦", story: "◎", gallery: "▧"
-  }[kind] || "✦");
+  const kindIcon = kind => iconMarkup(({
+    about: "book-marked", activity: "calendar-days", event: "calendar-check",
+    student: "user-round", teacher: "graduation-cap", achievement: "trophy",
+    award: "award", story: "book-open", gallery: "images"
+  }[kind] || "sparkles"));
 
   function isAchievementItem(item) {
     return item.section === "achievements" || ["achievement", "award"].includes(item.kind);
@@ -271,14 +275,14 @@
   function activityCardSummary(item) {
     const isEnglish = window.HamadI18n?.getLanguage() === "en";
     const fields = [
-      { icon: "◷", label: isEnglish ? "Date" : "التاريخ", value: formatSchoolLifeDate(item.activity_date) },
-      { icon: "⌖", label: isEnglish ? "Location" : "الموقع", value: displayText(item, "activity_location") },
-      { icon: "◎", label: isEnglish ? "For" : "للفئة", value: displayText(item, "activity_audience") },
-      { icon: "◴", label: isEnglish ? "Time" : "الوقت", value: item.activity_time }
+      { icon: "calendar-days", label: isEnglish ? "Date" : "التاريخ", value: formatSchoolLifeDate(item.activity_date) },
+      { icon: "map-pin", label: isEnglish ? "Location" : "الموقع", value: displayText(item, "activity_location") },
+      { icon: "users", label: isEnglish ? "For" : "للفئة", value: displayText(item, "activity_audience") },
+      { icon: "clock-3", label: isEnglish ? "Time" : "الوقت", value: item.activity_time }
     ].filter(field => String(field.value || "").trim()).slice(0, 3);
     if (!fields.length) return "";
     return '<div class="activity-row-meta">' + fields.map(field =>
-      '<span class="activity-meta-chip"><i aria-hidden="true">' + escapeHtml(field.icon) + '</i><small>' +
+      '<span class="activity-meta-chip"><i aria-hidden="true">' + iconMarkup(field.icon, "ui-icon activity-meta-icon") + '</i><small>' +
       escapeHtml(field.label) + ':</small><b>' + escapeHtml(field.value) + '</b></span>'
     ).join("") + '</div>';
   }
@@ -289,10 +293,10 @@
     const image = safeImage(item.image_url);
     const imageHtml = image
       ? `<div class="content-card-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`
-      : `<div class="content-card-media content-card-placeholder"><span>${kindSymbol(item.kind)}</span><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`;
+      : `<div class="content-card-media content-card-placeholder"><span>${kindIcon(item.kind)}</span><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`;
     const facts = isAchievementItem(item) ? achievementDetails(item).slice(0, 3) : [];
     const factsHtml = facts.length ? `<div class="achievement-card-facts">${facts.map(fact => `<span><small>${escapeHtml(fact.label)}</small><b>${escapeHtml(fact.value)}</b></span>`).join("")}</div>` : "";
-    return `<article class="content-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p>${factsHtml}<span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Open details ↗" : "افتح التفاصيل ↗"}</span></div></div></article>`;
+    return `<article class="content-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot">${iconMarkup("sparkles")}</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p>${factsHtml}<span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Open details " + iconMarkup("arrow-up-right") : "افتح التفاصيل " + iconMarkup("arrow-up-right")}</span></div></div></article>`;
   }
 
   function renderAboutContent(items) {
@@ -311,7 +315,7 @@
       const title = displayText(item, "title");
       const eyebrow = displayText(item, "eyebrow") || "OUR SCHOOL";
       return `<article class="story-feature-card reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">
-        <div class="story-feature-media">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="story-feature-placeholder" aria-hidden="true">✦</div>`}
+        <div class="story-feature-media">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="story-feature-placeholder" aria-hidden="true">${iconMarkup("sparkles")}</div>`}
           <span class="story-feature-media-tag">${escapeHtml(eyebrow)}</span>
         </div>
         <div class="story-feature-copy">
@@ -319,14 +323,14 @@
           <h2>${escapeHtml(title)}</h2>
           <p>${escapeHtml(displayText(item, "description"))}</p>
           ${item.year ? `<span class="story-feature-year">${escapeHtml(item.year)}</span>` : ""}
-          <span class="story-feature-accent" aria-hidden="true">✳</span>
+          <span class="story-feature-accent" aria-hidden="true">${iconMarkup("sparkles")}</span>
         </div>
       </article>`;
     }).join("");
     const standardMarkup = standardEntries.map((item, index) => {
       const image = safeImage(item.image_url);
-      const icon = ["✧", "✦", "✳", "⌂"][index % 4];
-      return `<article class="story-principle ${classes[index % classes.length]} reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(displayText(item, "title"))}">${image ? `<img class="about-principle-image" src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy">` : ""}<span class="principle-icon">${icon}</span><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || "OUR SCHOOL")}</span><h2>${escapeHtml(displayText(item, "title"))}</h2><p>${escapeHtml(displayText(item, "description"))}</p></article>`;
+      const iconName = ["lightbulb", "users", "compass", "house"][index % 4];
+      return `<article class="story-principle ${classes[index % classes.length]} reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(displayText(item, "title"))}">${image ? `<img class="about-principle-image" src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy">` : ""}<span class="principle-icon">${iconMarkup(iconName)}</span><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || "OUR SCHOOL")}</span><h2>${escapeHtml(displayText(item, "title"))}</h2><p>${escapeHtml(displayText(item, "description"))}</p></article>`;
     }).join("");
     container.innerHTML = featuredMarkup + standardMarkup;
   }
@@ -349,11 +353,11 @@
       const image = safeImage(item.image_url);
       const icon = image
         ? `<span class="activity-icon"><img src="${escapeHtml(image)}" alt="" loading="lazy"></span>`
-        : `<span class="activity-icon">${kindSymbol(item.kind)}</span>`;
+        : `<span class="activity-icon">${kindIcon(item.kind)}</span>`;
       const title = displayText(item, "title");
       const summary = activityCardSummary(item);
       const openHint = window.HamadI18n?.getLanguage() === "en" ? "View details" : "عرض التفاصيل";
-      return `<article class="activity-row is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${icon}<div class="activity-row-copy"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(displayText(item, "description"))}</p>${summary}<span class="content-open-hint">${openHint} ↗</span></div><span class="activity-arrow" aria-hidden="true">↗</span></article>`;
+      return `<article class="activity-row is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${icon}<div class="activity-row-copy"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(displayText(item, "description"))}</p>${summary}<span class="content-open-hint">${openHint} ${iconMarkup("arrow-up-right")}</span></div><span class="activity-arrow" aria-hidden="true">${iconMarkup("arrow-up-right")}</span></article>`;
     }).join("") : '<div class="empty-state">School activities and events will appear here.</div>';
   }
 
@@ -365,7 +369,7 @@
     container.innerHTML = stories.length ? stories.map(item => {
       const image = safeImage(item.image_url) || "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80";
       const title = displayText(item, "title");
-      return `<article class="story-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><div class="story-card-copy"><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(displayText(item, "description"))}</p><span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Read story ↗" : "اقرأ القصة ↗"}</span></div></article>`;
+      return `<article class="story-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><div class="story-card-copy"><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><h3>${escapeHtml(title)}</h3><p>${escapeHtml(displayText(item, "description"))}</p><span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Read story " + iconMarkup("arrow-up-right") : "اقرأ القصة " + iconMarkup("arrow-up-right")}</span></div></article>`;
     }).join("") : '<div class="empty-state">New stories from our community will be shared here.</div>';
   }
 
@@ -383,10 +387,10 @@
       const image = safeImage(item.image_url);
       if (index === 2 && !image) {
         const title = displayText(item, "title");
-        return `<figure class="gallery-tile gallery-tile-blue is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="gallery-note"><span>✳</span><b>${escapeHtml(title)}</b><small>${escapeHtml(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL")}</small></div><figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
+        return `<figure class="gallery-tile gallery-tile-blue is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(title)}</b><small>${escapeHtml(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL")}</small></div><figcaption>${escapeHtml(title)} ${iconMarkup("arrow-up-right")}</figcaption></figure>`;
       }
       const title = displayText(item, "title");
-      return `<figure class="gallery-tile ${classes[index % classes.length] || ""} is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>✦</span><b>${escapeHtml(title)}</b></div>`}<figcaption>${escapeHtml(title)} <span>↗</span></figcaption></figure>`;
+      return `<figure class="gallery-tile ${classes[index % classes.length] || ""} is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(title)}</b></div>`}<figcaption>${escapeHtml(title)} ${iconMarkup("arrow-up-right")}</figcaption></figure>`;
     }).join("");
   }
 
@@ -458,7 +462,7 @@
     const media = modal.querySelector("#contentDetailMedia");
     media.innerHTML = image
       ? '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(title) + '">'
-      : '<div class="content-detail-placeholder" aria-hidden="true">' + escapeHtml(kindSymbol(item.kind)) + '</div>';
+      : '<div class="content-detail-placeholder" aria-hidden="true">' + kindIcon(item.kind) + '</div>';
 
     const meta = [];
     const sectionLabels = isEnglish ? {
