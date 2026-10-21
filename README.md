@@ -40,11 +40,9 @@ Any static web host can serve these files. GitHub Pages can host the public site
 
 ## Admin portal modes
 
-### Demo mode (works without backend setup)
+### Admin sign-in requirement
 
-The portal starts in demo mode until Supabase is configured. You can try creating/editing/deleting entries, previewing photos and exporting JSON. Demo content is stored in that browser's `localStorage`, so it **does not publish to other devices or visitors**. In demo mode, photos must be no larger than 1 MB because browser storage is limited.
-
-Do not treat demo mode as an authenticated production admin system.
+The admin portal is locked until Supabase is configured. There is no unauthenticated demo-editor fallback: if the backend settings are missing, the content editor stays hidden. This prevents visitors from editing local browser content and mistaking it for a protected admin portal.
 
 ### Shared publishing with Supabase
 
@@ -52,15 +50,16 @@ To allow approved school staff to publish content that appears for every visitor
 
 1. Create a Supabase project.
 2. In Supabase Dashboard → SQL Editor, run the complete `supabase/schema.sql` file.
-3. In Supabase Dashboard → Authentication → Users, create the first admin account using email/password.
-4. In SQL Editor, replace the example email in the final statement in `supabase/schema.sql` and run it:
+3. In Supabase Dashboard → Authentication → Users, create an account using the admin email `ADMIN26@gmail.com` and set its password there. Do not put the password in repository files or commit it to GitHub.
+4. In Supabase Dashboard → SQL Editor, authorize that account:
 
    ```sql
    insert into public.school_admins (user_id)
-   select id from auth.users where email = 'admin@your-school.example'
+   select id from auth.users where lower(email) = lower('ADMIN26@gmail.com')
    on conflict (user_id) do nothing;
    ```
 
+   The portal checks both the Supabase session and membership in `public.school_admins`; an authenticated but unapproved account is denied.
 5. Copy the project's **Project URL** and **anon/public key** into `config.js`:
 
    ```js
