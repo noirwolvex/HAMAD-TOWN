@@ -209,3 +209,16 @@ html[dir="rtl"] .library-tools .search-box { flex-direction:row; }
 .achievement-extra-heading p { margin:6px 0 0; color:#7d8e9d; font-size:10px; line-height:1.7; }
 .achievement-extra-fields textarea { min-height:84px; }
 @media (max-width:520px) { .achievement-extra-fields { padding:12px; gap:11px; } }
+
+
+/* Optional bilingual details for activities and school events. */
+.activity-extra-fields[hidden] { display:none !important; }
+.activity-extra-fields {
+  display:flex; flex-direction:column; gap:13px; padding:17px;
+  border:1px solid #dcecf5; border-radius:15px;
+  background:linear-gradient(140deg,#f1faff,#fffaf0);
+}
+.activity-extra-heading .mini-label { color:#438db2; font-size:10px; font-weight:800; }
+.activity-extra-heading p { margin:6px 0 0; color:#7d8e9d; font-size:10px; line-height:1.7; }
+.activity-extra-fields textarea { min-height:78px; }
+@media (max-width:520px) { .activity-extra-fields { padding:12px; gap:11px; } }
