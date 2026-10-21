@@ -437,6 +437,21 @@
     "Curiosity builds the future": "فضول يصنع المستقبل",
     "IDEAS → IMPACT": "من الفكرة إلى الأثر",
     "Every idea opens a new horizon": "كل فكرة تفتح أفقًا جديدًا",
+    "THE HAMAD TOWN MINDSET": "روح مدرسة مدينة حمد",
+    "A future shaped": "مستقبل نصنعه",
+    "together.": "معًا.",
+    "Learning grows through curiosity, teamwork and the courage to try something new.": "ينمو التعلّم بالفضول والعمل الجماعي والشجاعة لتجربة أشياء جديدة.",
+    "01 / DISCOVER": "٠١ / نكتشف",
+    "Curiosity opens new doors.": "الفضول يفتح آفاقًا جديدة.",
+    "Questions are the beginning of every idea, experiment and new possibility.": "الأسئلة بداية كل فكرة وتجربة وإمكان جديد.",
+    "02 / COLLABORATE": "٠٢ / نتعاون",
+    "Better things happen together.": "معًا نصنع ما هو أفضل.",
+    "Sharing ideas helps us learn from one another and turn effort into progress.": "تساعدنا مشاركة الأفكار على التعلّم من بعضنا وتحويل الجهد إلى تقدّم.",
+    "03 / CELEBRATE": "٠٣ / نحتفي",
+    "Every step deserves recognition.": "كل خطوة تستحق الاحتفاء.",
+    "We value the courage to try, the patience to improve and the joy of achievement.": "نقدّر شجاعة المحاولة والصبر على التحسّن وفرحة الإنجاز.",
+    "PEOPLE · PURPOSE · POSSIBILITY": "الأشخاص · الهدف · الإمكانات",
+    "Discover our story": "اكتشف قصتنا",
   };
 
   const attributeTranslations = {
