@@ -1899,3 +1899,22 @@ html[dir="rtl"] body[data-page="home"] .section-link-go { right: 15px; left: aut
   .menu-toggle > span { display: none !important; }
   .main-nav .nav-icon .ui-icon { width: 13px; height: 13px; }
 }
+
+
+/* Use geometric rings as background ornament instead of a mismatched text glyph. */
+.home-values-band::after {
+  content: "";
+  width: clamp(160px, 25vw, 330px);
+  height: clamp(160px, 25vw, 330px);
+  border: 1px solid rgba(241,198,95,.24);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(241,198,95,.045), 0 0 0 52px rgba(157,226,255,.035), 0 0 0 82px rgba(157,226,255,.025);
+  color: transparent;
+}
+.activity-meta-chip .activity-meta-icon { width: 12px; height: 12px; vertical-align: -0.1em; }
+.gold-dot .ui-icon { width: 13px; height: 13px; vertical-align: middle; }
+.content-open-hint .ui-icon, .activity-arrow .ui-icon { width: 14px; height: 14px; vertical-align: -0.15em; }
+.story-feature-accent .ui-icon { width: 20px; height: 20px; }
+.gallery-note > span .ui-icon { width: 31px; height: 31px; }
+.content-card-placeholder .ui-icon { width: 48px; height: 48px; }
+.content-detail-placeholder .ui-icon { width: 78px; height: 78px; }
