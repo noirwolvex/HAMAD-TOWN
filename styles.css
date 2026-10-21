@@ -1042,3 +1042,27 @@ html[dir="rtl"] .section-link-card:hover .section-link-go {
     right: 14px;
   }
 }
+
+
+/* Force section-card arrow to the actual bottom-right corner (higher specificity). */
+body[data-page="home"] .section-link-card > .section-link-go {
+  position: absolute;
+  right: 22px;
+  left: auto;
+  bottom: 21px;
+  top: auto;
+  transform: none;
+}
+body[data-page="home"] .section-link-card:hover > .section-link-go {
+  transform: translate(3px, -3px);
+}
+@media (max-width: 720px) {
+  body[data-page="home"] .section-link-card > .section-link-go {
+    right: 14px;
+    left: auto;
+    bottom: 14px;
+    top: auto;
+    width: 29px;
+    height: 29px;
+  }
+}
