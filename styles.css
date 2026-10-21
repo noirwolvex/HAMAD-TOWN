@@ -1855,3 +1855,47 @@ html[dir="rtl"] body[data-page="home"] .section-link-go { right: 15px; left: aut
   .home-value-card, .section-link-visual img { transition: none !important; }
   .home-value-card:hover { transform: none; }
 }
+
+
+/* Unified icon system: consistent Lucide-like SVG strokes and optical alignment. */
+.ui-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  overflow: visible;
+  vertical-align: -0.14em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.ui-icon use { fill: none; }
+.main-nav .nav-icon .ui-icon { width: 15px; height: 15px; }
+.button-icon .ui-icon { width: 14px; height: 14px; vertical-align: middle; }
+.nav-cta .ui-icon, .button .ui-icon, .text-link .ui-icon, .underlined-link .ui-icon { width: 15px; height: 15px; }
+.menu-toggle { display: none; place-items: center; }
+.menu-toggle .ui-icon { width: 23px; height: 23px; }
+.avatar-stack .ui-icon { width: 13px; height: 13px; vertical-align: middle; }
+.caption-icon .ui-icon { width: 19px; height: 19px; vertical-align: middle; }
+.future-chip-mark .ui-icon { width: 16px; height: 16px; vertical-align: middle; }
+.future-chip-mark-gold .ui-icon { width: 20px; height: 20px; }
+.future-cross .ui-icon { width: 1em; height: 1em; vertical-align: top; }
+.ticker-track b .ui-icon { width: 17px; height: 17px; vertical-align: middle; }
+.home-value-symbol .ui-icon { width: 16px; height: 16px; vertical-align: middle; }
+.value-art-core .ui-icon { width: 24px; height: 24px; vertical-align: middle; }
+.team-orb .ui-icon { width: 22px; height: 22px; vertical-align: middle; }
+.section-link-icon .ui-icon { width: 22px; height: 22px; vertical-align: middle; }
+.section-link-go .ui-icon { width: 16px; height: 16px; vertical-align: middle; }
+.standalone-icon .ui-icon { width: 75px; height: 75px; vertical-align: middle; }
+.standalone-float .ui-icon { width: 1em; height: 1em; vertical-align: middle; }
+.principle-icon .ui-icon, .story-note-icon .ui-icon { width: 1em; height: 1em; vertical-align: middle; }
+.school-life-pillar-icon .ui-icon { width: 22px; height: 22px; vertical-align: middle; }
+.closing-decoration .ui-icon { width: 1em; height: 1em; vertical-align: middle; }
+.site-footer .ui-icon { width: 14px; height: 14px; vertical-align: -0.16em; }
+@media (max-width: 720px) {
+  .menu-toggle { display: grid; }
+  .menu-toggle > span { display: none !important; }
+  .main-nav .nav-icon .ui-icon { width: 13px; height: 13px; }
+}
