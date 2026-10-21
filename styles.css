@@ -1509,3 +1509,22 @@ html[dir="ltr"] .story-feature-copy { text-align: left; align-items: flex-start;
   .story-principle.is-openable-card { transition:none !important; }
   .story-principle.is-openable-card:hover { transform:none; }
 }
+
+/* School life overview and richer activity summaries. */
+.school-life-pillars { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin:24px 0 46px; }
+.school-life-pillar { display:flex; align-items:flex-start; gap:12px; min-width:0; padding:19px 17px; border:1px solid #e3edf4; border-radius:18px; background:linear-gradient(145deg,rgba(242,250,255,.95),rgba(255,255,255,.98) 65%,rgba(255,249,231,.65)); box-shadow:0 12px 28px rgba(30,70,100,.035); }
+.school-life-pillar-icon { display:grid; place-items:center; flex:0 0 40px; width:40px; height:40px; border-radius:13px; background:#e7f7ff; color:#358cb7; font-size:22px; }
+.school-life-pillar:nth-child(even) .school-life-pillar-icon { background:#fff3d0; color:#a97c1f; }
+.school-life-pillar h3 { margin:1px 0 7px; font-size:14px; line-height:1.35; }
+.school-life-pillar p { margin:0; color:#788a9b; font-size:11px; line-height:1.8; }
+.activity-row-copy { min-width:0; }
+.activity-row-meta { display:flex; flex-wrap:wrap; gap:7px; margin-top:11px; }
+.activity-meta-chip { display:inline-flex; align-items:center; flex-wrap:wrap; gap:4px; max-width:100%; padding:5px 8px; border:1px solid #e0edf4; border-radius:9px; background:#f8fcff; color:#71869a; font-size:9px; line-height:1.5; }
+.activity-meta-chip i { font-style:normal; color:#3795c0; font-size:12px; }
+.activity-meta-chip small { color:#91a0ae; font-size:8px; }
+.activity-meta-chip b { color:#49647b; font-size:9px; font-weight:800; overflow-wrap:anywhere; white-space:pre-wrap; }
+.activity-row .content-open-hint { margin-top:9px; font-size:10px; }
+.content-detail-extra-section + .content-detail-extra-section { border-top:1px solid rgba(208,225,236,.75); margin-top:16px; padding-top:15px; }
+.content-detail-extra-section p { white-space:pre-wrap; overflow-wrap:anywhere; }
+@media (max-width:1000px) { .school-life-pillars { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media (max-width:720px) { .school-life-pillars { grid-template-columns:1fr; gap:10px; margin:18px 0 32px; } .school-life-pillar { padding:15px; } .activity-row-meta { gap:6px; } .activity-meta-chip { font-size:9px; } }
