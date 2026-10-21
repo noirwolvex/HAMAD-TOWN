@@ -290,6 +290,7 @@
       "activityOutcomes", "activityOutcomesEn", "activityDetails", "activityDetailsEn"
     ].forEach(id => { if ($(id)) $(id).value = ""; });
     syncAchievementFields();
+    syncActivityFields();
     $("contentFeatured").checked = true;
     $("contentPublished").checked = true;
     $("editorTitle").textContent = "Add a new story";
