@@ -105,6 +105,39 @@
     };
   }
 
+  function syncActivityFields() {
+    const field = $("activityDetailsFields");
+    if (!field) return;
+    field.hidden = !($("contentSection").value === "school-life" &&
+      ["activity", "event"].includes($("contentKind").value));
+  }
+
+  function readActivityFields() {
+    const keys = {
+      activity_date: "activityDate",
+      activity_time: "activityTime",
+      activity_location_ar: "activityLocation",
+      activity_location_en: "activityLocationEn",
+      activity_organizer_ar: "activityOrganizer",
+      activity_organizer_en: "activityOrganizerEn",
+      activity_audience_ar: "activityAudience",
+      activity_audience_en: "activityAudienceEn",
+      activity_duration_ar: "activityDuration",
+      activity_duration_en: "activityDurationEn",
+      activity_goals_ar: "activityGoals",
+      activity_goals_en: "activityGoalsEn",
+      activity_outcomes_ar: "activityOutcomes",
+      activity_outcomes_en: "activityOutcomesEn",
+      activity_details_ar: "activityDetails",
+      activity_details_en: "activityDetailsEn"
+    };
+    const isSchoolLife = $("contentSection").value === "school-life" &&
+      ["activity", "event"].includes($("contentKind").value);
+    return Object.fromEntries(Object.entries(keys).map(([column, id]) => [
+      column, isSchoolLife ? ($(id)?.value.trim() || "") : ""
+    ]));
+  }
+
   function showToast(message) {
     const toast = $("adminToast");
     if (!toast) return;
@@ -208,7 +241,11 @@
       const haystack = [item.title, item.title_ar, item.title_en, item.description, item.description_ar, item.description_en, item.eyebrow, item.eyebrow_ar, item.eyebrow_en, item.year, item.kind, item.section, item.recipient_ar, item.recipient_en,
         item.achievement_event_ar, item.achievement_event_en, item.achievement_result_ar, item.achievement_result_en,
         item.achievement_organization_ar, item.achievement_organization_en, item.achievement_date,
-        item.achievement_highlights_ar, item.achievement_highlights_en].join(" ").toLowerCase();
+        item.achievement_highlights_ar, item.achievement_highlights_en,
+        item.activity_date, item.activity_time, item.activity_location_ar, item.activity_location_en,
+        item.activity_organizer_ar, item.activity_organizer_en, item.activity_audience_ar, item.activity_audience_en,
+        item.activity_duration_ar, item.activity_duration_en, item.activity_goals_ar, item.activity_goals_en,
+        item.activity_outcomes_ar, item.activity_outcomes_en, item.activity_details_ar, item.activity_details_en].join(" ").toLowerCase();
       return matchesKind && matchesSection && haystack.includes(q);
     });
 
@@ -246,7 +283,12 @@
     syncLayoutControl("standard");
     ["achievementRecipient", "achievementRecipientEn", "achievementEvent", "achievementEventEn",
       "achievementResult", "achievementResultEn", "achievementOrganization", "achievementOrganizationEn",
-      "achievementDate", "achievementHighlights", "achievementHighlightsEn"].forEach(id => { $(id).value = ""; });
+      "achievementDate", "achievementHighlights", "achievementHighlightsEn",
+      "activityDate", "activityTime", "activityLocation", "activityLocationEn",
+      "activityOrganizer", "activityOrganizerEn", "activityAudience", "activityAudienceEn",
+      "activityDuration", "activityDurationEn", "activityGoals", "activityGoalsEn",
+      "activityOutcomes", "activityOutcomesEn", "activityDetails", "activityDetailsEn"
+    ].forEach(id => { if ($(id)) $(id).value = ""; });
     syncAchievementFields();
     $("contentFeatured").checked = true;
     $("contentPublished").checked = true;
@@ -281,6 +323,23 @@
     $("achievementDate").value = record.achievement_date || "";
     $("achievementHighlights").value = record.achievement_highlights_ar || "";
     $("achievementHighlightsEn").value = record.achievement_highlights_en || "";
+    $("activityDate").value = record.activity_date || "";
+    $("activityTime").value = record.activity_time || "";
+    $("activityLocation").value = record.activity_location_ar || "";
+    $("activityLocationEn").value = record.activity_location_en || "";
+    $("activityOrganizer").value = record.activity_organizer_ar || "";
+    $("activityOrganizerEn").value = record.activity_organizer_en || "";
+    $("activityAudience").value = record.activity_audience_ar || "";
+    $("activityAudienceEn").value = record.activity_audience_en || "";
+    $("activityDuration").value = record.activity_duration_ar || "";
+    $("activityDurationEn").value = record.activity_duration_en || "";
+    $("activityGoals").value = record.activity_goals_ar || "";
+    $("activityGoalsEn").value = record.activity_goals_en || "";
+    $("activityOutcomes").value = record.activity_outcomes_ar || "";
+    $("activityOutcomesEn").value = record.activity_outcomes_en || "";
+    $("activityDetails").value = record.activity_details_ar || "";
+    $("activityDetailsEn").value = record.activity_details_en || "";
+    syncActivityFields();
     $("contentYear").value = record.year || "";
     $("contentTitle").value = record.title_ar || record.title || "";
     $("contentTitleEn").value = record.title_en || record.title || "";
@@ -456,6 +515,7 @@
         const existing = items.find(item => String(item.id) === String(id));
         const kind = $("contentKind").value;
         const achievementFields = readAchievementFields();
+        const activityFields = readActivityFields();
         const defaultTypeEnglish = kinds[kind] || "School story";
         const defaultTypeArabic = window.HamadI18n?.toArabic(defaultTypeEnglish) || defaultTypeEnglish;
         const eyebrowAr = $("contentEyebrow").value.trim() || defaultTypeArabic;
@@ -466,6 +526,7 @@
           layout,
           kind,
           ...achievementFields,
+          ...activityFields,
           title: titleAr,
           title_ar: titleAr,
           title_en: titleEn,
@@ -499,8 +560,12 @@
       populateKindOptions($("contentSection").value);
       syncLayoutControl("standard");
       syncAchievementFields();
+      syncActivityFields();
     });
-    $("contentKind").addEventListener("change", syncAchievementFields);
+    $("contentKind").addEventListener("change", () => {
+      syncAchievementFields();
+      syncActivityFields();
+    });
     $("resetFormBtn").addEventListener("click", resetForm);
     $("searchContent").addEventListener("input", renderRecords);
     $("filterSection").addEventListener("change", renderRecords);
@@ -568,6 +633,7 @@
     populateKindOptions($("contentSection").value || "achievements", "achievement");
     syncLayoutControl("standard");
     syncAchievementFields();
+    syncActivityFields();
     setupForm();
     setupAuth();
     window.addEventListener("hamad-language-change", renderRecords);
