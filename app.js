@@ -269,7 +269,7 @@
       const image = safeImage(item.image_url);
       const title = displayText(item, "title");
       const eyebrow = displayText(item, "eyebrow") || "OUR SCHOOL";
-      return `<article class="story-feature-card reveal is-visible">
+      return `<article class="story-feature-card reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">
         <div class="story-feature-media">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="story-feature-placeholder" aria-hidden="true">✦</div>`}
           <span class="story-feature-media-tag">${escapeHtml(eyebrow)}</span>
         </div>
@@ -285,7 +285,7 @@
     const standardMarkup = standardEntries.map((item, index) => {
       const image = safeImage(item.image_url);
       const icon = ["✧", "✦", "✳", "⌂"][index % 4];
-      return `<article class="story-principle ${classes[index % classes.length]} reveal is-visible">${image ? `<img class="about-principle-image" src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy">` : ""}<span class="principle-icon">${icon}</span><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || "OUR SCHOOL")}</span><h2>${escapeHtml(displayText(item, "title"))}</h2><p>${escapeHtml(displayText(item, "description"))}</p></article>`;
+      return `<article class="story-principle ${classes[index % classes.length]} reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(displayText(item, "title"))}">${image ? `<img class="about-principle-image" src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy">` : ""}<span class="principle-icon">${icon}</span><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || "OUR SCHOOL")}</span><h2>${escapeHtml(displayText(item, "title"))}</h2><p>${escapeHtml(displayText(item, "description"))}</p></article>`;
     }).join("");
     container.innerHTML = featuredMarkup + standardMarkup;
   }
@@ -418,16 +418,39 @@
       : '<div class="content-detail-placeholder" aria-hidden="true">' + escapeHtml(kindSymbol(item.kind)) + '</div>';
 
     const meta = [];
-    if (item.kind) meta.push({ label: isEnglish ? "Content type" : "نوع المحتوى", value: kindLabel(item.kind) });
+    const sectionLabels = isEnglish ? {
+      "our-story": "Our story", achievements: "Achievements", "school-life": "School life",
+      stories: "Stories", gallery: "Photo gallery"
+    } : {
+      "our-story": "قصتنا", achievements: "الإنجازات", "school-life": "الحياة المدرسية",
+      stories: "القصص", gallery: "معرض الصور"
+    };
+    if (item.section) meta.push({ label: isEnglish ? "Section" : "القسم", value: sectionLabels[item.section] || item.section });
+    if (item.kind) meta.push({ label: isEnglish ? "Content type" : "نوع المحتوى", value: isEnglish ? kindLabel(item.kind) : ({
+      about: "محتوى تعريفي", achievement: "إنجاز", award: "جائزة", activity: "نشاط مدرسي",
+      story: "قصة", teacher: "تكريم معلم", student: "تكريم طالب", event: "فعالية مدرسية", gallery: "صورة من المعرض"
+    }[item.kind] || "محتوى مدرسي") });
     if (item.year) meta.push({ label: isEnglish ? "School year" : "العام الدراسي", value: item.year });
     if (isAchievementItem(item)) meta.push(...achievementDetails(item));
+    if (item.created_at) {
+      const createdAt = new Date(item.created_at);
+      if (!Number.isNaN(createdAt.getTime())) {
+        meta.push({
+          label: isEnglish ? "Date added" : "تاريخ الإضافة",
+          value: new Intl.DateTimeFormat(isEnglish ? "en" : "ar", {
+            year: "numeric", month: "long", day: "numeric"
+          }).format(createdAt)
+        });
+      }
+    }
+    if (item.featured === true) meta.push({ label: isEnglish ? "Highlight" : "ضمن أبرز المحتويات", value: isEnglish ? "Featured" : "محتوى مميّز" });
     modal.querySelector("#contentDetailMeta").innerHTML = meta
       .map(entry => '<span class="content-detail-meta-item"><small>' + escapeHtml(entry.label) + '</small><b>' + escapeHtml(entry.value) + '</b></span>')
       .join("");
 
     const highlights = displayText(item, "achievement_highlights");
     const extra = modal.querySelector("#contentDetailExtra");
-    extra.hidden = !isAchievementItem(item) || !highlights;
+    extra.hidden = !highlights;
     extra.innerHTML = extra.hidden ? "" :
       '<h3>' + (isEnglish ? "More details" : "تفاصيل إضافية") + '</h3><p>' + escapeHtml(highlights) + '</p>';
 
@@ -438,6 +461,8 @@
     lastOpenedCard = sourceCard || document.activeElement;
     previousBodyOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    modal.querySelector(".content-detail-copy").scrollTop = 0;
+    modal.querySelector(".content-detail-dialog").scrollTop = 0;
     modal.hidden = false;
     document.documentElement.classList.add("content-detail-open");
     closeButton.focus();
