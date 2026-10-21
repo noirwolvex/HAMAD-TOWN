@@ -647,6 +647,7 @@
         if (authorized) showToast("تم تسجيل الدخول إلى بوابة إدارة المدرسة.");
       } catch (error) {
         currentSession = null;
+        try { await supabaseClient.auth.signOut(); } catch (_) { /* Keep the portal locked if sign-out also fails. */ }
         showLogin("تعذّر تسجيل الدخول أو التحقق من صلاحيات الإدارة. تحقق من بيانات الحساب وإضافته إلى قائمة مديري المدرسة.", true);
       } finally {
         submit.disabled = false;
