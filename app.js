@@ -242,6 +242,47 @@
     ].filter(field => String(field.value || "").trim());
   }
 
+  function isSchoolLifeItem(item) {
+    return item.section === "school-life" || ["activity", "event"].includes(item.kind);
+  }
+
+  function formatSchoolLifeDate(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return "";
+    const date = new Date(raw + "T00:00:00");
+    if (Number.isNaN(date.getTime())) return raw;
+    return new Intl.DateTimeFormat(window.HamadI18n?.getLanguage() === "en" ? "en" : "ar", {
+      year: "numeric", month: "long", day: "numeric"
+    }).format(date);
+  }
+
+  function activityDetails(item) {
+    const isEnglish = window.HamadI18n?.getLanguage() === "en";
+    return [
+      { label: isEnglish ? "Activity date" : "تاريخ النشاط", value: formatSchoolLifeDate(item.activity_date) },
+      { label: isEnglish ? "Time / schedule" : "الوقت / الجدول", value: item.activity_time },
+      { label: isEnglish ? "Location" : "الموقع", value: displayText(item, "activity_location") },
+      { label: isEnglish ? "Organizer" : "الجهة المنظمة", value: displayText(item, "activity_organizer") },
+      { label: isEnglish ? "Intended audience" : "الفئة المستهدفة", value: displayText(item, "activity_audience") },
+      { label: isEnglish ? "Duration" : "المدة", value: displayText(item, "activity_duration") }
+    ].filter(field => String(field.value || "").trim());
+  }
+
+  function activityCardSummary(item) {
+    const isEnglish = window.HamadI18n?.getLanguage() === "en";
+    const fields = [
+      { icon: "◷", label: isEnglish ? "Date" : "التاريخ", value: formatSchoolLifeDate(item.activity_date) },
+      { icon: "⌖", label: isEnglish ? "Location" : "الموقع", value: displayText(item, "activity_location") },
+      { icon: "◎", label: isEnglish ? "For" : "للفئة", value: displayText(item, "activity_audience") },
+      { icon: "◴", label: isEnglish ? "Time" : "الوقت", value: item.activity_time }
+    ].filter(field => String(field.value || "").trim()).slice(0, 3);
+    if (!fields.length) return "";
+    return '<div class="activity-row-meta">' + fields.map(field =>
+      '<span class="activity-meta-chip"><i aria-hidden="true">' + escapeHtml(field.icon) + '</i><small>' +
+      escapeHtml(field.label) + ':</small><b>' + escapeHtml(field.value) + '</b></span>'
+    ).join("") + '</div>';
+  }
+
   function cardMarkup(item) {
     const title = displayText(item, "title");
     const description = displayText(item, "description");
@@ -310,7 +351,9 @@
         ? `<span class="activity-icon"><img src="${escapeHtml(image)}" alt="" loading="lazy"></span>`
         : `<span class="activity-icon">${kindSymbol(item.kind)}</span>`;
       const title = displayText(item, "title");
-      return `<article class="activity-row is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${icon}<div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(displayText(item, "description"))}</p></div><span class="activity-arrow" aria-hidden="true">↗</span></article>`;
+      const summary = activityCardSummary(item);
+      const openHint = window.HamadI18n?.getLanguage() === "en" ? "View details" : "عرض التفاصيل";
+      return `<article class="activity-row is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${icon}<div class="activity-row-copy"><h3>${escapeHtml(title)}</h3><p>${escapeHtml(displayText(item, "description"))}</p>${summary}<span class="content-open-hint">${openHint} ↗</span></div><span class="activity-arrow" aria-hidden="true">↗</span></article>`;
     }).join("") : '<div class="empty-state">School activities and events will appear here.</div>';
   }
 
@@ -432,6 +475,7 @@
     }[item.kind] || "محتوى مدرسي") });
     if (item.year) meta.push({ label: isEnglish ? "School year" : "العام الدراسي", value: item.year });
     if (isAchievementItem(item)) meta.push(...achievementDetails(item));
+    if (isSchoolLifeItem(item)) meta.push(...activityDetails(item));
     if (item.created_at) {
       const createdAt = new Date(item.created_at);
       if (!Number.isNaN(createdAt.getTime())) {
@@ -448,11 +492,29 @@
       .map(entry => '<span class="content-detail-meta-item"><small>' + escapeHtml(entry.label) + '</small><b>' + escapeHtml(entry.value) + '</b></span>')
       .join("");
 
-    const highlights = displayText(item, "achievement_highlights");
     const extra = modal.querySelector("#contentDetailExtra");
-    extra.hidden = !highlights;
-    extra.innerHTML = extra.hidden ? "" :
-      '<h3>' + (isEnglish ? "More details" : "تفاصيل إضافية") + '</h3><p>' + escapeHtml(highlights) + '</p>';
+    const extraSections = [];
+    const highlights = displayText(item, "achievement_highlights");
+    if (highlights) {
+      extraSections.push({
+        title: isAchievementItem(item)
+          ? (isEnglish ? "Achievement details" : "تفاصيل الإنجاز")
+          : (isEnglish ? "Additional information" : "معلومات إضافية"),
+        value: highlights
+      });
+    }
+    if (isSchoolLifeItem(item)) {
+      [
+        { title: isEnglish ? "Activity overview" : "تفاصيل النشاط", value: displayText(item, "activity_details") },
+        { title: isEnglish ? "Learning goals" : "أهداف النشاط", value: displayText(item, "activity_goals") },
+        { title: isEnglish ? "Outcomes & highlights" : "النتائج وأبرز اللحظات", value: displayText(item, "activity_outcomes") }
+      ].filter(section => String(section.value || "").trim()).forEach(section => extraSections.push(section));
+    }
+    extra.hidden = !extraSections.length;
+    extra.innerHTML = extra.hidden ? "" : extraSections.map(section =>
+      '<section class="content-detail-extra-section"><h3>' + escapeHtml(section.title) +
+      '</h3><p>' + escapeHtml(section.value) + '</p></section>'
+    ).join("");
 
     const closeButton = modal.querySelector(".content-detail-close");
     const closeLabel = isEnglish ? "Close details" : "إغلاق التفاصيل";

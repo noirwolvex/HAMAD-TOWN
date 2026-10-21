@@ -87,6 +87,41 @@
             <div class="form-row"><label>التصنيف بالعربية<input id="contentEyebrow" maxlength="80" placeholder="أضف تصنيفًا بالعربية (اختياري)"></label><label>التصنيف بالإنجليزية<input id="contentEyebrowEn" maxlength="80" placeholder="أضف تصنيفًا بالإنجليزية (اختياري)"></label></div>
             <label>الوصف بالعربية <span class="required-star">*</span><textarea id="contentDescription" rows="4" maxlength="800" placeholder="اكتب القصة بالعربية…" required></textarea><span class="field-hint">اكتب بوضوح وودّ، واحرص على خصوصية الطلاب.</span></label>
             <label>الوصف بالإنجليزية <span class="required-star">*</span><textarea id="contentDescriptionEn" rows="4" maxlength="800" placeholder="اكتب الترجمة الإنجليزية…" required></textarea><span class="field-hint">احرص على دقة النصين وحماية خصوصية الطلاب.</span></label>
+            <div class="activity-extra-fields" id="activityDetailsFields" hidden>
+              <div class="activity-extra-heading"><span class="mini-label">School life details</span><p>Add a little more context about school activities. These fields are optional and appear in the activity detail window.</p></div>
+              <div class="form-row">
+                <label>Activity date<input id="activityDate" type="date"></label>
+                <label>Start time / schedule<input id="activityTime" maxlength="160" placeholder="e.g. 9:00 AM or every Tuesday"></label>
+              </div>
+              <div class="form-row">
+                <label>Location (Arabic)<input id="activityLocation" maxlength="180" placeholder="Enter location in Arabic"></label>
+                <label>Location (English)<input id="activityLocationEn" maxlength="180" placeholder="Activity location"></label>
+              </div>
+              <div class="form-row">
+                <label>Organizer (Arabic)<input id="activityOrganizer" maxlength="180" placeholder="Enter organizer in Arabic"></label>
+                <label>Organizer (English)<input id="activityOrganizerEn" maxlength="180" placeholder="Organizer or supervisor"></label>
+              </div>
+              <div class="form-row">
+                <label>Intended audience (Arabic)<input id="activityAudience" maxlength="180" placeholder="Enter target group in Arabic"></label>
+                <label>Intended audience (English)<input id="activityAudienceEn" maxlength="180" placeholder="Students or target group"></label>
+              </div>
+              <div class="form-row">
+                <label>Duration (Arabic)<input id="activityDuration" maxlength="120" placeholder="Enter duration in Arabic"></label>
+                <label>Duration (English)<input id="activityDurationEn" maxlength="120" placeholder="e.g. One hour"></label>
+              </div>
+              <div class="form-row">
+                <label>Learning goals (Arabic)<textarea id="activityGoals" rows="3" maxlength="1800" placeholder="Describe the learning goals in Arabic"></textarea></label>
+                <label>Learning goals (English)<textarea id="activityGoalsEn" rows="3" maxlength="1800" placeholder="What skills or values does the activity support?"></textarea></label>
+              </div>
+              <div class="form-row">
+                <label>Outcomes &amp; highlights (Arabic)<textarea id="activityOutcomes" rows="3" maxlength="1800" placeholder="Summarize outcomes and highlights in Arabic"></textarea></label>
+                <label>Outcomes &amp; highlights (English)<textarea id="activityOutcomesEn" rows="3" maxlength="1800" placeholder="Outcomes, memorable moments or what participants learned."></textarea></label>
+              </div>
+              <div class="form-row">
+                <label>Full activity details (Arabic)<textarea id="activityDetails" rows="5" maxlength="5000" placeholder="Enter the full activity details in Arabic"></textarea></label>
+                <label>Full activity details (English)<textarea id="activityDetailsEn" rows="5" maxlength="5000" placeholder="Write the full activity description and useful information for visitors."></textarea></label>
+              </div>
+            </div>
             <div class="image-upload-block">
               <label>صورة</label>
               <div class="image-entry"><input id="contentImageUrl" type="url" placeholder="ألصق رابط الصورة (اختياري)" aria-label="رابط الصورة"><label class="upload-button" for="contentImageFile">＋ رفع صورة</label><input id="contentImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden></div>
