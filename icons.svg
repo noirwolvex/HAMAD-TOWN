@@ -40,4 +40,5 @@
   <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></symbol>
   <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><path d="m16 8 5-5m-4 0h4v4"/></symbol>
   <symbol id="i-rocket" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.2-2 4-2 4s2.8-.5 4-2"/><path d="m9 15-3-3c-.8-4 4-8 14-9-1 10-5 14-9 13l-3-3Z"/><path d="M10 14 6 18m6-7h.01"/></symbol>
+  <symbol id="i-trending-up" viewBox="0 0 24 24"><path d="m3 17 6-6 4 4 8-8"/><path d="M14 7h7v7"/></symbol>
 </svg>
