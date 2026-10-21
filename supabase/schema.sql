@@ -8,6 +8,7 @@ create table if not exists public.school_content (
   id uuid primary key default gen_random_uuid(),
   kind text not null check (kind in ('about', 'achievement', 'award', 'activity', 'story', 'teacher', 'student', 'event', 'gallery')),
   section text not null default '',
+  layout text not null default 'standard',
   title text not null,
   title_ar text not null default '',
   title_en text not null default '',
@@ -28,12 +29,19 @@ create table if not exists public.school_content (
 
 -- Add bilingual fields on existing installations as well as fresh projects.
 alter table public.school_content add column if not exists section text not null default '';
+alter table public.school_content add column if not exists layout text not null default 'standard';
 alter table public.school_content add column if not exists title_ar text not null default '';
 alter table public.school_content add column if not exists title_en text not null default '';
 alter table public.school_content add column if not exists eyebrow_ar text not null default '';
 alter table public.school_content add column if not exists eyebrow_en text not null default '';
 alter table public.school_content add column if not exists description_ar text not null default '';
 alter table public.school_content add column if not exists description_en text not null default '';
+
+-- Restrict card layouts to the options supported by the public renderer.
+alter table public.school_content drop constraint if exists school_content_layout_check;
+alter table public.school_content
+  add constraint school_content_layout_check
+  check (layout in ('standard', 'feature'));
 
 -- Allow the dedicated Our story content type and preserve legacy records.
 alter table public.school_content drop constraint if exists school_content_kind_check;
