@@ -1576,7 +1576,7 @@ body[data-page="home"] .ticker { margin-bottom: 55px; }
   mask-image: linear-gradient(110deg, #000, transparent 70%);
 }
 .home-values-band::after {
-  content: "✳";
+  content: "";
   position: absolute;
   z-index: -1;
   top: -80px;
