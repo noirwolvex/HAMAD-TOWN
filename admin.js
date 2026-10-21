@@ -21,6 +21,9 @@
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[char]);
 
+  const iconMarkup = (name, className = "ui-icon") =>
+    '<svg class="' + className + '" aria-hidden="true" focusable="false"><use href="icons.svg#i-' + name + '"></use></svg>';
+
   const kinds = {
     about: "School identity", achievement: "Student achievement", award: "Award",
     activity: "Activity", story: "School story", teacher: "Teacher spotlight",
@@ -158,7 +161,7 @@
     busy = value;
     $("saveContentBtn").disabled = value;
     $("saveContentBtn").style.opacity = value ? ".65" : "1";
-    $("saveContentBtn").innerHTML = value ? "Saving…" : 'Save content <span>↗</span>';
+    $("saveContentBtn").innerHTML = value ? "Saving…" : 'Save content <span>' + iconMarkup("arrow-up-right") + '</span>';
   }
 
   function normalizeRecord(item) {
@@ -224,7 +227,7 @@
     const preview = $("imagePreview");
     const safe = safePreviewUrl(src);
     if (!safe) {
-      preview.innerHTML = '<span>▧</span><p>Image preview will appear here</p>';
+      preview.innerHTML = '<span>' + iconMarkup("image") + '</span><p>Image preview will appear here</p>';
       return;
     }
     preview.innerHTML = '<img src="' + escapeHtml(safe) + '" alt="Selected image preview">';
@@ -263,14 +266,14 @@
         : '<span class="record-status">Published</span>';
       const image = img
         ? '<div class="record-thumb"><img src="' + escapeHtml(img) + '" alt="" loading="lazy"></div>'
-        : '<div class="record-thumb">✦</div>';
+        : '<div class="record-thumb">' + iconMarkup("sparkles") + '</div>';
       const description = String(displayText(item, "description") || "").slice(0, 125);
       const title = displayText(item, "title") || "Untitled entry";
       return '<article class="record-item">' + image +
         '<div class="record-copy"><span class="record-type">' + escapeHtml(sectionLabels[sectionForItem(item)] || "Stories") + ' · ' + escapeHtml(kinds[kindKey] || kindKey) + '</span>' +
         '<h3>' + escapeHtml(title) + '</h3><p>' + escapeHtml(description) + '</p>' + status + '</div>' +
-        '<div class="record-actions"><button type="button" data-action="edit" data-id="' + escapeHtml(item.id) + '">Edit</button>' +
-        '<button type="button" class="delete-record" data-action="delete" data-id="' + escapeHtml(item.id) + '">Delete</button></div></article>';
+        '<div class="record-actions"><button type="button" data-action="edit" data-id="' + escapeHtml(item.id) + '">' + iconMarkup("pencil") + ' Edit</button>' +
+        '<button type="button" class="delete-record" data-action="delete" data-id="' + escapeHtml(item.id) + '">' + iconMarkup("trash-2") + ' Delete</button></div></article>';
     }).join("");
     updateMetrics();
   }
@@ -651,7 +654,7 @@
         showLogin("تعذّر تسجيل الدخول أو التحقق من صلاحيات الإدارة. تحقق من بيانات الحساب وإضافته إلى قائمة مديري المدرسة.", true);
       } finally {
         submit.disabled = false;
-        submit.innerHTML = 'تسجيل الدخول بأمان <span>→</span>';
+        submit.innerHTML = 'تسجيل الدخول بأمان <span>' + iconMarkup("arrow-right") + '</span>';
       }
     });
 
