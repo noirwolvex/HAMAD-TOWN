@@ -217,15 +217,41 @@
     achievement: "↗", award: "✦", story: "◎", gallery: "▧"
   }[kind] || "✦");
 
+  function isAchievementItem(item) {
+    return item.section === "achievements" || ["achievement", "award"].includes(item.kind);
+  }
+
+  function formatAchievementDate(value) {
+    const raw = String(value || "").trim();
+    if (!raw) return "";
+    const date = new Date(raw + "T00:00:00");
+    if (Number.isNaN(date.getTime())) return raw;
+    return new Intl.DateTimeFormat(window.HamadI18n?.getLanguage() === "en" ? "en" : "ar", {
+      year: "numeric", month: "short", day: "numeric"
+    }).format(date);
+  }
+
+  function achievementDetails(item) {
+    const isEnglish = window.HamadI18n?.getLanguage() === "en";
+    return [
+      { label: isEnglish ? "Student / team" : "الطالب / الفريق", value: displayText(item, "recipient") },
+      { label: isEnglish ? "Competition / project" : "المسابقة / المشروع", value: displayText(item, "achievement_event") },
+      { label: isEnglish ? "Result / rank" : "النتيجة / المركز", value: displayText(item, "achievement_result") },
+      { label: isEnglish ? "Organizer" : "الجهة المنظمة", value: displayText(item, "achievement_organization") },
+      { label: isEnglish ? "Achievement date" : "تاريخ الإنجاز", value: formatAchievementDate(item.achievement_date) }
+    ].filter(field => String(field.value || "").trim());
+  }
+
   function cardMarkup(item) {
-    const kind = escapeHtml(item.kind);
     const title = displayText(item, "title");
     const description = displayText(item, "description");
     const image = safeImage(item.image_url);
     const imageHtml = image
       ? `<div class="content-card-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`
       : `<div class="content-card-media content-card-placeholder"><span>${kindSymbol(item.kind)}</span><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`;
-    return `<article class="content-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p><span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Open details ↗" : "افتح التفاصيل ↗"}</span></div></div></article>`;
+    const facts = isAchievementItem(item) ? achievementDetails(item).slice(0, 3) : [];
+    const factsHtml = facts.length ? `<div class="achievement-card-facts">${facts.map(fact => `<span><small>${escapeHtml(fact.label)}</small><b>${escapeHtml(fact.value)}</b></span>`).join("")}</div>` : "";
+    return `<article class="content-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot">✦</span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p>${factsHtml}<span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Open details ↗" : "افتح التفاصيل ↗"}</span></div></div></article>`;
   }
 
   function renderAboutContent(items) {
@@ -336,6 +362,7 @@
           <span class="content-detail-kicker" id="contentDetailKicker"></span>
           <h2 id="contentDetailTitle"></h2>
           <p id="contentDetailDescription"></p>
+          <div class="content-detail-extra" id="contentDetailExtra" hidden></div>
           <div class="content-detail-meta" id="contentDetailMeta"></div>
         </div>
       </section>`;
@@ -391,11 +418,18 @@
       : '<div class="content-detail-placeholder" aria-hidden="true">' + escapeHtml(kindSymbol(item.kind)) + '</div>';
 
     const meta = [];
-    if (item.kind) meta.push(kindLabel(item.kind));
-    if (item.year) meta.push(item.year);
+    if (item.kind) meta.push({ label: isEnglish ? "Content type" : "نوع المحتوى", value: kindLabel(item.kind) });
+    if (item.year) meta.push({ label: isEnglish ? "School year" : "العام الدراسي", value: item.year });
+    if (isAchievementItem(item)) meta.push(...achievementDetails(item));
     modal.querySelector("#contentDetailMeta").innerHTML = meta
-      .map(value => '<span>' + escapeHtml(value) + '</span>')
+      .map(entry => '<span class="content-detail-meta-item"><small>' + escapeHtml(entry.label) + '</small><b>' + escapeHtml(entry.value) + '</b></span>')
       .join("");
+
+    const highlights = displayText(item, "achievement_highlights");
+    const extra = modal.querySelector("#contentDetailExtra");
+    extra.hidden = !isAchievementItem(item) || !highlights;
+    extra.innerHTML = extra.hidden ? "" :
+      '<h3>' + (isEnglish ? "More details" : "تفاصيل إضافية") + '</h3><p>' + escapeHtml(highlights) + '</p>';
 
     const closeButton = modal.querySelector(".content-detail-close");
     const closeLabel = isEnglish ? "Close details" : "إغلاق التفاصيل";
