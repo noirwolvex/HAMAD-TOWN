@@ -1918,3 +1918,81 @@ html[dir="rtl"] body[data-page="home"] .section-link-go { right: 15px; left: aut
 .gallery-note > span .ui-icon { width: 31px; height: 31px; }
 .content-card-placeholder .ui-icon { width: 48px; height: 48px; }
 .content-detail-placeholder .ui-icon { width: 78px; height: 78px; }
+
+
+/* Fix: long Arabic achievement fields must wrap naturally instead of being clipped. */
+body[data-page="achievements"] .content-card-body {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+body[data-page="achievements"] .content-card h3,
+body[data-page="achievements"] .content-card p {
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+body[data-page="achievements"] .achievement-card-facts {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+}
+body[data-page="achievements"] .achievement-card-facts > span {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  padding: 9px 11px;
+  gap: 4px;
+  text-align: start;
+}
+body[data-page="achievements"] .achievement-card-facts small {
+  display: block;
+  min-width: 0;
+  font-size: 9px;
+  line-height: 1.55;
+  letter-spacing: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+body[data-page="achievements"] .achievement-card-facts b {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: visible;
+  color: #314d65;
+  font-size: 11px;
+  line-height: 1.8;
+  font-weight: 800;
+  white-space: normal;
+  text-overflow: clip;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+@media (max-width: 720px) {
+  body[data-page="achievements"] .achievements-grid {
+    grid-template-columns: minmax(0, 1fr);
+    width: 100%;
+    max-width: 560px;
+    margin-inline: auto;
+    gap: 16px;
+  }
+  body[data-page="achievements"] .content-card-media {
+    height: clamp(170px, 45vw, 230px);
+  }
+  body[data-page="achievements"] .content-card-body {
+    padding: 18px;
+  }
+  body[data-page="achievements"] .achievement-card-facts > span {
+    padding: 10px 12px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body[data-page="achievements"] .content-card {
+    transition: none;
+  }
+}
