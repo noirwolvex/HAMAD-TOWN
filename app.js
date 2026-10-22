@@ -130,11 +130,24 @@
     '<svg class="' + className + '" aria-hidden="true" focusable="false"><use href="icons.svg#i-' + name + '"></use></svg>';
 
   // Cards show short previews only; the detail modal always reads the original record.
-  function previewText(value, maxWords = 14) {
-    const text = String(value || "").replace(/\s+/g, " ").trim();
-    if (!text) return "";
-    const words = text.split(" ");
-    return words.length > maxWords ? words.slice(0, maxWords).join(" ") + "…" : text;
+  // Limit both words and characters so very long Arabic words / labels cannot fill tiny cards.
+  function previewText(value, maxWords = 14, maxChars = 110) {
+    const fullText = String(value || "").replace(/\s+/g, " ").trim();
+    if (!fullText) return "";
+
+    let preview = fullText;
+    const words = fullText.split(" ");
+    if (words.length > maxWords) preview = words.slice(0, maxWords).join(" ");
+
+    if (preview.length > maxChars) {
+      const boundary = preview.lastIndexOf(" ", maxChars);
+      const cutAt = boundary >= Math.floor(maxChars * 0.65) ? boundary : maxChars;
+      preview = preview.slice(0, cutAt).trim();
+    }
+
+    return preview.length < fullText.length
+      ? preview.replace(/[\s.,،;؛:!?؟…-]+$/g, "") + "…"
+      : fullText;
   }
 
   const contentById = new Map();
@@ -291,22 +304,23 @@
     if (!fields.length) return "";
     return '<div class="activity-row-meta">' + fields.map(field =>
       '<span class="activity-meta-chip"><i aria-hidden="true">' + iconMarkup(field.icon, "ui-icon activity-meta-icon") + '</i><small>' +
-      escapeHtml(field.label) + ':</small><b>' + escapeHtml(previewText(field.value, 3)) + '</b></span>'
+      escapeHtml(field.label) + ':</small><b>' + escapeHtml(previewText(field.value, 3, 26)) + '</b></span>'
     ).join("") + '</div>';
   }
 
   function cardMarkup(item) {
     const title = displayText(item, "title");
     const description = displayText(item, "description");
-    const titlePreview = previewText(title, 6);
-    const descriptionPreview = previewText(description, 18);
-    const eyebrow = previewText(displayText(item, "eyebrow") || kindLabel(item.kind), 5);
+    const titlePreview = previewText(title, 6, 42);
+    const descriptionPreview = previewText(description, 18, 100);
+    const eyebrow = previewText(displayText(item, "eyebrow") || kindLabel(item.kind), 5, 32);
     const image = safeImage(item.image_url);
     const imageHtml = image
       ? `<div class="content-card-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`
       : `<div class="content-card-media content-card-placeholder"><span>${kindIcon(item.kind)}</span><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`;
-    const facts = isAchievementItem(item) ? achievementDetails(item).slice(0, 3) : [];
-    const factsHtml = facts.length ? `<div class="achievement-card-facts">${facts.map(fact => `<span><small>${escapeHtml(fact.label)}</small><b>${escapeHtml(previewText(fact.value, 3))}</b></span>`).join("")}</div>` : "";
+    const factsLimit = document.body.dataset.page === "home" ? 2 : 3;
+    const facts = isAchievementItem(item) ? achievementDetails(item).slice(0, factsLimit) : [];
+    const factsHtml = facts.length ? `<div class="achievement-card-facts">${facts.map(fact => `<span><small>${escapeHtml(fact.label)}</small><b>${escapeHtml(previewText(fact.value, 3, 26))}</b></span>`).join("")}</div>` : "";
     return `<article class="content-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(eyebrow)}</span><span class="gold-dot">${iconMarkup("sparkles")}</span></div><h3>${escapeHtml(titlePreview)}</h3><p>${escapeHtml(descriptionPreview)}</p>${factsHtml}<span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Open details " + iconMarkup("arrow-up-right") : "افتح التفاصيل " + iconMarkup("arrow-up-right")}</span></div></div></article>`;
   }
 
@@ -327,12 +341,12 @@
       const eyebrow = displayText(item, "eyebrow") || "OUR SCHOOL";
       return `<article class="story-feature-card reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">
         <div class="story-feature-media">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="story-feature-placeholder" aria-hidden="true">${iconMarkup("sparkles")}</div>`}
-          <span class="story-feature-media-tag">${escapeHtml(previewText(eyebrow, 5))}</span>
+          <span class="story-feature-media-tag">${escapeHtml(previewText(eyebrow, 5, 32))}</span>
         </div>
         <div class="story-feature-copy">
-          <span class="story-feature-kicker">${escapeHtml(previewText(eyebrow, 5))}</span>
-          <h2>${escapeHtml(previewText(title, 7))}</h2>
-          <p>${escapeHtml(previewText(displayText(item, "description"), 20))}</p>
+          <span class="story-feature-kicker">${escapeHtml(previewText(eyebrow, 5, 32))}</span>
+          <h2>${escapeHtml(previewText(title, 7, 46))}</h2>
+          <p>${escapeHtml(previewText(displayText(item, "description"), 18, 105))}</p>
           ${item.year ? `<span class="story-feature-year">${escapeHtml(item.year)}</span>` : ""}
           <span class="story-feature-accent" aria-hidden="true">${iconMarkup("sparkles")}</span>
         </div>
@@ -341,7 +355,7 @@
     const standardMarkup = standardEntries.map((item, index) => {
       const image = safeImage(item.image_url);
       const iconName = ["lightbulb", "users", "compass", "house"][index % 4];
-      return `<article class="story-principle ${classes[index % classes.length]} reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(displayText(item, "title"))}">${image ? `<img class="about-principle-image" src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy">` : ""}<span class="principle-icon">${iconMarkup(iconName)}</span><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || "OUR SCHOOL")}</span><h2>${escapeHtml(previewText(displayText(item, "title"), 7))}</h2><p>${escapeHtml(previewText(displayText(item, "description"), 18))}</p></article>`;
+      return `<article class="story-principle ${classes[index % classes.length]} reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(displayText(item, "title"))}">${image ? `<img class="about-principle-image" src="${escapeHtml(image)}" alt="${escapeHtml(displayText(item, "title"))}" loading="lazy">` : ""}<span class="principle-icon">${iconMarkup(iconName)}</span><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || "OUR SCHOOL")}</span><h2>${escapeHtml(previewText(displayText(item, "title"), 7, 46))}</h2><p>${escapeHtml(previewText(displayText(item, "description"), 18, 100))}</p></article>`;
     }).join("");
     container.innerHTML = featuredMarkup + standardMarkup;
   }
@@ -366,8 +380,8 @@
         ? `<span class="activity-icon"><img src="${escapeHtml(image)}" alt="" loading="lazy"></span>`
         : `<span class="activity-icon">${kindIcon(item.kind)}</span>`;
       const title = displayText(item, "title");
-      const titlePreview = previewText(title, 7);
-      const descriptionPreview = previewText(displayText(item, "description"), 18);
+      const titlePreview = previewText(title, 7, 46);
+      const descriptionPreview = previewText(displayText(item, "description"), 18, 100);
       const summary = activityCardSummary(item);
       const openHint = window.HamadI18n?.getLanguage() === "en" ? "View details" : "عرض التفاصيل";
       return `<article class="activity-row is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${icon}<div class="activity-row-copy"><h3>${escapeHtml(titlePreview)}</h3><p>${escapeHtml(descriptionPreview)}</p>${summary}<span class="content-open-hint">${openHint} ${iconMarkup("arrow-up-right")}</span></div><span class="activity-arrow" aria-hidden="true">${iconMarkup("arrow-up-right")}</span></article>`;
@@ -382,8 +396,8 @@
     container.innerHTML = stories.length ? stories.map(item => {
       const image = safeImage(item.image_url) || "https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80";
       const title = displayText(item, "title");
-      const titlePreview = previewText(title, 7);
-      const descriptionPreview = previewText(displayText(item, "description"), 18);
+      const titlePreview = previewText(title, 7, 46);
+      const descriptionPreview = previewText(displayText(item, "description"), 18, 100);
       return `<article class="story-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><div class="story-card-copy"><span class="mini-label">${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><h3>${escapeHtml(titlePreview)}</h3><p>${escapeHtml(descriptionPreview)}</p><span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Read story " + iconMarkup("arrow-up-right") : "اقرأ القصة " + iconMarkup("arrow-up-right")}</span></div></article>`;
     }).join("") : '<div class="empty-state">New stories from our community will be shared here.</div>';
   }
@@ -402,10 +416,10 @@
       const image = safeImage(item.image_url);
       if (index === 2 && !image) {
         const title = displayText(item, "title");
-        return `<figure class="gallery-tile gallery-tile-blue is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(previewText(title, 5))}</b><small>${escapeHtml(previewText(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL", 5))}</small></div><figcaption><span class="gallery-title-preview">${escapeHtml(previewText(title, 5))}</span>${iconMarkup("arrow-up-right")}</figcaption></figure>`;
+        return `<figure class="gallery-tile gallery-tile-blue is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(previewText(title, 5, 36))}</b><small>${escapeHtml(previewText(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL", 5, 30))}</small></div><figcaption><span class="gallery-title-preview">${escapeHtml(previewText(title, 5, 36))}</span>${iconMarkup("arrow-up-right")}</figcaption></figure>`;
       }
       const title = displayText(item, "title");
-      return `<figure class="gallery-tile ${classes[index % classes.length] || ""} is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(previewText(title, 5))}</b></div>`}<figcaption><span class="gallery-title-preview">${escapeHtml(previewText(title, 5))}</span>${iconMarkup("arrow-up-right")}</figcaption></figure>`;
+      return `<figure class="gallery-tile ${classes[index % classes.length] || ""} is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(previewText(title, 5, 36))}</b></div>`}<figcaption><span class="gallery-title-preview">${escapeHtml(previewText(title, 5, 36))}</span>${iconMarkup("arrow-up-right")}</figcaption></figure>`;
     }).join("");
   }
 
