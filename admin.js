@@ -631,8 +631,14 @@
     const submit = loginForm.querySelector('button[type="submit"]');
 
     if (!supabaseClient) {
-      loginForm.querySelectorAll("input, button").forEach(control => { control.disabled = true; });
-      showLogin("يلزم إعداد Supabase أولًا لإتاحة تسجيل الدخول الآمن. أضف Project URL و anon/public key في config.js ثم طبّق supabase/schema.sql.");
+      // Keep the inputs usable so visitors can type, but never unlock the admin workspace without auth.
+      loginForm.querySelectorAll("input").forEach(control => { control.disabled = false; });
+      submit.disabled = false;
+      loginForm.addEventListener("submit", event => {
+        event.preventDefault();
+        showLogin("لا يمكن التحقق من بيانات الدخول حتى تكتمل إعدادات Supabase. أضف Project URL و public key إلى config.js ثم حدّث الصفحة.", true);
+      });
+      showLogin("يمكنك كتابة البريد وكلمة المرور، لكن تسجيل الدخول لن يعمل حتى يتم ربط Supabase وإعداد حساب المدير.");
       return;
     }
 
