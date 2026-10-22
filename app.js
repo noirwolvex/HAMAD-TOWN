@@ -318,9 +318,12 @@
     const imageHtml = image
       ? `<div class="content-card-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`
       : `<div class="content-card-media content-card-placeholder"><span>${kindIcon(item.kind)}</span><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`;
-    const factsLimit = document.body.dataset.page === "home" ? 2 : 3;
+    const isHomeCard = document.body.dataset.page === "home";
+    const factsLimit = isHomeCard ? 2 : 3;
+    const factsPreviewWords = isHomeCard ? 2 : 3;
+    const factsPreviewChars = isHomeCard ? 20 : 26;
     const facts = isAchievementItem(item) ? achievementDetails(item).slice(0, factsLimit) : [];
-    const factsHtml = facts.length ? `<div class="achievement-card-facts">${facts.map(fact => `<span><small>${escapeHtml(fact.label)}</small><b>${escapeHtml(previewText(fact.value, 3, 26))}</b></span>`).join("")}</div>` : "";
+    const factsHtml = facts.length ? `<div class="achievement-card-facts">${facts.map(fact => `<span><small>${escapeHtml(fact.label)}</small><b>${escapeHtml(previewText(fact.value, factsPreviewWords, factsPreviewChars))}</b></span>`).join("")}</div>` : "";
     return `<article class="content-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(eyebrow)}</span><span class="gold-dot">${iconMarkup("sparkles")}</span></div><h3>${escapeHtml(titlePreview)}</h3><p>${escapeHtml(descriptionPreview)}</p>${factsHtml}<span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Open details " + iconMarkup("arrow-up-right") : "افتح التفاصيل " + iconMarkup("arrow-up-right")}</span></div></div></article>`;
   }
 
