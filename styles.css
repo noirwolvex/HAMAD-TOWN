@@ -2142,3 +2142,64 @@ body[data-page="achievements"] .achievement-card-facts b {
   .achievement-card-facts b, .activity-row-copy h3, .activity-row-copy p,
   .story-card-copy h3, .story-card-copy p { transition: none !important; }
 }
+
+
+/* Compact achievement metadata layout also applies to homepage preview cards. */
+.achievement-card-facts {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: stretch;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+}
+.achievement-card-facts > span {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.achievement-card-facts small {
+  font-size: 9px;
+  line-height: 1.5;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.achievement-card-facts b {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: normal;
+  text-overflow: ellipsis;
+  line-height: 1.65;
+}
+body[data-page="home"] .achievement-card-facts {
+  gap: 5px;
+  margin-top: 10px;
+}
+body[data-page="home"] .achievement-card-facts > span {
+  padding: 7px 9px;
+  border-radius: 9px;
+}
+body[data-page="home"] .achievement-card-facts small {
+  font-size: 8px;
+}
+body[data-page="home"] .achievement-card-facts b {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  white-space: normal;
+  font-size: 10px;
+  line-height: 1.65;
+}
+body[data-page="home"] .content-card h3 {
+  -webkit-line-clamp: 2;
+}
+body[data-page="home"] .content-card p {
+  -webkit-line-clamp: 2;
+}
