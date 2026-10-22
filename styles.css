@@ -1996,3 +1996,149 @@ body[data-page="achievements"] .achievement-card-facts b {
     transition: none;
   }
 }
+
+
+/* Card previews: show a few words and an ellipsis; full text remains in the detail modal. */
+.content-card .card-meta > span:first-child {
+  display: block;
+  min-width: 0;
+  max-width: calc(100% - 24px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.content-card h3,
+body[data-page="achievements"] .content-card h3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
+  text-overflow: ellipsis;
+}
+.content-card p,
+body[data-page="achievements"] .content-card p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
+  text-overflow: ellipsis;
+}
+.achievement-card-facts > span {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+}
+.achievement-card-facts small,
+body[data-page="achievements"] .achievement-card-facts small {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
+  text-overflow: ellipsis;
+  line-height: 1.55;
+}
+.achievement-card-facts b,
+body[data-page="achievements"] .achievement-card-facts b {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
+  text-overflow: ellipsis;
+  line-height: 1.7;
+}
+.activity-row-copy h3,
+.story-card-copy h3,
+.story-feature-copy h2,
+.story-principle h2 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
+  text-overflow: ellipsis;
+}
+.activity-row-copy p,
+.story-card-copy p,
+.story-feature-copy p,
+.story-principle p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  min-width: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+  white-space: normal;
+  text-overflow: ellipsis;
+}
+.activity-meta-chip b {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+.story-card-copy .mini-label,
+.story-feature-kicker,
+.story-feature-media-tag {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gallery-note b {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  max-width: 100%;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: normal;
+  text-overflow: ellipsis;
+}
+.gallery-tile .gallery-title-preview {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gallery-tile figcaption .ui-icon {
+  flex: 0 0 16px;
+  width: 16px;
+  height: 16px;
+}
+@media (max-width: 720px) {
+  .achievement-card-facts > span { padding: 8px; }
+  .achievement-card-facts b { font-size: 10px; }
+  .content-card h3 { line-height: 1.5; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .content-card h3, .content-card p,
+  .achievement-card-facts b, .activity-row-copy h3, .activity-row-copy p,
+  .story-card-copy h3, .story-card-copy p { transition: none !important; }
+}
