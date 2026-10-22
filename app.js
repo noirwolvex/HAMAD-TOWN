@@ -402,10 +402,10 @@
       const image = safeImage(item.image_url);
       if (index === 2 && !image) {
         const title = displayText(item, "title");
-        return `<figure class="gallery-tile gallery-tile-blue is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(previewText(title, 5))}</b><small>${escapeHtml(previewText(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL", 5))}</small></div><figcaption>${escapeHtml(previewText(title, 5))} ${iconMarkup("arrow-up-right")}</figcaption></figure>`;
+        return `<figure class="gallery-tile gallery-tile-blue is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(previewText(title, 5))}</b><small>${escapeHtml(previewText(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL", 5))}</small></div><figcaption><span class="gallery-title-preview">${escapeHtml(previewText(title, 5))}</span>${iconMarkup("arrow-up-right")}</figcaption></figure>`;
       }
       const title = displayText(item, "title");
-      return `<figure class="gallery-tile ${classes[index % classes.length] || ""} is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(previewText(title, 5))}</b></div>`}<figcaption>${escapeHtml(previewText(title, 5))} ${iconMarkup("arrow-up-right")}</figcaption></figure>`;
+      return `<figure class="gallery-tile ${classes[index % classes.length] || ""} is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span>${iconMarkup("images")}</span><b>${escapeHtml(previewText(title, 5))}</b></div>`}<figcaption><span class="gallery-title-preview">${escapeHtml(previewText(title, 5))}</span>${iconMarkup("arrow-up-right")}</figcaption></figure>`;
     }).join("");
   }
 
