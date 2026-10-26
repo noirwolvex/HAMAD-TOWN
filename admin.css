@@ -209,3 +209,12 @@ html[dir="rtl"] .library-tools .search-box { flex-direction:row; }
 .achievement-extra-heading p { margin:6px 0 0; color:#7d8e9d; font-size:10px; line-height:1.7; }
 .achievement-extra-fields textarea { min-height:84px; }
 @media (max-width:520px) { .achievement-extra-fields { padding:12px; gap:11px; } }
+
+
+/* Admin controls use the same refined SVG icon language as the public pages. */
+.icon-button { display: inline-grid; place-items: center; }
+.icon-button .school-icon-svg { width: 19px; height: 19px; }
+.upload-button .ui-icon-inline { width: 1.2em; height: 1.2em; margin-inline-end: 5px; }
+.record-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+.record-actions .ui-icon-inline { width: 1em; height: 1em; }
+.privacy-note > .ui-icon-inline { width: 1.15em; height: 1.15em; flex: 0 0 auto; }
