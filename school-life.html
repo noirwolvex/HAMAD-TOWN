@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
+  <script src="icons.js" defer></script>
   <script src="language.js" defer></script>
   <script src="app.js" defer></script>
 </head>
@@ -24,36 +25,36 @@
     </a>
     <button class="menu-toggle" id="menuToggle" aria-label="فتح القائمة" aria-expanded="false"><span></span><span></span></button>
     <nav class="main-nav" id="mainNav" aria-label="القائمة الرئيسية">
-      <a href="story.html"><span class="nav-icon" aria-hidden="true">⌂</span> قصتنا</a>
-      <a href="achievements.html"><span class="nav-icon" aria-hidden="true">✦</span> الإنجازات</a>
-      <a href="school-life.html"><span class="nav-icon" aria-hidden="true">✳</span> الحياة المدرسية</a>
-      <a href="stories.html"><span class="nav-icon" aria-hidden="true">▤</span> القصص</a>
-      <a href="gallery.html"><span class="nav-icon" aria-hidden="true">▧</span> معرض الصور</a>
+      <a href="story.html"><span class="nav-icon" aria-hidden="true" data-icon="home"></span> قصتنا</a>
+      <a href="achievements.html"><span class="nav-icon" aria-hidden="true" data-icon="trophy"></span> الإنجازات</a>
+      <a href="school-life.html"><span class="nav-icon" aria-hidden="true" data-icon="calendar-days"></span> الحياة المدرسية</a>
+      <a href="stories.html"><span class="nav-icon" aria-hidden="true" data-icon="book-open"></span> القصص</a>
+      <a href="gallery.html"><span class="nav-icon" aria-hidden="true" data-icon="images"></span> معرض الصور</a>
     </nav>
-    <div class="header-actions"><button class="language-toggle" id="languageToggle" type="button" aria-label="تغيير اللغة إلى الإنجليزية" lang="en">English</button><a class="nav-cta" href="admin.html">بوابة المدرسة <span>↗</span></a></div>
+    <div class="header-actions"><button class="language-toggle" id="languageToggle" type="button" aria-label="تغيير اللغة إلى الإنجليزية" lang="en">English</button><a class="nav-cta" href="admin.html">بوابة المدرسة <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a></div>
   </header>
   <main class="inner-page-main">
     <section class="section-shell standalone-hero">
-      <a class="back-home-link" href="index.html"><span aria-hidden="true">←</span> العودة إلى الصفحة الرئيسية</a>
+      <a class="back-home-link" href="index.html"><span aria-hidden="true" class="ui-icon-inline" data-icon="arrow-left"></span> العودة إلى الصفحة الرئيسية</a>
       <div class="standalone-hero-grid">
         <div class="standalone-hero-copy reveal">
           <div class="eyebrow"><span class="live-dot"></span> نتعلّم خارج الصف أيضًا</div>
           <h1>كل يوم يحمل<br><em>فرصة جديدة.</em></h1>
           <p class="standalone-description">الأنشطة والأندية والرياضة والفعاليات تمنح طلابنا مساحة للتجربة والتعاون واكتشاف اهتمامات جديدة.</p>
-          <div class="standalone-hero-actions"><a class="button button-dark" href="stories.html">استكشف القسم التالي <span>↗</span></a></div>
+          <div class="standalone-hero-actions"><a class="button button-dark" href="stories.html">استكشف القسم التالي <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a></div>
         </div>
-        <div class="standalone-hero-art reveal reveal-delay"><div class="standalone-icon-wrap"><span class="standalone-icon">✳</span><span class="standalone-orbit orbit-a"></span><span class="standalone-orbit orbit-b"></span><span class="standalone-float float-one">✦</span><span class="standalone-float float-two">✳</span></div><span class="standalone-art-caption">مدرسة مدينة حمد · ننمو معًا</span></div>
+        <div class="standalone-hero-art reveal reveal-delay"><div class="standalone-icon-wrap"><span class="standalone-icon" data-icon="calendar-days" aria-hidden="true"></span><span class="standalone-orbit orbit-a"></span><span class="standalone-orbit orbit-b"></span><span class="standalone-float float-one" data-icon="sparkles" aria-hidden="true"></span><span class="standalone-float float-two" data-icon="sparkles" aria-hidden="true"></span></div><span class="standalone-art-caption">مدرسة مدينة حمد · ننمو معًا</span></div>
       </div>
     </section>
     <section class="section-shell standalone-content school-life-page">
       <div class="life-page-banner reveal"><img src="https://images.unsplash.com/photo-1529390079861-591de354faf5?auto=format&fit=crop&w=1200&q=85" alt="طلاب يشاركون في نشاط جماعي" loading="lazy"><div><span class="mini-label">نتشارك ونجرب ونبدع</span><h2>التجارب الجميلة تصنع ذكريات تدوم.</h2><p>تابع هنا الأندية والأنشطة والفعاليات المدرسية التي يضيفها فريق المدرسة.</p></div></div>
-      <div class="content-page-heading"><span class="mini-label">الأنشطة والفعاليات</span><a class="underlined-link" href="admin.html">أضف نشاطًا <span>↗</span></a></div>
+      <div class="content-page-heading"><span class="mini-label">الأنشطة والفعاليات</span><a class="underlined-link" href="admin.html">أضف نشاطًا <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a></div>
       <div class="activity-list activity-list-page" id="activityList" aria-live="polite"><div class="loading-state">جارٍ تحميل الأنشطة…</div></div>
     </section>
   </main>
   <footer class="site-footer">
-    <div class="footer-main section-shell"><a class="brand brand-footer" href="index.html"><span class="brand-mark"><span>H</span><i></i></span><span class="brand-copy"><strong>مدينة حمد</strong><small>المدرسة · ننمو معًا</small></span></a><p>نحتفي بمجتمعنا.<br>ونلهم خطواتنا القادمة.</p><div class="footer-links"><a href="story.html">قصتنا</a><a href="achievements.html">الإنجازات</a><a href="school-life.html">الحياة المدرسية</a><a href="stories.html">القصص</a><a href="gallery.html">معرض الصور</a><a href="admin.html">بوابة المدرسة ↗</a></div></div>
-    <div class="footer-bottom section-shell"><span>© <span id="yearNow"></span> مدرسة مدينة حمد</span><span>صُنع بفخر من أجل مجتمع مدرستنا <b>✦</b></span></div>
+    <div class="footer-main section-shell"><a class="brand brand-footer" href="index.html"><span class="brand-mark"><span>H</span><i></i></span><span class="brand-copy"><strong>مدينة حمد</strong><small>المدرسة · ننمو معًا</small></span></a><p>نحتفي بمجتمعنا.<br>ونلهم خطواتنا القادمة.</p><div class="footer-links"><a href="story.html">قصتنا</a><a href="achievements.html">الإنجازات</a><a href="school-life.html">الحياة المدرسية</a><a href="stories.html">القصص</a><a href="gallery.html">معرض الصور</a><a href="admin.html">بوابة المدرسة <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a></div></div>
+    <div class="footer-bottom section-shell"><span>© <span id="yearNow"></span> مدرسة مدينة حمد</span><span>صُنع بفخر من أجل مجتمع مدرستنا <b class="ui-icon-inline" data-icon="sparkles" aria-hidden="true"></b></span></div>
   </footer>
   <div class="toast" id="siteToast" role="status" aria-live="polite"></div>
 </body>
