@@ -142,25 +142,35 @@ create table if not exists public.school_admins (
 alter table public.school_content enable row level security;
 alter table public.school_admins enable row level security;
 
--- Admin status is checked by a small SECURITY DEFINER function. Direct access
--- to the allow-list table remains revoked from browser clients.
+-- Admin allow-list: authenticated users may inspect only their own access row.
+grant select on public.school_admins to authenticated;
+revoke all on public.school_admins from anon;
+
+drop policy if exists "School admins can read their own access record" on public.school_admins;
+create policy "School admins can read their own access record"
+on public.school_admins
+for select
+to authenticated
+using ((select auth.uid()) = user_id);
+
+-- Verify admin status with caller privileges, avoiding a public SECURITY DEFINER helper.
 create or replace function public.is_school_admin()
 returns boolean
 language sql
 stable
-security definer
-set search_path = public
+security invoker
+set search_path = ''
 as $$
   select exists (
     select 1
     from public.school_admins a
-    where a.user_id = auth.uid()
+    where a.user_id = (select auth.uid())
   );
 $$;
 
-revoke all on public.school_admins from anon, authenticated;
 revoke all on function public.is_school_admin() from public;
-grant execute on function public.is_school_admin() to anon, authenticated;
+revoke all on function public.is_school_admin() from anon;
+grant execute on function public.is_school_admin() to authenticated;
 
 grant select on public.school_content to anon, authenticated;
 grant insert, update, delete on public.school_content to authenticated;
@@ -170,7 +180,14 @@ create policy "Published school content is public"
 on public.school_content
 for select
 to anon, authenticated
-using (published = true or public.is_school_admin());
+using (published = true);
+
+drop policy if exists "School admins can read all content" on public.school_content;
+create policy "School admins can read all content"
+on public.school_content
+for select
+to authenticated
+using (public.is_school_admin());
 
 drop policy if exists "School admins can insert content" on public.school_content;
 create policy "School admins can insert content"
