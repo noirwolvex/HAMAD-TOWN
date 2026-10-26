@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="admin.css">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
+  <script src="icons.js" defer></script>
   <script src="app.js" defer></script>
   <script src="language.js" defer></script>
   <script src="admin.js" defer></script>
@@ -23,32 +24,32 @@
       <span class="brand-mark"><span>H</span><i></i></span>
       <span class="brand-copy"><strong>مدينة حمد</strong><small>المدرسة · ننمو معًا</small></span>
     </a>
-    <div class="admin-header-right"><button class="language-toggle" id="languageToggle" type="button" aria-label="تغيير اللغة إلى الإنجليزية" lang="en">English</button><span class="portal-mark"><span class="portal-dot"></span> بوابة إدارة المدرسة</span><a class="portal-home-link" href="index.html">عرض الموقع <span>↗</span></a><button id="signOutBtn" class="button button-outline sign-out-btn" type="button" hidden>تسجيل الخروج</button></div>
+    <div class="admin-header-right"><button class="language-toggle" id="languageToggle" type="button" aria-label="تغيير اللغة إلى الإنجليزية" lang="en">English</button><span class="portal-mark"><span class="portal-dot"></span> بوابة إدارة المدرسة</span><a class="portal-home-link" href="index.html">عرض الموقع <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a><button id="signOutBtn" class="button button-outline sign-out-btn" type="button" hidden><span class="ui-icon-inline" data-icon="log-out" aria-hidden="true"></span> تسجيل الخروج</button></div>
   </header>
 
   <main class="admin-main">
     <section class="portal-welcome">
       <div><div class="section-kicker"><span>نظام المحتوى</span> إدارة المحتوى</div><h1>اجعل أخبارنا الجميلة <em>مرئية للجميع.</em></h1><p>أضف اللحظات والأشخاص والإنجازات التي تروي قصة مدرسة مدينة حمد.</p></div>
-      <div class="welcome-spark" aria-hidden="true">✳</div>
+      <div class="welcome-spark" aria-hidden="true" data-icon="sparkles"></div>
     </section>
 
     <section class="backend-login panel" id="backendLogin" hidden>
-      <span class="portal-icon">⌁</span><h2>سجّل الدخول للنشر</h2>
+      <span class="portal-icon" data-icon="lock-keyhole" aria-hidden="true"></span><h2>سجّل الدخول للنشر</h2>
       <p>استخدم حساب إدارة المدرسة المعتمد. لا يستطيع زوّار الموقع إدارة محتوى المدرسة.</p>
       <form id="loginForm" class="login-form">
         <label>البريد الإلكتروني<input id="loginEmail" type="email" autocomplete="username" placeholder="admin@school.example" required></label>
         <label>كلمة المرور<input id="loginPassword" type="password" autocomplete="current-password" placeholder="أدخل كلمة المرور" required></label>
-        <button class="button button-dark" type="submit">تسجيل الدخول بأمان <span>→</span></button>
+        <button class="button button-dark" type="submit">تسجيل الدخول بأمان <span class="ui-icon-inline" data-icon="arrow-right" aria-hidden="true"></span></button>
         <p id="loginMessage" class="form-message" role="status"></p>
       </form>
     </section>
 
     <div id="adminWorkspace" hidden>
-      <section class="demo-banner" id="demoBanner"><span class="demo-banner-icon">i</span><div><strong>الوضع التجريبي — تُحفَظ التغييرات في هذا المتصفح فقط.</strong><p>تحفظ هذه النسخة التجريبية المحتوى والصور المرفوعة في هذا المتصفح فقط. لنشر المحتوى لجميع الزوار، اربط Supabase وطبّق <code>supabase/schema.sql</code>.</p></div><a href="README.md">دليل الإعداد ↗</a></section>
+      <section class="demo-banner" id="demoBanner"><span class="demo-banner-icon" data-icon="info" aria-hidden="true"></span><div><strong>الوضع التجريبي — تُحفَظ التغييرات في هذا المتصفح فقط.</strong><p>تحفظ هذه النسخة التجريبية المحتوى والصور المرفوعة في هذا المتصفح فقط. لنشر المحتوى لجميع الزوار، اربط Supabase وطبّق <code>supabase/schema.sql</code>.</p></div><a href="README.md">دليل الإعداد <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a></section>
       <section class="admin-metrics" aria-label="Content summary">
-        <article class="metric-card"><span class="metric-icon metric-blue">▤</span><div><span>إجمالي المحتوى</span><strong id="totalCount">0</strong></div></article>
-        <article class="metric-card"><span class="metric-icon metric-gold">✦</span><div><span>منشور</span><strong id="publishedCount">0</strong></div></article>
-        <article class="metric-card"><span class="metric-icon metric-purple">◷</span><div><span>مسودات</span><strong id="draftCount">0</strong></div></article>
+        <article class="metric-card"><span class="metric-icon metric-blue" data-icon="book-open" aria-hidden="true"></span><div><span>إجمالي المحتوى</span><strong id="totalCount">0</strong></div></article>
+        <article class="metric-card"><span class="metric-icon metric-gold" data-icon="trophy" aria-hidden="true"></span><div><span>منشور</span><strong id="publishedCount">0</strong></div></article>
+        <article class="metric-card"><span class="metric-icon metric-purple" data-icon="clock" aria-hidden="true"></span><div><span>مسودات</span><strong id="draftCount">0</strong></div></article>
       </section>
       <div class="admin-columns">
         <section class="editor-panel panel">
@@ -89,28 +90,28 @@
             <label>الوصف بالإنجليزية <span class="required-star">*</span><textarea id="contentDescriptionEn" rows="4" maxlength="800" placeholder="اكتب الترجمة الإنجليزية…" required></textarea><span class="field-hint">احرص على دقة النصين وحماية خصوصية الطلاب.</span></label>
             <div class="image-upload-block">
               <label>صورة</label>
-              <div class="image-entry"><input id="contentImageUrl" type="url" placeholder="ألصق رابط الصورة (اختياري)" aria-label="رابط الصورة"><label class="upload-button" for="contentImageFile">＋ رفع صورة</label><input id="contentImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden></div>
-              <div class="image-preview" id="imagePreview"><span>▧</span><p>ستظهر معاينة الصورة هنا</p></div>
+              <div class="image-entry"><input id="contentImageUrl" type="url" placeholder="ألصق رابط الصورة (اختياري)" aria-label="رابط الصورة"><label class="upload-button" for="contentImageFile"><span class="ui-icon-inline" data-icon="upload" aria-hidden="true"></span> رفع صورة</label><input id="contentImageFile" type="file" accept="image/png,image/jpeg,image/webp,image/gif" hidden></div>
+              <div class="image-preview" id="imagePreview"><span class="ui-icon-inline" data-icon="images" aria-hidden="true"></span><p>ستظهر معاينة الصورة هنا</p></div>
               <span class="field-hint">الصيغ المدعومة: JPG وPNG وWEBP وGIF. استخدم صورًا معتمدة من المدرسة وتأكد من الإذن قبل النشر.</span>
             </div>
             <div class="form-row form-row-options"><label class="check-control"><input id="contentFeatured" type="checkbox" checked><span><b>إبراز المحتوى</b><small>امنح هذا المحتوى أولوية في القائمة.</small></span></label><label class="check-control"><input id="contentPublished" type="checkbox" checked><span><b>النشر على الموقع</b><small>تبقى المسودات مخفية عن الزوار.</small></span></label></div>
-            <div class="form-actions"><button class="button button-dark" id="saveContentBtn" type="submit">حفظ المحتوى <span>↗</span></button><button class="button button-outline" id="resetFormBtn" type="button">مسح النموذج</button></div>
+            <div class="form-actions"><button class="button button-dark" id="saveContentBtn" type="submit">حفظ المحتوى <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></button><button class="button button-outline" id="resetFormBtn" type="button"><span class="ui-icon-inline" data-icon="refresh-cw" aria-hidden="true"></span> مسح النموذج</button></div>
             <p class="form-message" id="formMessage" role="status"></p>
           </form>
         </section>
 
         <section class="content-manager panel">
-          <div class="panel-heading manager-heading"><div><span class="mini-label">قصة مدرستك</span><h2>مكتبة المحتوى <span class="entry-count" id="libraryCount">0</span></h2></div><button class="icon-button" id="exportBtn" type="button" title="تصدير المحتوى بصيغة JSON" aria-label="تصدير المحتوى بصيغة JSON">⇩</button></div>
-          <div class="library-tools"><label class="search-box"><span>⌕</span><input id="searchContent" type="search" placeholder="ابحث عن قصة…" aria-label="البحث في المحتوى"></label><select id="filterSection" aria-label="Filter content by section"><option value="all">All sections</option><option value="our-story">Our story</option><option value="achievements">Achievements</option><option value="school-life">School life</option><option value="stories">Stories</option><option value="gallery">Gallery</option></select><select id="filterKind" aria-label="تصفية حسب نوع المحتوى"><option value="all">All content types</option><option value="about">School identity</option><option value="achievement">الإنجازات</option><option value="award">الجوائز</option><option value="activity">الأنشطة</option><option value="story">القصص</option><option value="teacher">المعلمون</option><option value="student">الطلاب</option><option value="event">الفعاليات</option><option value="gallery">معرض الصور</option></select></div>
+          <div class="panel-heading manager-heading"><div><span class="mini-label">قصة مدرستك</span><h2>مكتبة المحتوى <span class="entry-count" id="libraryCount">0</span></h2></div><button class="icon-button" id="exportBtn" type="button" title="تصدير المحتوى بصيغة JSON" aria-label="تصدير المحتوى بصيغة JSON"><span class="ui-icon-inline" data-icon="download" aria-hidden="true"></span></button></div>
+          <div class="library-tools"><label class="search-box"><span class="ui-icon-inline" data-icon="search" aria-hidden="true"></span><input id="searchContent" type="search" placeholder="ابحث عن قصة…" aria-label="البحث في المحتوى"></label><select id="filterSection" aria-label="Filter content by section"><option value="all">All sections</option><option value="our-story">Our story</option><option value="achievements">Achievements</option><option value="school-life">School life</option><option value="stories">Stories</option><option value="gallery">Gallery</option></select><select id="filterKind" aria-label="تصفية حسب نوع المحتوى"><option value="all">All content types</option><option value="about">School identity</option><option value="achievement">الإنجازات</option><option value="award">الجوائز</option><option value="activity">الأنشطة</option><option value="story">القصص</option><option value="teacher">المعلمون</option><option value="student">الطلاب</option><option value="event">الفعاليات</option><option value="gallery">معرض الصور</option></select></div>
           <div class="record-list" id="recordList" aria-live="polite"><div class="loading-state">جارٍ تحميل مكتبة المحتوى…</div></div>
           <div class="library-footer"><span><span class="portal-dot"></span> حُفِظ المحتوى في الوضع الحالي</span><span id="saveStatus">جاهز</span></div>
         </section>
       </div>
-      <section class="privacy-note"><span>✦</span><p><strong>قصة مدرسية بمسؤولية.</strong> يرجى نشر الصور والمعلومات المعتمدة فقط. تجنّب معلومات الاتصال الخاصة وعناوين الطلاب والمعلومات الحساسة وأي تفاصيل تعريفية عن الأطفال دون موافقة.</p></section>
+      <section class="privacy-note"><span class="ui-icon-inline" data-icon="sparkles" aria-hidden="true"></span><p><strong>قصة مدرسية بمسؤولية.</strong> يرجى نشر الصور والمعلومات المعتمدة فقط. تجنّب معلومات الاتصال الخاصة وعناوين الطلاب والمعلومات الحساسة وأي تفاصيل تعريفية عن الأطفال دون موافقة.</p></section>
     </div>
   </main>
 
   <div class="admin-toast" id="adminToast" role="status" aria-live="polite"></div>
-  <footer class="admin-footer"><span>مدرسة مدينة حمد · بوابة المحتوى</span><a href="index.html">العودة إلى الموقع الرئيسي ↗</a></footer>
+  <footer class="admin-footer"><span>مدرسة مدينة حمد · بوابة المحتوى</span><a href="index.html">العودة إلى الموقع الرئيسي <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a></footer>
 </body>
 </html>
