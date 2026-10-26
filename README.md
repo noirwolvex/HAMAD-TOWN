@@ -48,33 +48,28 @@ Do not treat demo mode as an authenticated production admin system.
 
 ### Shared publishing with Supabase
 
-To allow approved school staff to publish content that appears for every visitor:
+The repository's `config.js` is connected to the active Supabase project **HAMAD TOWN**. It uses a browser-safe publishable key; do not replace it with a service-role or secret key. The live project has the schema from `supabase/schema.sql`, row-level security policies, and the `school-media` image bucket applied.
 
-1. Create a Supabase project.
-2. In Supabase Dashboard → SQL Editor, run the complete `supabase/schema.sql` file.
-3. In Supabase Dashboard → Authentication → Users, create the first admin account using email/password.
-4. In SQL Editor, replace the example email in the final statement in `supabase/schema.sql` and run it:
+To create the first school administrator:
+
+1. In Supabase Dashboard, open **Authentication → Users** and create a user with the intended admin email and password, or invite that email and finish the invitation/password setup. The portal does not provide public administrator registration.
+2. In **SQL Editor**, replace `admin@example.com` with the exact email of that Auth user and run:
 
    ```sql
    insert into public.school_admins (user_id)
-   select id from auth.users where email = 'admin@your-school.example'
+   select id
+   from auth.users
+   where lower(email) = lower('admin@example.com')
    on conflict (user_id) do nothing;
    ```
 
-5. Copy the project's **Project URL** and **anon/public key** into `config.js`:
+   If no row is inserted, first confirm that the Auth user exists and that the email is correct.
+3. Open `admin.html`, sign in with that account's email and password, and publish a test entry. The portal verifies the allow-list before showing the content editor.
+4. Confirm the entry appears on the public website in a separate browser/device.
 
-   ```js
-   window.SCHOOL_CONFIG = {
-     supabaseUrl: "https://YOUR_PROJECT.supabase.co",
-     supabaseAnonKey: "YOUR_SUPABASE_ANON_PUBLIC_KEY"
-   };
-   ```
+Only accounts listed in `public.school_admins` can manage shared content. Anonymous visitors can read published records only; drafts and write operations remain protected by row-level security. The schema can also be run on a fresh Supabase project through Dashboard → SQL Editor.
 
-6. Publish the updated files to your static host. Open `admin.html`, sign in using the admin account, and publish a test entry. Verify it appears in the public website in a separate browser/device.
-
-**Never put a Supabase `service_role` key in `config.js` or browser code.** The anon/public key is intended for clients; row-level security in `schema.sql` protects writes and media uploads. Only accounts added to `public.school_admins` can write shared content.
-
-The schema uses a public image bucket so published image URLs can be shown on the public site. Only authenticated school administrators may upload/delete images. The site accepts image uploads up to 8 MB with Supabase.
+The public `school-media` bucket serves approved images. Only approved administrators may upload/delete images, and uploads are stored under the user's ID folder. Images up to 8 MB are supported.
 
 ## Before going live
 
