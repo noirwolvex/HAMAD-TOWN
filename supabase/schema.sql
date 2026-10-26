@@ -179,15 +179,15 @@ drop policy if exists "Published school content is public" on public.school_cont
 create policy "Published school content is public"
 on public.school_content
 for select
-to anon, authenticated
+to anon
 using (published = true);
 
-drop policy if exists "School admins can read all content" on public.school_content;
-create policy "School admins can read all content"
+drop policy if exists "Authenticated users can read published content or admin drafts" on public.school_content;
+create policy "Authenticated users can read published content or admin drafts"
 on public.school_content
 for select
 to authenticated
-using (public.is_school_admin());
+using (published = true or public.is_school_admin());
 
 drop policy if exists "School admins can insert content" on public.school_content;
 create policy "School admins can insert content"
