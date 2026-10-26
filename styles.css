@@ -1849,3 +1849,40 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
   .content-card:hover, .section-link-card:hover, .story-card:hover,
   .story-principle:hover, .activity-list-page .activity-row:hover { transform:none !important; }
 }
+
+
+/* Unified school icon system: crisp line icons with consistent sizing and motion. */
+.ui-icon-inline {
+  display: inline-grid;
+  place-items: center;
+  width: 1.12em;
+  height: 1.12em;
+  line-height: 1;
+  vertical-align: -0.17em;
+  flex: 0 0 auto;
+}
+[data-icon] > .school-icon-svg {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+  transition: transform .22s ease, opacity .22s ease;
+}
+.ui-icon-inline > .school-icon-svg { width: 100%; height: 100%; }
+.main-nav a:hover .nav-icon > .school-icon-svg,
+.section-link-card:hover .section-link-icon > .school-icon-svg {
+  transform: translateY(-1px) scale(1.08);
+}
+.button:hover .ui-icon-inline > .school-icon-svg,
+.nav-cta:hover .ui-icon-inline > .school-icon-svg,
+.underlined-link:hover .ui-icon-inline > .school-icon-svg {
+  transform: translate(1px, -1px);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-icon] > .school-icon-svg { transition: none; }
+}
