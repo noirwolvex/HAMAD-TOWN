@@ -394,6 +394,19 @@
     $("signOutBtn").hidden = isDemo;
   }
 
+  async function verifySchoolAdminAccess() {
+    if (!supabaseClient || !currentSession) return false;
+    const { data, error } = await supabaseClient.rpc("is_school_admin");
+    if (error) throw error;
+    return data === true;
+  }
+
+  function adminAccessMessage() {
+    return window.HamadI18n?.getLanguage() === "ar"
+      ? "هذا الحساب غير معتمد لإدارة بوابة المدرسة. تواصل مع مسؤول النظام."
+      : "This account is not approved to manage the school portal. Contact the system administrator.";
+  }
+
   function setupImageInputs() {
     $("contentImageUrl").addEventListener("input", event => {
       pendingImageFile = null;
@@ -540,10 +553,23 @@
         const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
         if (error) throw error;
         currentSession = data.session;
+
+        const approved = await verifySchoolAdminAccess();
+        if (!approved) {
+          await supabaseClient.auth.signOut();
+          currentSession = null;
+          setMessage(adminAccessMessage(), true, "loginMessage");
+          return;
+        }
+
         showWorkspace(false);
         await loadBackendItems();
-        showToast("Signed in. Database permissions control what you can publish.");
+        showToast("Signed in securely. School admin access verified.");
       } catch (error) {
+        if (currentSession) {
+          try { await supabaseClient.auth.signOut(); } catch (_) {}
+          currentSession = null;
+        }
         setMessage(error.message || "Sign-in failed.", true, "loginMessage");
       } finally {
         submit.disabled = false;
@@ -553,13 +579,18 @@
 
     $("signOutBtn").addEventListener("click", async () => {
       if (!supabaseClient) return;
-      await supabaseClient.auth.signOut();
-      currentSession = null;
-      items = [];
-      $("adminWorkspace").hidden = true;
-      $("backendLogin").hidden = false;
-      $("signOutBtn").hidden = true;
-      setMessage("You have been signed out.", false, "loginMessage");
+      try {
+        const { error } = await supabaseClient.auth.signOut();
+        if (error) throw error;
+        currentSession = null;
+        items = [];
+        $("adminWorkspace").hidden = true;
+        $("backendLogin").hidden = false;
+        $("signOutBtn").hidden = true;
+        setMessage("You have been signed out.", false, "loginMessage");
+      } catch (error) {
+        showToast(error.message || "Sign-out failed.");
+      }
     });
   }
 
@@ -587,10 +618,21 @@
       if (error) throw error;
       currentSession = data.session;
       if (currentSession) {
+        const approved = await verifySchoolAdminAccess();
+        if (!approved) {
+          await supabaseClient.auth.signOut();
+          currentSession = null;
+          setMessage(adminAccessMessage(), true, "loginMessage");
+          return;
+        }
         showWorkspace(false);
         await loadBackendItems();
       }
     } catch (error) {
+      if (currentSession) {
+        try { await supabaseClient.auth.signOut(); } catch (_) {}
+        currentSession = null;
+      }
       setMessage("Could not verify the current session: " + error.message, true, "loginMessage");
     }
   });
