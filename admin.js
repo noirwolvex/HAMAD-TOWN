@@ -87,6 +87,12 @@
         achievement_event_ar: "", achievement_event_en: "",
         achievement_result_ar: "", achievement_result_en: "",
         achievement_organization_ar: "", achievement_organization_en: "",
+        achievement_level_ar: "", achievement_level_en: "",
+        achievement_field_ar: "", achievement_field_en: "",
+        achievement_grade_ar: "", achievement_grade_en: "",
+        achievement_mentor_ar: "", achievement_mentor_en: "",
+        achievement_impact_ar: "", achievement_impact_en: "",
+        achievement_certificate_url: "",
         achievement_date: "", achievement_highlights_ar: "", achievement_highlights_en: ""
       };
     }
@@ -99,6 +105,17 @@
       achievement_result_en: $("achievementResultEn").value.trim(),
       achievement_organization_ar: $("achievementOrganization").value.trim(),
       achievement_organization_en: $("achievementOrganizationEn").value.trim(),
+      achievement_level_ar: $("achievementLevel").value.trim(),
+      achievement_level_en: $("achievementLevelEn").value.trim(),
+      achievement_field_ar: $("achievementField").value.trim(),
+      achievement_field_en: $("achievementFieldEn").value.trim(),
+      achievement_grade_ar: $("achievementGrade").value.trim(),
+      achievement_grade_en: $("achievementGradeEn").value.trim(),
+      achievement_mentor_ar: $("achievementMentor").value.trim(),
+      achievement_mentor_en: $("achievementMentorEn").value.trim(),
+      achievement_impact_ar: $("achievementImpact").value.trim(),
+      achievement_impact_en: $("achievementImpactEn").value.trim(),
+      achievement_certificate_url: $("achievementCertificateUrl").value.trim(),
       achievement_date: $("achievementDate").value,
       achievement_highlights_ar: $("achievementHighlights").value.trim(),
       achievement_highlights_en: $("achievementHighlightsEn").value.trim()
@@ -208,6 +225,9 @@
       const haystack = [item.title, item.title_ar, item.title_en, item.description, item.description_ar, item.description_en, item.eyebrow, item.eyebrow_ar, item.eyebrow_en, item.year, item.kind, item.section, item.recipient_ar, item.recipient_en,
         item.achievement_event_ar, item.achievement_event_en, item.achievement_result_ar, item.achievement_result_en,
         item.achievement_organization_ar, item.achievement_organization_en, item.achievement_date,
+        item.achievement_level_ar, item.achievement_level_en, item.achievement_field_ar, item.achievement_field_en,
+        item.achievement_grade_ar, item.achievement_grade_en, item.achievement_mentor_ar, item.achievement_mentor_en,
+        item.achievement_impact_ar, item.achievement_impact_en, item.achievement_certificate_url,
         item.achievement_highlights_ar, item.achievement_highlights_en].join(" ").toLowerCase();
       return matchesKind && matchesSection && haystack.includes(q);
     });
@@ -246,6 +266,9 @@
     syncLayoutControl("standard");
     ["achievementRecipient", "achievementRecipientEn", "achievementEvent", "achievementEventEn",
       "achievementResult", "achievementResultEn", "achievementOrganization", "achievementOrganizationEn",
+      "achievementLevel", "achievementLevelEn", "achievementField", "achievementFieldEn",
+      "achievementGrade", "achievementGradeEn", "achievementMentor", "achievementMentorEn",
+      "achievementImpact", "achievementImpactEn", "achievementCertificateUrl",
       "achievementDate", "achievementHighlights", "achievementHighlightsEn"].forEach(id => { $(id).value = ""; });
     syncAchievementFields();
     $("contentFeatured").checked = true;
@@ -278,6 +301,17 @@
     $("achievementResultEn").value = record.achievement_result_en || "";
     $("achievementOrganization").value = record.achievement_organization_ar || "";
     $("achievementOrganizationEn").value = record.achievement_organization_en || "";
+    $("achievementLevel").value = record.achievement_level_ar || "";
+    $("achievementLevelEn").value = record.achievement_level_en || "";
+    $("achievementField").value = record.achievement_field_ar || "";
+    $("achievementFieldEn").value = record.achievement_field_en || "";
+    $("achievementGrade").value = record.achievement_grade_ar || "";
+    $("achievementGradeEn").value = record.achievement_grade_en || "";
+    $("achievementMentor").value = record.achievement_mentor_ar || "";
+    $("achievementMentorEn").value = record.achievement_mentor_en || "";
+    $("achievementImpact").value = record.achievement_impact_ar || "";
+    $("achievementImpactEn").value = record.achievement_impact_en || "";
+    $("achievementCertificateUrl").value = record.achievement_certificate_url || "";
     $("achievementDate").value = record.achievement_date || "";
     $("achievementHighlights").value = record.achievement_highlights_ar || "";
     $("achievementHighlightsEn").value = record.achievement_highlights_en || "";
