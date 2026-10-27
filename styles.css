@@ -2510,3 +2510,253 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
   .achievement-art-badge,.achievement-art-star,.achievements-grid .content-card { animation:none !important; }
   .achievement-pillar,.achievement-pillar:hover { transition:none !important; transform:none !important; }
 }
+
+
+/* SCHOOL LIFE PAGE EXPERIENCE 2026 — a lively, animated journey beyond the classroom. */
+.life-hero {
+  isolation:isolate;
+  padding-top:38px;
+  padding-bottom:20px;
+}
+.life-hero::before {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  inset:78px -3.5vw 3px;
+  border:1px solid rgba(190,224,239,.66);
+  border-radius:42px;
+  background:
+    radial-gradient(circle at 78% 24%,rgba(181,230,251,.42),transparent 31%),
+    radial-gradient(circle at 12% 83%,rgba(255,223,137,.31),transparent 31%),
+    linear-gradient(125deg,rgba(244,251,255,.96),rgba(255,255,255,.92) 55%,rgba(255,250,235,.78));
+  pointer-events:none;
+}
+.life-hero-grid { grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr); gap:clamp(24px,4.8vw,70px); min-height:445px; }
+.life-hero-copy { padding-block:12px 20px; }
+.life-main-eyebrow { background:rgba(255,255,255,.84); }
+.life-hero-kicker { display:inline-flex; align-items:center; gap:8px; margin-bottom:13px; color:#318ab5; font-size:10px; font-weight:800; }
+.life-hero-kicker .ui-icon-inline { width:16px; height:16px; color:#bd922d; }
+.life-hero h1 { max-width:650px; font-size:clamp(45px,5.1vw,72px); line-height:1.27; letter-spacing:-1.3px; }
+.life-hero h1 em { background:linear-gradient(105deg,#287ca2 0%,#2999c9 53%,#b78c2c 108%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.life-hero h1 em::after { height:8px; bottom:-1px; border-radius:100%; opacity:.72; background:#f1c65f; }
+.life-hero .standalone-description { max-width:525px; font-size:14px; line-height:2.15; color:#6b8092; }
+.life-hero-actions { gap:10px; align-items:center; }
+.life-hero-actions .button { min-height:47px; }
+.life-hero-actions .button-outline { gap:8px; }
+.life-hero-signature { display:inline-flex; align-items:center; gap:11px; margin-top:24px; padding:10px 14px; border:1px solid #dcecf4; border-radius:16px; background:rgba(255,255,255,.82); box-shadow:0 9px 25px rgba(37,84,111,.055); }
+.life-signature-icon { display:grid; place-items:center; width:39px; height:39px; flex:0 0 39px; border-radius:13px; background:#e4f6ff; color:#348cb4; }
+.life-signature-icon .school-icon-svg { width:21px; height:21px; }
+.life-hero-signature b,.life-hero-signature small { display:block; }
+.life-hero-signature b { color:#29485f; font-size:11px; font-weight:800; }
+.life-hero-signature small { margin-top:3px; color:#8698a6; font-size:9px; }
+.life-signature-seal { display:grid; place-items:center; width:27px; height:27px; margin-inline-start:8px; color:#78ae98; }
+.life-signature-seal .school-icon-svg { width:23px; height:23px; }
+.life-hero-art { min-height:440px; padding:0; }
+.life-art-stage { position:relative; isolation:isolate; width:min(100%,490px); height:430px; margin-inline:auto; perspective:900px; }
+.life-art-grid { position:absolute; z-index:-2; inset:7% 2%; border-radius:35px; background-image:linear-gradient(rgba(82,166,205,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(82,166,205,.1) 1px,transparent 1px); background-size:24px 24px; mask-image:radial-gradient(ellipse at center,#000 16%,transparent 75%); }
+.life-art-orbit { position:absolute; left:50%; top:45%; border:1px solid rgba(88,176,215,.34); border-radius:50%; pointer-events:none; }
+.life-orbit-a { width:245px; height:245px; transform:translate(-50%,-50%) rotateX(65deg) rotate(-17deg); animation:life-orbit-turn 25s linear infinite; }
+.life-orbit-b { width:320px; height:320px; border-style:dashed; border-color:rgba(212,170,65,.35); transform:translate(-50%,-50%) rotateX(66deg) rotate(20deg); animation:life-orbit-turn 34s linear infinite reverse; }
+.life-orbit-c { width:370px; height:370px; border-color:rgba(111,181,212,.19); transform:translate(-50%,-50%) rotateX(70deg) rotate(10deg); }
+.life-art-core { position:absolute; left:50%; top:43%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:11px; width:178px; height:184px; border:1px solid rgba(255,255,255,.95); border-radius:49px 49px 41px 17px; background:linear-gradient(145deg,#f4fbff 0%,#cceeff 48%,#a8def4 100%); box-shadow:0 26px 64px rgba(47,133,171,.18),inset 0 1px 0 #fff; transform:translate(-50%,-50%) rotate(-5deg); animation:life-core-float 5.7s ease-in-out infinite; }
+.life-art-core::before { content:""; position:absolute; inset:9px; border:1px solid rgba(255,255,255,.62); border-radius:39px 39px 33px 13px; }
+.life-art-halo { position:absolute; z-index:-1; inset:-27px; border-radius:50%; background:radial-gradient(circle,rgba(133,215,247,.34),transparent 69%); animation:life-halo-pulse 4.5s ease-in-out infinite; }
+.life-art-icon { display:grid; place-items:center; width:82px; height:82px; color:#2b7fa2; filter:drop-shadow(0 10px 8px rgba(37,109,144,.11)); }
+.life-art-icon .school-icon-svg { width:76px; height:76px; stroke-width:1.35; }
+.life-art-label { direction:ltr; color:#397f9c; font:800 8px/1 var(--font-display); letter-spacing:1.7px; white-space:nowrap; }
+.life-art-label i { display:inline-block; width:4px; height:4px; margin:0 4px 1px; border-radius:50%; background:#d0a23b; }
+.life-art-star { position:absolute; z-index:3; display:grid; place-items:center; color:#c79d3c; }
+.life-art-star .school-icon-svg { width:24px; height:24px; }
+.life-star-one { top:17%; inset-inline-end:21%; animation:life-star-shine 3.2s ease-in-out infinite; }
+.life-star-two { top:36%; inset-inline-start:13%; color:#68b6da; animation:life-star-shine 3.9s ease-in-out infinite reverse; }
+.life-star-three { bottom:22%; inset-inline-start:22%; color:#9f91d9; animation:life-star-shine 4.5s ease-in-out infinite; }
+.life-art-badge { position:absolute; z-index:4; display:flex; align-items:center; gap:10px; min-width:205px; padding:11px 13px; border:1px solid rgba(220,235,243,.96); border-radius:17px; background:rgba(255,255,255,.92); box-shadow:0 16px 36px rgba(38,88,117,.12),inset 0 1px 0 #fff; backdrop-filter:blur(13px); animation:life-badge-drift 5.5s ease-in-out infinite; }
+.life-badge-top { top:54px; inset-inline-start:-2px; }
+.life-badge-bottom { bottom:55px; inset-inline-end:-4px; animation-delay:-2.5s; border-color:rgba(237,228,202,.95); }
+.life-badge-icon { display:grid; place-items:center; width:43px; height:43px; flex:0 0 43px; border-radius:13px; background:#fff1c8; color:#a87e22; }
+.life-badge-icon .school-icon-svg { width:23px; height:23px; }
+.life-badge-blue { background:#e5f6ff; color:#398db2; }
+.life-art-badge small,.life-art-badge b { display:block; }
+.life-art-badge small { color:#899aa7; font-size:9px; }
+.life-art-badge b { margin-top:3px; color:#304d62; font-size:11px; font-weight:800; }
+.life-badge-pulse { width:7px; height:7px; margin-inline-start:auto; border-radius:50%; background:#6bc4a1; box-shadow:0 0 0 4px rgba(107,196,161,.13); animation:life-breathe 2.4s ease-in-out infinite; }
+.life-badge-check { display:grid; place-items:center; width:22px; height:22px; margin-inline-start:auto; border-radius:50%; background:#e5f6ea; color:#519b6e; }
+.life-badge-check .school-icon-svg { width:13px; height:13px; }
+.life-art-caption { position:absolute; bottom:8px; left:50%; white-space:nowrap; direction:ltr; transform:translateX(-50%); color:#94a5b1; font:800 8px/1 var(--font-display); letter-spacing:1.6px; }
+.life-art-footnote { display:inline-flex; align-items:center; gap:9px; margin-top:-5px; font-size:10px; }
+.life-caption-pulse { width:6px; height:6px; border-radius:50%; background:#6cc5a0; box-shadow:0 0 0 4px rgba(108,197,160,.13); }
+.life-pillars { padding-top:44px; padding-bottom:34px; }
+.life-section-heading { display:flex; justify-content:space-between; align-items:flex-end; gap:35px; margin-bottom:28px; }
+.life-section-kicker { display:inline-flex; align-items:center; gap:8px; margin-bottom:10px; color:#3989ad; font-size:10px; font-weight:800; }
+.life-section-kicker .ui-icon-inline { width:15px; height:15px; color:#b48b2e; }
+.life-section-heading h2,.life-activities-heading h2 { margin:0; color:#203d55; font:800 clamp(31px,3.5vw,43px)/1.32 "Tajawal","Manrope",sans-serif; letter-spacing:-.5px; }
+.life-section-heading h2 em,.life-activities-heading h2 em { color:#348db3; font-style:normal; position:relative; z-index:0; }
+.life-section-heading h2 em::after,.life-activities-heading h2 em::after { content:""; position:absolute; z-index:-1; right:0; left:0; bottom:1px; height:8px; border-radius:99px; background:rgba(241,198,95,.52); transform:rotate(-1deg); }
+.life-section-heading > p { max-width:470px; margin:0 0 3px; color:#7a8d9c; font-size:12px; line-height:2; }
+.life-journey-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; }
+.life-journey-card { position:relative; display:flex; flex-direction:column; min-width:0; min-height:226px; padding:21px 22px 20px; overflow:hidden; border:1px solid #e3edf3; border-radius:21px; background:linear-gradient(135deg,#fff,#f3fbff); box-shadow:0 10px 27px rgba(30,74,102,.045); transition:transform .32s ease,border-color .3s ease,box-shadow .32s ease; }
+.life-journey-card::after { content:""; position:absolute; inset-inline-end:-30px; bottom:-51px; width:120px; height:120px; border-radius:50%; background:radial-gradient(circle,rgba(121,202,235,.21),transparent 70%); pointer-events:none; }
+.life-journey-gold { background:linear-gradient(135deg,#fff,#fffbef); }
+.life-journey-gold::after { background:radial-gradient(circle,rgba(241,198,95,.24),transparent 70%); }
+.life-journey-lilac { background:linear-gradient(135deg,#fff,#faf8ff); }
+.life-journey-lilac::after { background:radial-gradient(circle,rgba(167,151,231,.21),transparent 70%); }
+.life-journey-card:hover { transform:translateY(-4px); border-color:#c9e4ef; box-shadow:0 17px 35px rgba(30,74,102,.085); }
+.life-card-topline { display:flex; align-items:center; justify-content:space-between; margin-bottom:17px; }
+.life-card-number { color:#a5b4bf; font:800 10px var(--font-display); letter-spacing:1.5px; }
+.life-card-icon { display:grid; place-items:center; width:45px; height:45px; border-radius:14px; background:#e5f6ff; color:#348bb3; }
+.life-card-icon .school-icon-svg { width:23px; height:23px; }
+.life-journey-gold .life-card-icon { background:#fff0c8; color:#a98025; }
+.life-journey-lilac .life-card-icon { background:#f0edff; color:#8172c8; }
+.life-card-label { margin-bottom:6px; color:#91a2af; font-size:8px; font-weight:800; letter-spacing:1.1px; direction:ltr; text-align:start; }
+.life-journey-card h3 { margin:0 0 7px; color:#2c485e; font:800 20px/1.45 "Tajawal","Manrope",sans-serif; }
+.life-journey-card p { max-width:280px; margin:0; color:#788c9c; font-size:11px; line-height:1.95; }
+.life-card-arrow { position:absolute; inset-inline-end:18px; bottom:17px; display:grid; place-items:center; width:25px; height:25px; border:1px solid #deebf2; border-radius:50%; color:#76a9c1; opacity:.85; }
+.life-card-arrow .school-icon-svg { width:14px; height:14px; }
+.life-journey-footline { display:flex; align-items:center; justify-content:center; gap:16px; margin-top:24px; }
+.life-journey-footline > span { width:min(17%,130px); height:1px; background:#e3edf2; }
+.life-journey-footline p { margin:0; color:#9baab5; font-size:9px; font-weight:800; letter-spacing:.7px; }
+.life-journey-card:nth-child(2).reveal { transition-delay:.1s; }
+.life-journey-card:nth-child(3).reveal { transition-delay:.2s; }
+.life-activities { padding-top:22px; padding-bottom:36px; scroll-margin-top:95px; }
+.life-page-banner-premium { grid-template-columns:minmax(0,.96fr) minmax(0,1.04fr); gap:clamp(20px,3.7vw,42px); margin-bottom:51px; padding:17px; border-color:#e1edf4; border-radius:28px; background:linear-gradient(115deg,#f1faff 0%,#fff 58%,#fffbef 100%); box-shadow:0 15px 36px rgba(39,84,112,.055); }
+.life-banner-media { position:relative; min-width:0; min-height:270px; overflow:hidden; border-radius:21px; background:#e8f7ff; }
+.life-banner-media::after { content:""; position:absolute; inset:45% 0 0; background:linear-gradient(180deg,transparent,rgba(20,45,67,.57)); pointer-events:none; }
+.life-banner-media img { width:100%; height:100%; min-height:270px; object-fit:cover; transition:transform .7s cubic-bezier(.2,.8,.2,1); }
+.life-page-banner-premium:hover .life-banner-media img { transform:scale(1.045); }
+.life-banner-photo-label { position:absolute; z-index:1; inset-inline-start:15px; bottom:14px; display:inline-flex; align-items:center; gap:7px; padding:8px 10px; border:1px solid rgba(255,255,255,.27); border-radius:999px; color:#fff; background:rgba(18,39,59,.35); backdrop-filter:blur(10px); font:800 8px var(--font-display); letter-spacing:1.1px; }
+.life-banner-photo-label .ui-icon-inline { width:14px; height:14px; }
+.life-banner-copy { min-width:0; padding:12px 14px; }
+.life-banner-copy .mini-label { color:#b18a30; }
+.life-banner-copy h2 { margin:10px 0 10px; color:#203d55; font:800 clamp(24px,2.7vw,32px)/1.5 "Tajawal","Manrope",sans-serif; letter-spacing:-.5px; }
+.life-banner-copy p { max-width:480px; margin:0; color:#718697; font-size:12px; line-height:2.05; }
+.life-banner-tags { display:flex; flex-wrap:wrap; gap:9px; margin-top:21px; }
+.life-banner-tags > span { display:inline-flex; align-items:center; gap:7px; padding:8px 10px; border:1px solid #e5edf2; border-radius:999px; color:#5d778b; background:rgba(255,255,255,.82); font-size:9px; font-weight:800; }
+.life-banner-tags .ui-icon-inline { width:14px; height:14px; color:#64a9ca; }
+.life-banner-tags > span:first-child .ui-icon-inline { color:#bf983a; }
+.life-activities-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:28px; margin-bottom:25px; padding:0 0 19px; border-bottom:1px solid #e3edf4; scroll-margin-top:112px; }
+.life-activities-heading > div { min-width:0; }
+.life-activities-heading h2 { font-size:clamp(31px,3.4vw,42px); }
+.life-activities-heading h2 em { color:#b0872c; }
+.life-activities-heading > div > p { max-width:560px; margin:9px 0 0; color:#7c8e9d; font-size:12px; line-height:1.95; }
+.life-activities-heading > .underlined-link { flex:0 0 auto; margin:0 0 3px; }
+.life-activity-feed { max-width:1000px; }
+.life-activity-feed .activity-row { position:relative; min-height:92px; padding:19px 21px; grid-template-columns:62px minmax(0,1fr) 25px; gap:17px; margin-bottom:12px; border:1px solid #e1edf3; border-radius:19px; background:rgba(255,255,255,.94); box-shadow:0 8px 22px rgba(33,78,105,.035); transition:transform .28s ease,border-color .28s ease,box-shadow .28s ease,background .28s ease; }
+.life-activity-feed .activity-row:hover { transform:translateY(-3px); border-color:#c7e3ef; background:#fbfeff; box-shadow:0 15px 30px rgba(33,78,105,.08); }
+.life-activity-feed .activity-row h3 { font-size:16px; color:#26465e; }
+.life-activity-feed .activity-row p { color:#788b9b; font-size:12px; line-height:1.9; }
+.life-activity-feed .activity-icon { width:62px; height:62px; border:1px solid #e0edf4; border-radius:17px; background:#f1faff; box-shadow:0 6px 14px rgba(27,67,96,.04); }
+.life-activity-feed .activity-arrow { color:#69a8c8; }
+.life-bottom-cta { position:relative; display:flex; align-items:center; gap:22px; margin-top:9px; margin-bottom:82px; padding:27px 30px; overflow:hidden; border:1px solid #dcebf2; border-radius:25px; background:linear-gradient(110deg,#f0faff 0%,#fff 57%,#fff9e8 100%); box-shadow:0 14px 34px rgba(35,80,108,.055); }
+.life-bottom-cta::after { content:""; position:absolute; inset-inline-end:-58px; top:-90px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle,rgba(241,198,95,.19),transparent 71%); pointer-events:none; }
+.life-cta-icon { position:relative; z-index:1; display:grid; place-items:center; width:58px; height:58px; flex:0 0 58px; border:1px solid rgba(255,255,255,.92); border-radius:19px; background:#fff0c8; color:#a97f21; box-shadow:0 9px 20px rgba(169,127,33,.1); }
+.life-cta-icon .school-icon-svg { width:28px; height:28px; }
+.life-bottom-cta > div { flex:1; min-width:0; position:relative; z-index:1; }
+.life-bottom-cta .life-section-kicker { margin-bottom:4px; }
+.life-bottom-cta h2 { margin:0 0 6px; color:#203d55; font:800 clamp(22px,2.3vw,29px)/1.45 "Tajawal","Manrope",sans-serif; }
+.life-bottom-cta p { margin:0; color:#73899a; font-size:11px; line-height:1.9; }
+.life-bottom-cta .button { position:relative; z-index:1; flex:0 0 auto; }
+@keyframes life-orbit-turn { to { transform:translate(-50%,-50%) rotateX(66deg) rotate(342deg); } }
+@keyframes life-core-float { 0%,100% { transform:translate(-50%,-50%) rotate(-5deg) translateY(0); } 50% { transform:translate(-50%,-50%) rotate(-2deg) translateY(-9px); } }
+@keyframes life-halo-pulse { 0%,100% { opacity:.55; transform:scale(.92); } 50% { opacity:1; transform:scale(1.08); } }
+@keyframes life-badge-drift { 0%,100% { translate:0 0; } 50% { translate:0 -7px; } }
+@keyframes life-star-shine { 0%,100% { opacity:.62; scale:.88; rotate:-7deg; } 50% { opacity:1; scale:1.1; rotate:8deg; } }
+@keyframes life-breathe { 0%,100% { transform:scale(.82); opacity:.7; } 50% { transform:scale(1.12); opacity:1; } }
+@media (max-width:980px) {
+  .life-hero-grid { gap:23px; }
+  .life-art-stage { height:370px; }
+  .life-art-core { width:158px; height:164px; }
+  .life-art-icon,.life-art-icon .school-icon-svg { width:70px; height:70px; }
+  .life-orbit-a { width:220px; height:220px; }
+  .life-orbit-b { width:280px; height:280px; }
+  .life-orbit-c { width:322px; height:322px; }
+  .life-art-badge { min-width:175px; padding:9px; }
+  .life-badge-top { top:39px; inset-inline-start:-7px; }
+  .life-badge-bottom { bottom:42px; inset-inline-end:-7px; }
+  .life-journey-grid { gap:11px; }
+  .life-journey-card { padding:17px 15px; }
+  .life-journey-card h3 { font-size:18px; }
+  .life-activities-heading h2 { font-size:36px; }
+}
+@media (max-width:720px) {
+  .life-hero { padding-top:25px; padding-bottom:9px; }
+  .life-hero::before { inset:55px -3vw 0; border-radius:25px; }
+  .life-hero-grid { grid-template-columns:minmax(0,1fr); gap:0; }
+  .life-hero-copy { padding:0 0 7px; }
+  .life-hero h1 { font-size:clamp(39px,9.4vw,56px); line-height:1.34; letter-spacing:0; }
+  .life-hero .standalone-description { font-size:12px; line-height:2; }
+  .life-hero-actions { gap:8px; }
+  .life-hero-actions .button { min-height:44px; padding:11px 13px; font-size:11px; }
+  .life-hero-signature { margin-top:16px; padding:8px 10px; }
+  .life-hero-art { min-height:340px; margin-top:-4px; }
+  .life-art-stage { height:340px; width:min(100%,430px); }
+  .life-art-core { width:137px; height:143px; border-radius:40px 40px 35px 14px; }
+  .life-art-icon,.life-art-icon .school-icon-svg { width:59px; height:59px; }
+  .life-art-label { font-size:7px; letter-spacing:1.3px; }
+  .life-orbit-a { width:202px; height:202px; }
+  .life-orbit-b { width:253px; height:253px; }
+  .life-orbit-c { width:290px; height:290px; }
+  .life-art-badge { min-width:0; max-width:68%; gap:7px; padding:8px; border-radius:13px; }
+  .life-badge-top { top:24px; inset-inline-start:0; }
+  .life-badge-bottom { bottom:38px; inset-inline-end:0; }
+  .life-badge-icon { width:34px; height:34px; flex-basis:34px; border-radius:10px; }
+  .life-badge-icon .school-icon-svg { width:18px; height:18px; }
+  .life-art-badge small { font-size:8px; }
+  .life-art-badge b { font-size:9px; }
+  .life-art-star .school-icon-svg { width:19px; height:19px; }
+  .life-art-caption { bottom:3px; gap:6px; font-size:7px; letter-spacing:1.2px; }
+  .life-pillars { padding-top:30px; padding-bottom:23px; }
+  .life-section-heading { align-items:flex-start; flex-direction:column; gap:10px; margin-bottom:19px; }
+  .life-section-heading h2,.life-activities-heading h2 { font-size:clamp(29px,7vw,36px); }
+  .life-section-heading > p { font-size:11px; }
+  .life-journey-grid { grid-template-columns:minmax(0,1fr); gap:10px; }
+  .life-journey-card { min-height:0; padding:16px 17px 18px; border-radius:17px; }
+  .life-card-topline { margin-bottom:11px; }
+  .life-card-icon { width:40px; height:40px; }
+  .life-journey-card h3 { font-size:19px; }
+  .life-journey-card p { max-width:100%; font-size:10px; }
+  .life-journey-footline { margin-top:18px; gap:10px; }
+  .life-journey-footline p { font-size:8px; }
+  .life-activities { padding-top:15px; padding-bottom:25px; }
+  .life-page-banner-premium { grid-template-columns:minmax(0,1fr); gap:13px; margin-bottom:37px; padding:11px; border-radius:21px; }
+  .life-banner-media { min-height:0; height:215px; border-radius:15px; }
+  .life-banner-media img { min-height:0; height:215px; }
+  .life-banner-copy { padding:8px 7px 9px; }
+  .life-banner-copy h2 { font-size:24px; }
+  .life-banner-copy p { font-size:11px; }
+  .life-banner-tags { gap:7px; margin-top:15px; }
+  .life-banner-tags > span { padding:7px 8px; font-size:8px; }
+  .life-activities-heading { align-items:flex-start; flex-direction:column; gap:10px; margin-bottom:18px; padding-bottom:16px; }
+  .life-activities-heading h2 { font-size:clamp(29px,7vw,36px); }
+  .life-activities-heading > div > p { font-size:11px; }
+  .life-activities-heading > .underlined-link { margin-top:0; }
+  .life-activity-feed .activity-row { grid-template-columns:49px minmax(0,1fr) 18px; gap:12px; padding:13px; border-radius:16px; }
+  .life-activity-feed .activity-icon { width:49px; height:49px; }
+  .life-activity-feed .activity-row h3 { font-size:14px; }
+  .life-activity-feed .activity-row p { font-size:10px; }
+  .life-bottom-cta { flex-wrap:wrap; gap:13px; margin-bottom:60px; padding:21px; border-radius:20px; }
+  .life-cta-icon { width:48px; height:48px; flex-basis:48px; border-radius:15px; }
+  .life-cta-icon .school-icon-svg { width:23px; height:23px; }
+  .life-bottom-cta > div { flex-basis:calc(100% - 62px); }
+  .life-bottom-cta h2 { font-size:23px; }
+  .life-bottom-cta p { font-size:10px; }
+  .life-bottom-cta .button { margin-inline-start:auto; }
+}
+@media (max-width:420px) {
+  .life-hero-actions .button { padding-inline:10px; font-size:10px; }
+  .life-hero-art { min-height:315px; }
+  .life-art-stage { height:315px; }
+  .life-art-core { width:125px; height:130px; }
+  .life-art-icon,.life-art-icon .school-icon-svg { width:53px; height:53px; }
+  .life-orbit-a { width:184px; height:184px; }
+  .life-orbit-b { width:230px; height:230px; }
+  .life-orbit-c { width:265px; height:265px; }
+  .life-art-badge { max-width:70%; }
+  .life-badge-top { top:17px; }
+  .life-badge-bottom { bottom:31px; }
+  .life-journey-card { gap:0; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .life-orbit-a,.life-orbit-b,.life-art-core,.life-art-halo,.life-art-badge,.life-art-star,.life-badge-pulse,
+  .life-page-banner-premium .life-banner-media img { animation:none !important; transition:none !important; }
+  .life-journey-card,.life-journey-card:hover { transition:none !important; transform:none !important; }
+}
