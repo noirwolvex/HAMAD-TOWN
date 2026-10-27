@@ -1886,3 +1886,20 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
 @media (prefers-reduced-motion: reduce) {
   [data-icon] > .school-icon-svg { transition: none; }
 }
+
+
+/* Achievement cards: show key metadata without letting long text overflow. */
+.achievement-card-facts { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:14px; }
+.achievement-card-facts > span { min-width:0; padding:9px 10px; border:1px solid #e0edf4; border-radius:12px; background:linear-gradient(135deg,#f3faff,#fffdf6); }
+.achievement-card-facts small { display:block; margin-bottom:3px; color:#8497a7; font-size:9px; font-weight:800; line-height:1.4; }
+.achievement-card-facts b { display:block; color:#2f4c63; font-size:11px; font-weight:800; line-height:1.55; overflow-wrap:anywhere; }
+.achievement-card-impact { display:-webkit-box; -webkit-box-orient:vertical; -webkit-line-clamp:2; overflow:hidden; margin:11px 0 0 !important; padding:10px 12px; border:1px solid #e4eff5; border-radius:11px; background:#f8fcff; color:#6f8497 !important; font-size:10px !important; line-height:1.75 !important; }
+.achievement-card-impact small { display:block; margin-bottom:3px; color:#3688b3; font-size:9px; font-weight:800; }
+.achievement-certificate-link { display:inline-flex; align-items:center; gap:8px; align-self:flex-start; margin-top:14px; padding:10px 14px; border:1px solid #d8eaf4; border-radius:12px; background:#f2faff; color:#2c789f; font-size:11px; font-weight:800; text-decoration:none; transition:background .2s,transform .2s; }
+.achievement-certificate-link:hover { background:#e4f5ff; transform:translateY(-1px); }
+.achievement-certificate-link .school-icon-svg { width:16px; height:16px; }
+@media (max-width:520px) {
+  .achievement-card-facts { gap:6px; }
+  .achievement-card-facts > span { padding:8px; }
+  .achievement-card-facts b { font-size:10px; }
+}
