@@ -136,6 +136,15 @@
     return /^(https:\/\/|data:image\/|\.\/|\/)/i.test(url) ? url : "";
   };
 
+  const safeExternalUrl = value => {
+    try {
+      const url = new URL(String(value || "").trim());
+      return ["http:", "https:"].includes(url.protocol) ? url.href : "";
+    } catch (_) {
+      return "";
+    }
+  };
+
   const inferSection = kind => ({
     about: "our-story", achievement: "achievements", award: "achievements",
     activity: "school-life", event: "school-life", story: "stories",
@@ -235,11 +244,29 @@
     const isEnglish = window.HamadI18n?.getLanguage() === "en";
     return [
       { label: isEnglish ? "Student / team" : "الطالب / الفريق", value: displayText(item, "recipient") },
-      { label: isEnglish ? "Competition / project" : "المسابقة / المشروع", value: displayText(item, "achievement_event") },
       { label: isEnglish ? "Result / rank" : "النتيجة / المركز", value: displayText(item, "achievement_result") },
+      { label: isEnglish ? "Achievement level" : "مستوى الإنجاز", value: displayText(item, "achievement_level") },
+      { label: isEnglish ? "Field / discipline" : "المجال / التخصص", value: displayText(item, "achievement_field") },
+      { label: isEnglish ? "Grade / school stage" : "الصف / المرحلة الدراسية", value: displayText(item, "achievement_grade") },
+      { label: isEnglish ? "Competition / project" : "المسابقة / المشروع", value: displayText(item, "achievement_event") },
       { label: isEnglish ? "Organizer" : "الجهة المنظمة", value: displayText(item, "achievement_organization") },
+      { label: isEnglish ? "Supervising teacher / coach" : "المعلم المشرف / المدرب", value: displayText(item, "achievement_mentor") },
       { label: isEnglish ? "Achievement date" : "تاريخ الإنجاز", value: formatAchievementDate(item.achievement_date) }
     ].filter(field => String(field.value || "").trim());
+  }
+
+  function achievementCardDetails(item) {
+    const isEnglish = window.HamadI18n?.getLanguage() === "en";
+    return [
+      { label: isEnglish ? "Result" : "النتيجة", value: displayText(item, "achievement_result") },
+      { label: isEnglish ? "Level" : "المستوى", value: displayText(item, "achievement_level") },
+      { label: isEnglish ? "Field" : "المجال", value: displayText(item, "achievement_field") },
+      { label: isEnglish ? "Student / team" : "الطالب / الفريق", value: displayText(item, "recipient") },
+      { label: isEnglish ? "Grade" : "الصف", value: displayText(item, "achievement_grade") },
+      { label: isEnglish ? "Competition" : "المسابقة", value: displayText(item, "achievement_event") },
+      { label: isEnglish ? "Organizer" : "الجهة المنظمة", value: displayText(item, "achievement_organization") },
+      { label: isEnglish ? "Date" : "التاريخ", value: formatAchievementDate(item.achievement_date) }
+    ].filter(field => String(field.value || "").trim()).slice(0, 4);
   }
 
   function cardMarkup(item) {
@@ -249,9 +276,12 @@
     const imageHtml = image
       ? `<div class="content-card-media"><img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy"><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`
       : `<div class="content-card-media content-card-placeholder"><span class="ui-icon-inline" data-icon="${kindSymbol(item.kind)}" aria-hidden="true"></span><span class="card-tag">${escapeHtml(kindLabel(item.kind))}</span></div>`;
-    const facts = isAchievementItem(item) ? achievementDetails(item).slice(0, 3) : [];
+    const facts = isAchievementItem(item) ? achievementCardDetails(item) : [];
     const factsHtml = facts.length ? `<div class="achievement-card-facts">${facts.map(fact => `<span><small>${escapeHtml(fact.label)}</small><b>${escapeHtml(fact.value)}</b></span>`).join("")}</div>` : "";
-    return `<article class="content-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot" data-icon="sparkles" aria-hidden="true"></span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p>${factsHtml}<span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Open details " : "افتح التفاصيل "}<span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></span></div></div></article>`;
+    const achievementImpact = isAchievementItem(item) ? displayText(item, "achievement_impact") : "";
+    const impactExcerpt = achievementImpact.length > 150 ? achievementImpact.slice(0, 147).trimEnd() + "…" : achievementImpact;
+    const impactHtml = impactExcerpt ? `<p class="achievement-card-impact"><small>${window.HamadI18n?.getLanguage() === "en" ? "Impact / skills" : "الأثر / المهارات"}</small>${escapeHtml(impactExcerpt)}</p>` : "";
+    return `<article class="content-card is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="content-card-link">${imageHtml}<div class="content-card-body"><div class="card-meta"><span>${escapeHtml(displayText(item, "eyebrow") || kindLabel(item.kind))}</span><span class="gold-dot" data-icon="sparkles" aria-hidden="true"></span></div><h3>${escapeHtml(title)}</h3><p>${escapeHtml(description)}</p>${factsHtml}${impactHtml}<span class="content-open-hint" aria-hidden="true">${window.HamadI18n?.getLanguage() === "en" ? "Open details " : "افتح التفاصيل "}<span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></span></div></div></article>`;
   }
 
   function renderAboutContent(items) {
@@ -449,10 +479,19 @@
       .join("");
 
     const highlights = displayText(item, "achievement_highlights");
+    const impact = displayText(item, "achievement_impact");
+    const certificateUrl = safeExternalUrl(item.achievement_certificate_url);
     const extra = modal.querySelector("#contentDetailExtra");
-    extra.hidden = !highlights;
-    extra.innerHTML = extra.hidden ? "" :
-      '<h3>' + (isEnglish ? "More details" : "تفاصيل إضافية") + '</h3><p>' + escapeHtml(highlights) + '</p>';
+    const extraSections = [];
+    if (highlights) extraSections.push('<h3>' + (isEnglish ? "Additional details" : "تفاصيل إضافية") + '</h3><p>' + escapeHtml(highlights) + '</p>');
+    if (impact) extraSections.push('<h3>' + (isEnglish ? "Impact and skills gained" : "الأثر والمهارات المكتسبة") + '</h3><p>' + escapeHtml(impact) + '</p>');
+    if (certificateUrl && isAchievementItem(item)) extraSections.push(
+      '<a class="achievement-certificate-link" href="' + escapeHtml(certificateUrl) + '" target="_blank" rel="noopener noreferrer">' +
+      '<span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span>' +
+      (isEnglish ? "View certificate or evidence" : "عرض الشهادة أو دليل الإنجاز") + '</a>'
+    );
+    extra.hidden = !extraSections.length;
+    extra.innerHTML = extraSections.join("");
 
     const closeButton = modal.querySelector(".content-detail-close");
     const closeLabel = isEnglish ? "Close details" : "إغلاق التفاصيل";
