@@ -218,3 +218,10 @@ html[dir="rtl"] .library-tools .search-box { flex-direction:row; }
 .record-actions button { display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
 .record-actions .ui-icon-inline { width: 1em; height: 1em; }
 .privacy-note > .ui-icon-inline { width: 1.15em; height: 1.15em; flex: 0 0 auto; }
+
+
+/* Achievement editor additions keep their sections clear on desktop and mobile. */
+.achievement-extra-fields { border:1px solid #dceef7; background:linear-gradient(145deg,#fafdff,#fffdf7); border-radius:15px; }
+.achievement-extra-fields .form-row { align-items:start; }
+#achievementCertificateUrl { direction:ltr; text-align:left; }
+html[dir="rtl"] #achievementCertificateUrl { direction:ltr; text-align:left; }
