@@ -438,6 +438,8 @@
     "EXPLORE · LEARN": "اكتشف · تعلّم",
     "Curiosity builds the future": "فضول يصنع المستقبل",
     "IDEAS → IMPACT": "من الفكرة إلى الأثر",
+    "A visual design symbolizing learning and growth": "تصميم بصري يرمز إلى التعلّم والنمو",
+    "Hamad Town School brings together knowledge, curiosity and respect, and believes every student can grow and shape a bright future.": "مدرسة مدينة حمد مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.",
     "A story that starts with learning,": "حكاية تبدأ بالتعلّم،",
     "A story we write together": "حكاية نكتبها معًا",
     "Discover our journey": "اكتشف رحلتنا",
