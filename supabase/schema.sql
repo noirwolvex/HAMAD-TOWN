@@ -27,6 +27,17 @@ create table if not exists public.school_content (
   achievement_date text not null default '',
   achievement_highlights_ar text not null default '',
   achievement_highlights_en text not null default '',
+  achievement_level_ar text not null default '',
+  achievement_level_en text not null default '',
+  achievement_field_ar text not null default '',
+  achievement_field_en text not null default '',
+  achievement_grade_ar text not null default '',
+  achievement_grade_en text not null default '',
+  achievement_mentor_ar text not null default '',
+  achievement_mentor_en text not null default '',
+  achievement_impact_ar text not null default '',
+  achievement_impact_en text not null default '',
+  achievement_certificate_url text not null default '',
   description text not null default '',
   description_ar text not null default '',
   description_en text not null default '',
@@ -58,6 +69,17 @@ alter table public.school_content add column if not exists achievement_organizat
 alter table public.school_content add column if not exists achievement_date text not null default '';
 alter table public.school_content add column if not exists achievement_highlights_ar text not null default '';
 alter table public.school_content add column if not exists achievement_highlights_en text not null default '';
+alter table public.school_content add column if not exists achievement_level_ar text not null default '';
+alter table public.school_content add column if not exists achievement_level_en text not null default '';
+alter table public.school_content add column if not exists achievement_field_ar text not null default '';
+alter table public.school_content add column if not exists achievement_field_en text not null default '';
+alter table public.school_content add column if not exists achievement_grade_ar text not null default '';
+alter table public.school_content add column if not exists achievement_grade_en text not null default '';
+alter table public.school_content add column if not exists achievement_mentor_ar text not null default '';
+alter table public.school_content add column if not exists achievement_mentor_en text not null default '';
+alter table public.school_content add column if not exists achievement_impact_ar text not null default '';
+alter table public.school_content add column if not exists achievement_impact_en text not null default '';
+alter table public.school_content add column if not exists achievement_certificate_url text not null default '';
 
 -- Restrict card layouts to the options supported by the public renderer.
 alter table public.school_content drop constraint if exists school_content_layout_check;
