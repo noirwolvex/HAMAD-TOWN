@@ -3220,3 +3220,39 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
   .gallery-mosaic .gallery-tile > img { animation:none !important; transition:none !important; }
   .gallery-mosaic .gallery-tile,.gallery-mosaic .gallery-tile:hover { transform:none !important; }
 }
+
+
+/* OFFICIAL HAMAD TOWN LOGO — traced from the exact user-supplied red H mark, on a transparent background. */
+.brand-mark {
+  width: 38px;
+  height: 46px;
+  flex: 0 0 38px;
+  display: grid;
+  place-items: center;
+  overflow: visible;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: transparent;
+  font-size: 0;
+  transform: none !important;
+}
+.brand-logo-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.brand-mark i { display: none !important; }
+@media (max-width: 980px) {
+  .brand-mark { width: 35px; height: 44px; flex-basis: 35px; }
+}
+@media (max-width: 720px) {
+  .brand-mark { width: 32px; height: 41px; flex-basis: 32px; }
+}
