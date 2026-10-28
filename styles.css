@@ -3004,3 +3004,219 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
   .stories-page-grid .story-card { animation:none !important; transition:none !important; }
   .stories-theme-card,.stories-theme-card:hover { transition:none !important; transform:none !important; }
 }
+
+
+/* PHOTO GALLERY PAGE EXPERIENCE 2026 — framed memories and an editorial mosaic. */
+.gallery-hero { isolation:isolate; padding-top:38px; padding-bottom:20px; }
+.gallery-hero::before {
+  content:""; position:absolute; z-index:-1; inset:78px -3.5vw 3px;
+  border:1px solid rgba(204,224,236,.68); border-radius:42px;
+  background:
+    radial-gradient(circle at 79% 24%,rgba(183,230,251,.43),transparent 32%),
+    radial-gradient(circle at 13% 83%,rgba(255,222,139,.32),transparent 31%),
+    linear-gradient(125deg,rgba(244,251,255,.96),rgba(255,255,255,.92) 53%,rgba(255,250,237,.84));
+  pointer-events:none;
+}
+.gallery-hero-grid { grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr); gap:clamp(24px,4.8vw,70px); min-height:445px; }
+.gallery-hero-copy { padding-block:12px 20px; }
+.gallery-main-eyebrow { background:rgba(255,255,255,.84); }
+.gallery-hero-kicker { display:inline-flex; align-items:center; gap:8px; margin-bottom:13px; color:#398bb2; font-size:10px; font-weight:800; }
+.gallery-hero-kicker .ui-icon-inline { width:16px; height:16px; color:#bb912f; }
+.gallery-hero h1 { max-width:670px; font-size:clamp(43px,4.9vw,70px); line-height:1.3; letter-spacing:-1.3px; }
+.gallery-hero h1 em { background:linear-gradient(105deg,#287fa4 0%,#398fba 48%,#b58b2c 108%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.gallery-hero h1 em::after { height:8px; bottom:-1px; border-radius:100%; opacity:.72; background:#f1c65f; }
+.gallery-hero .standalone-description { max-width:525px; font-size:14px; line-height:2.15; color:#6f8292; }
+.gallery-hero-actions { gap:10px; align-items:center; }
+.gallery-hero-actions .button { min-height:47px; }
+.gallery-hero-actions .button-outline { gap:8px; }
+.gallery-hero-signature { display:inline-flex; align-items:center; gap:11px; margin-top:24px; padding:10px 14px; border:1px solid #dcebf3; border-radius:16px; background:rgba(255,255,255,.84); box-shadow:0 9px 25px rgba(37,84,111,.055); }
+.gallery-signature-icon { display:grid; place-items:center; width:39px; height:39px; flex:0 0 39px; border-radius:13px; background:#e5f6ff; color:#3489b0; }
+.gallery-signature-icon .school-icon-svg { width:21px; height:21px; }
+.gallery-hero-signature b,.gallery-hero-signature small { display:block; }
+.gallery-hero-signature b { color:#29485f; font-size:11px; font-weight:800; }
+.gallery-hero-signature small { margin-top:3px; color:#8798a5; font-size:9px; }
+.gallery-signature-seal { display:grid; place-items:center; width:27px; height:27px; margin-inline-start:8px; color:#75ad98; }
+.gallery-signature-seal .school-icon-svg { width:23px; height:23px; }
+.gallery-hero-art { min-height:440px; padding:0; }
+.gallery-art-stage { position:relative; isolation:isolate; width:min(100%,490px); height:430px; margin-inline:auto; perspective:900px; }
+.gallery-art-grid { position:absolute; z-index:-2; inset:7% 2%; border-radius:35px; background-image:linear-gradient(rgba(82,166,205,.1) 1px,transparent 1px),linear-gradient(90deg,rgba(82,166,205,.1) 1px,transparent 1px); background-size:24px 24px; mask-image:radial-gradient(ellipse at center,#000 16%,transparent 75%); }
+.gallery-art-orbit { position:absolute; left:50%; top:45%; border:1px solid rgba(87,173,212,.33); border-radius:50%; pointer-events:none; }
+.gallery-orbit-one { width:245px; height:245px; transform:translate(-50%,-50%) rotateX(65deg) rotate(-17deg); animation:gallery-orbit-turn 25s linear infinite; }
+.gallery-orbit-two { width:320px; height:320px; border-style:dashed; border-color:rgba(207,171,81,.34); transform:translate(-50%,-50%) rotateX(66deg) rotate(20deg); animation:gallery-orbit-turn 34s linear infinite reverse; }
+.gallery-orbit-three { width:370px; height:370px; border-color:rgba(111,181,212,.2); transform:translate(-50%,-50%) rotateX(70deg) rotate(10deg); }
+.gallery-photo-stack { position:absolute; left:50%; top:43%; width:220px; height:222px; transform:translate(-50%,-50%) rotate(-5deg); animation:gallery-stack-float 5.8s ease-in-out infinite; }
+.gallery-photo-frame { position:absolute; display:block; overflow:hidden; border:1px solid rgba(255,255,255,.96); border-radius:24px; box-shadow:0 24px 52px rgba(32,82,111,.15),inset 0 1px 0 #fff; }
+.gallery-frame-back { inset:0 0 18px 23px; transform:rotate(10deg); background:#dff4ff; }
+.gallery-frame-sky { position:absolute; inset:0; background:linear-gradient(160deg,#dbf4ff 0%,#eaf9ff 48%,#fff4d2 100%); }
+.gallery-frame-sun { position:absolute; width:43px; height:43px; top:27px; inset-inline-end:24px; border-radius:50%; background:linear-gradient(145deg,#ffedb5,#f0c861); box-shadow:0 0 0 11px rgba(255,255,255,.22); }
+.gallery-frame-hill { position:absolute; bottom:-13px; width:145px; height:112px; border-radius:50% 50% 0 0; }
+.gallery-hill-one { inset-inline-start:-25px; background:linear-gradient(145deg,#b6e3ed,#70bfd9); transform:rotate(-13deg); }
+.gallery-hill-two { inset-inline-end:-28px; bottom:-28px; background:linear-gradient(145deg,#e5d9a8,#b8d9bd); transform:rotate(16deg); }
+.gallery-frame-front { inset:13px 18px 0 0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; border-color:rgba(255,255,255,.97); background:linear-gradient(145deg,#fff 0%,#f9fcff 56%,#fff9e9 100%); transform:rotate(-3deg); }
+.gallery-frame-icon { display:grid; place-items:center; width:83px; height:83px; border:1px solid #e4eff5; border-radius:25px 25px 25px 9px; background:linear-gradient(145deg,#e9f8ff,#cdeeff); color:#3188ad; box-shadow:0 13px 25px rgba(49,136,173,.1); }
+.gallery-frame-icon .school-icon-svg { width:51px; height:51px; stroke-width:1.4; }
+.gallery-frame-lines { display:flex; flex-direction:column; gap:5px; align-items:center; width:100%; }
+.gallery-frame-lines i { display:block; width:94px; height:3px; border-radius:4px; background:#dceaf1; }
+.gallery-frame-lines i:nth-child(2) { width:67px; background:#f0dfad; }
+.gallery-frame-lines i:nth-child(3) { width:42px; background:#e5edf2; }
+.gallery-frame-label { position:absolute; bottom:13px; left:0; right:0; text-align:center; direction:ltr; color:#94a4af; font:800 7px/1 var(--font-display); letter-spacing:1.6px; }
+.gallery-stack-pin { position:absolute; z-index:4; top:7px; right:18px; width:14px; height:14px; border:3px solid #fff; border-radius:50%; background:#d0a33d; box-shadow:0 4px 10px rgba(62,85,99,.16); }
+.gallery-art-spark { position:absolute; z-index:3; display:grid; place-items:center; color:#bd9537; }
+.gallery-art-spark .school-icon-svg { width:24px; height:24px; }
+.gallery-spark-one { top:17%; inset-inline-end:21%; animation:gallery-spark-shine 3.2s ease-in-out infinite; }
+.gallery-spark-two { top:36%; inset-inline-start:13%; color:#68b6d9; animation:gallery-spark-shine 3.9s ease-in-out infinite reverse; }
+.gallery-art-note { position:absolute; z-index:4; display:flex; align-items:center; gap:10px; min-width:205px; padding:11px 13px; border:1px solid rgba(219,235,243,.96); border-radius:17px; background:rgba(255,255,255,.93); box-shadow:0 16px 36px rgba(38,88,117,.12),inset 0 1px 0 #fff; backdrop-filter:blur(13px); animation:gallery-note-drift 5.4s ease-in-out infinite; }
+.gallery-note-top { top:54px; inset-inline-start:-2px; }
+.gallery-note-bottom { bottom:55px; inset-inline-end:-4px; animation-delay:-2.5s; border-color:rgba(237,228,202,.96); }
+.gallery-note-icon { display:grid; place-items:center; width:43px; height:43px; flex:0 0 43px; border-radius:13px; background:#fff0c6; color:#a98025; }
+.gallery-note-icon .school-icon-svg { width:23px; height:23px; }
+.gallery-note-blue { background:#e5f6ff; color:#348bb3; }
+.gallery-art-note small,.gallery-art-note b { display:block; }
+.gallery-art-note small { color:#8999a6; font-size:9px; }
+.gallery-art-note b { margin-top:3px; color:#304d62; font-size:11px; font-weight:800; }
+.gallery-note-check { display:grid; place-items:center; width:22px; height:22px; margin-inline-start:auto; border-radius:50%; background:#e5f6ea; color:#519b6e; }
+.gallery-note-check .school-icon-svg { width:13px; height:13px; }
+.gallery-art-baseline { position:absolute; bottom:8px; left:50%; white-space:nowrap; direction:ltr; transform:translateX(-50%); color:#99a6b0; font:800 8px/1 var(--font-display); letter-spacing:1.5px; }
+.gallery-art-baseline i { display:inline-block; width:4px; height:4px; margin:0 5px 1px; border-radius:50%; background:#c5a04b; }
+.gallery-art-footnote { display:inline-flex; align-items:center; gap:9px; margin-top:-5px; font-size:10px; }
+.gallery-caption-pulse { width:6px; height:6px; border-radius:50%; background:#6cc5a0; box-shadow:0 0 0 4px rgba(108,197,160,.13); }
+.gallery-collection { padding-top:25px; padding-bottom:35px; scroll-margin-top:95px; }
+.gallery-collection-heading { display:flex; align-items:flex-end; justify-content:space-between; gap:28px; margin-bottom:25px; padding:0 0 19px; border-bottom:1px solid #e0ebf1; }
+.gallery-collection-heading > div { min-width:0; }
+.gallery-section-kicker { display:inline-flex; align-items:center; gap:8px; margin-bottom:10px; color:#3c8caf; font-size:10px; font-weight:800; }
+.gallery-section-kicker .ui-icon-inline { width:15px; height:15px; color:#b68c30; }
+.gallery-collection-heading h2 { margin:0; color:#203d55; font:800 clamp(31px,3.4vw,42px)/1.35 "Tajawal","Manrope",sans-serif; letter-spacing:-.5px; }
+.gallery-collection-heading h2 em { color:#b1872e; font-style:normal; position:relative; z-index:0; }
+.gallery-collection-heading h2 em::after { content:""; position:absolute; z-index:-1; right:0; left:0; bottom:1px; height:8px; border-radius:99px; background:rgba(241,198,95,.52); transform:rotate(-1deg); }
+.gallery-collection-heading > div > p { max-width:560px; margin:9px 0 0; color:#7c8e9b; font-size:12px; line-height:1.95; }
+.gallery-collection-heading > .underlined-link { flex:0 0 auto; margin:0 0 3px; }
+.gallery-mosaic { gap:18px; grid-auto-rows:245px; align-items:stretch; }
+.gallery-mosaic .gallery-tile { position:relative; min-width:0; overflow:hidden; border:1px solid rgba(220,235,243,.82); border-radius:24px; box-shadow:0 12px 27px rgba(27,67,96,.055); background:#e8f7ff; animation:gallery-tile-enter .62s cubic-bezier(.2,.8,.2,1) both; transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease; }
+.gallery-mosaic .gallery-tile:nth-child(2) { animation-delay:.07s; }
+.gallery-mosaic .gallery-tile:nth-child(3) { animation-delay:.14s; }
+.gallery-mosaic .gallery-tile:nth-child(4) { animation-delay:.21s; }
+.gallery-mosaic .gallery-tile:nth-child(5) { animation-delay:.28s; }
+.gallery-mosaic .gallery-tile:nth-child(6) { animation-delay:.35s; }
+.gallery-mosaic .gallery-tile:hover { transform:translateY(-4px); border-color:#c8e4f0; box-shadow:0 20px 39px rgba(27,67,96,.1); }
+.gallery-mosaic .gallery-tile > img { width:100%; height:100%; min-height:100%; object-fit:cover; transition:transform .75s cubic-bezier(.2,.8,.2,1),filter .35s ease; }
+.gallery-mosaic .gallery-tile:hover > img { transform:scale(1.055); filter:saturate(1.06); }
+.gallery-mosaic .gallery-tile figcaption { padding:43px 20px 17px; font-size:12px; line-height:1.65; background:linear-gradient(180deg,transparent 0%,rgba(13,32,53,.02) 22%,rgba(13,32,53,.74) 100%); }
+.gallery-mosaic .gallery-tile figcaption .ui-icon-inline { display:grid; place-items:center; width:29px; height:29px; border:1px solid rgba(255,255,255,.45); border-radius:50%; background:rgba(255,255,255,.13); backdrop-filter:blur(8px); }
+.gallery-mosaic .gallery-tile-blue { border-color:#cde7f3; background:linear-gradient(145deg,#e4f7ff,#c6ecfb 68%,#fff0c3); }
+.gallery-mosaic .gallery-tile-blue figcaption { color:#29485f; background:linear-gradient(180deg,transparent,rgba(183,224,241,.42)); }
+.gallery-mosaic .gallery-tile-blue figcaption .ui-icon-inline { border-color:rgba(66,123,154,.18); background:rgba(255,255,255,.36); }
+.gallery-mosaic .gallery-tile-tall { grid-row:span 2; }
+.gallery-mosaic .gallery-note { position:absolute; inset:14px; display:flex; flex-direction:column; align-items:flex-start; justify-content:center; gap:9px; border:1px solid rgba(255,255,255,.7); border-radius:17px; padding:18px; color:#2b4f68; background:radial-gradient(circle at 85% 12%,rgba(255,255,255,.68),transparent 31%); }
+.gallery-mosaic .gallery-note .ui-icon-inline { display:grid; place-items:center; width:45px; height:45px; border:1px solid rgba(255,255,255,.68); border-radius:15px; background:rgba(255,255,255,.63); color:#347fa4; }
+.gallery-mosaic .gallery-note .ui-icon-inline .school-icon-svg { width:23px; height:23px; }
+.gallery-mosaic .gallery-note b { max-width:100%; font:800 18px/1.5 "Tajawal","Manrope",sans-serif; }
+.gallery-mosaic .gallery-note small { color:#688599; font:800 8px var(--font-display); letter-spacing:1px; }
+.gallery-mosaic .gallery-tile-blue figcaption { color:#29485f; }
+.gallery-mosaic .gallery-tile.is-openable-card:focus-visible { outline:3px solid rgba(58,150,196,.72); outline-offset:3px; }
+.gallery-collection-footnote { display:flex; align-items:center; justify-content:center; gap:9px; padding-top:25px; color:#91a2ae; font-size:10px; font-weight:700; text-align:center; }
+.gallery-footnote-mark { display:grid; place-items:center; width:26px; height:26px; border:1px solid #e0edf3; border-radius:50%; color:#bd9538; }
+.gallery-footnote-mark .school-icon-svg { width:14px; height:14px; }
+.gallery-bottom-cta { position:relative; display:flex; align-items:center; gap:22px; margin-top:8px; margin-bottom:82px; padding:27px 30px; overflow:hidden; border:1px solid #dcebf2; border-radius:25px; background:linear-gradient(110deg,#f0faff 0%,#fff 55%,#fff9e8 100%); box-shadow:0 14px 34px rgba(35,80,108,.055); }
+.gallery-bottom-cta::after { content:""; position:absolute; inset-inline-end:-58px; top:-90px; width:220px; height:220px; border-radius:50%; background:radial-gradient(circle,rgba(241,198,95,.19),transparent 71%); pointer-events:none; }
+.gallery-cta-icon { position:relative; z-index:1; display:grid; place-items:center; width:58px; height:58px; flex:0 0 58px; border:1px solid rgba(255,255,255,.92); border-radius:19px; background:#e5f6ff; color:#378bb2; box-shadow:0 9px 20px rgba(55,139,178,.1); }
+.gallery-cta-icon .school-icon-svg { width:28px; height:28px; }
+.gallery-bottom-cta > div { flex:1; min-width:0; position:relative; z-index:1; }
+.gallery-bottom-cta .gallery-section-kicker { margin-bottom:4px; }
+.gallery-bottom-cta h2 { margin:0 0 6px; color:#203d55; font:800 clamp(22px,2.3vw,29px)/1.45 "Tajawal","Manrope",sans-serif; }
+.gallery-bottom-cta p { margin:0; color:#748999; font-size:11px; line-height:1.9; }
+.gallery-bottom-cta .button { position:relative; z-index:1; flex:0 0 auto; }
+@keyframes gallery-orbit-turn { to { transform:translate(-50%,-50%) rotateX(66deg) rotate(342deg); } }
+@keyframes gallery-stack-float { 0%,100% { transform:translate(-50%,-50%) rotate(-5deg) translateY(0); } 50% { transform:translate(-50%,-50%) rotate(-2deg) translateY(-9px); } }
+@keyframes gallery-spark-shine { 0%,100% { opacity:.62; scale:.88; rotate:-7deg; } 50% { opacity:1; scale:1.1; rotate:8deg; } }
+@keyframes gallery-note-drift { 0%,100% { translate:0 0; } 50% { translate:0 -7px; } }
+@keyframes gallery-tile-enter { from { opacity:0; translate:0 13px; } to { opacity:1; translate:0 0; } }
+@media (max-width:980px) {
+  .gallery-hero-grid { gap:23px; }
+  .gallery-art-stage { height:370px; }
+  .gallery-photo-stack { width:195px; height:200px; }
+  .gallery-frame-icon { width:72px; height:72px; }
+  .gallery-frame-icon .school-icon-svg { width:44px; height:44px; }
+  .gallery-orbit-one { width:220px; height:220px; }
+  .gallery-orbit-two { width:280px; height:280px; }
+  .gallery-orbit-three { width:322px; height:322px; }
+  .gallery-art-note { min-width:175px; padding:9px; }
+  .gallery-note-top { top:39px; inset-inline-start:-7px; }
+  .gallery-note-bottom { bottom:42px; inset-inline-end:-7px; }
+  .gallery-mosaic { gap:13px; grid-auto-rows:210px; }
+}
+@media (max-width:720px) {
+  .gallery-hero { padding-top:25px; padding-bottom:9px; }
+  .gallery-hero::before { inset:55px -3vw 0; border-radius:25px; }
+  .gallery-hero-grid { grid-template-columns:minmax(0,1fr); gap:0; }
+  .gallery-hero-copy { padding:0 0 7px; }
+  .gallery-hero h1 { font-size:clamp(38px,9.1vw,54px); line-height:1.37; letter-spacing:0; }
+  .gallery-hero .standalone-description { font-size:12px; line-height:2; }
+  .gallery-hero-actions { gap:8px; }
+  .gallery-hero-actions .button { min-height:44px; padding:11px 13px; font-size:11px; }
+  .gallery-hero-signature { margin-top:16px; padding:8px 10px; }
+  .gallery-hero-art { min-height:340px; margin-top:-4px; }
+  .gallery-art-stage { height:340px; width:min(100%,430px); }
+  .gallery-photo-stack { width:160px; height:165px; }
+  .gallery-photo-frame { border-radius:18px; }
+  .gallery-frame-icon { width:60px; height:60px; border-radius:19px 19px 19px 7px; }
+  .gallery-frame-icon .school-icon-svg { width:38px; height:38px; }
+  .gallery-frame-lines i { width:73px; height:2px; }
+  .gallery-frame-lines i:nth-child(2) { width:51px; }
+  .gallery-frame-lines i:nth-child(3) { width:33px; }
+  .gallery-frame-label { font-size:6px; }
+  .gallery-orbit-one { width:202px; height:202px; }
+  .gallery-orbit-two { width:253px; height:253px; }
+  .gallery-orbit-three { width:290px; height:290px; }
+  .gallery-art-note { min-width:0; max-width:68%; gap:7px; padding:8px; border-radius:13px; }
+  .gallery-note-top { top:24px; inset-inline-start:0; }
+  .gallery-note-bottom { bottom:38px; inset-inline-end:0; }
+  .gallery-note-icon { width:34px; height:34px; flex-basis:34px; border-radius:10px; }
+  .gallery-note-icon .school-icon-svg { width:18px; height:18px; }
+  .gallery-art-note small { font-size:8px; }
+  .gallery-art-note b { font-size:9px; }
+  .gallery-art-spark .school-icon-svg { width:19px; height:19px; }
+  .gallery-art-baseline { bottom:3px; font-size:7px; letter-spacing:1.2px; }
+  .gallery-collection { padding-top:20px; padding-bottom:25px; }
+  .gallery-collection-heading { align-items:flex-start; flex-direction:column; gap:10px; margin-bottom:18px; padding-bottom:16px; }
+  .gallery-collection-heading h2 { font-size:clamp(29px,7vw,36px); }
+  .gallery-collection-heading > div > p { font-size:11px; }
+  .gallery-collection-heading > .underlined-link { margin-top:0; }
+  .gallery-mosaic { grid-template-columns:repeat(2,minmax(0,1fr)); grid-auto-rows:175px; gap:10px; }
+  .gallery-mosaic .gallery-tile,.gallery-mosaic .gallery-tile-blue { min-height:175px; border-radius:17px; }
+  .gallery-mosaic .gallery-tile-tall { grid-row:span 2; grid-column:auto; }
+  .gallery-mosaic .gallery-tile figcaption { padding:31px 12px 12px; font-size:10px; }
+  .gallery-mosaic .gallery-tile figcaption .ui-icon-inline { width:25px; height:25px; }
+  .gallery-mosaic .gallery-note { inset:8px; padding:10px; gap:7px; }
+  .gallery-mosaic .gallery-note .ui-icon-inline { width:35px; height:35px; border-radius:12px; }
+  .gallery-mosaic .gallery-note b { font-size:15px; }
+  .gallery-mosaic .gallery-note small { font-size:7px; }
+  .gallery-collection-footnote { align-items:flex-start; font-size:9px; }
+  .gallery-bottom-cta { flex-wrap:wrap; gap:13px; margin-bottom:60px; padding:21px; border-radius:20px; }
+  .gallery-cta-icon { width:48px; height:48px; flex-basis:48px; border-radius:15px; }
+  .gallery-cta-icon .school-icon-svg { width:23px; height:23px; }
+  .gallery-bottom-cta > div { flex-basis:calc(100% - 62px); }
+  .gallery-bottom-cta h2 { font-size:23px; }
+  .gallery-bottom-cta p { font-size:10px; }
+  .gallery-bottom-cta .button { margin-inline-start:auto; }
+}
+@media (max-width:420px) {
+  .gallery-hero-actions .button { padding-inline:10px; font-size:10px; }
+  .gallery-hero-art { min-height:315px; }
+  .gallery-art-stage { height:315px; }
+  .gallery-photo-stack { width:145px; height:150px; }
+  .gallery-frame-icon { width:52px; height:52px; }
+  .gallery-frame-icon .school-icon-svg { width:33px; height:33px; }
+  .gallery-orbit-one { width:184px; height:184px; }
+  .gallery-orbit-two { width:230px; height:230px; }
+  .gallery-orbit-three { width:265px; height:265px; }
+  .gallery-art-note { max-width:70%; }
+  .gallery-note-top { top:17px; }
+  .gallery-note-bottom { bottom:31px; }
+  .gallery-mosaic { grid-auto-rows:145px; }
+  .gallery-mosaic .gallery-tile,.gallery-mosaic .gallery-tile-blue { min-height:145px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .gallery-orbit-one,.gallery-orbit-two,.gallery-photo-stack,.gallery-art-note,.gallery-art-spark,.gallery-mosaic .gallery-tile,
+  .gallery-mosaic .gallery-tile > img { animation:none !important; transition:none !important; }
+  .gallery-mosaic .gallery-tile,.gallery-mosaic .gallery-tile:hover { transform:none !important; }
+}
