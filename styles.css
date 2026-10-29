@@ -3224,6 +3224,8 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
 
 /* OFFICIAL HAMAD TOWN LOGO — traced from the exact user-supplied red H mark, on a transparent background. */
 .brand-mark {
+  position: relative;
+  top: -2px;
   width: 34px;
   height: 41px;
   flex: 0 0 34px;
