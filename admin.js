@@ -21,6 +21,42 @@
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[char]);
 
+  const currentLanguage = () => window.HamadI18n?.getLanguage() === "en" ? "en" : "ar";
+
+  function detectTextLanguage(value) {
+    const text = String(value ?? "");
+    const arabicCount = (text.match(/[\u0600-\u06FF]/g) || []).length;
+    const latinCount = (text.match(/[A-Za-z]/g) || []).length;
+    if (arabicCount === latinCount) return "";
+    return arabicCount > latinCount ? "ar" : "en";
+  }
+
+  function textForLanguage(value, language = currentLanguage()) {
+    const text = String(value ?? "").trim();
+    if (!text) return "";
+    const sourceLanguage = detectTextLanguage(text);
+    if (!sourceLanguage || sourceLanguage === language) return text;
+
+    const translated = language === "ar"
+      ? window.HamadI18n?.toArabic(text)
+      : window.HamadI18n?.toEnglish(text);
+    const result = String(translated ?? "").trim();
+    if (!result || result === text) return "";
+    const resultLanguage = detectTextLanguage(result);
+    return !resultLanguage || resultLanguage === language ? result : "";
+  }
+
+  function localizedField(record, field, baseValue, language) {
+    const targetSuffix = language === "ar" ? "_ar" : "_en";
+    const otherSuffix = language === "ar" ? "_en" : "_ar";
+    const candidates = [record[field + targetSuffix], baseValue, record[field + otherSuffix]];
+    for (const candidate of candidates) {
+      const localized = textForLanguage(candidate, language);
+      if (localized) return localized;
+    }
+    return "";
+  }
+
   const kinds = {
     about: "School identity", achievement: "Student achievement", award: "Award",
     activity: "Activity", story: "School story", teacher: "Teacher spotlight",
@@ -149,25 +185,25 @@
     const title = item.title || "";
     const description = item.description || "";
     const eyebrow = item.eyebrow || item.label || "";
-    const toArabic = value => window.HamadI18n?.toArabic(value) || value;
-    const toEnglish = value => window.HamadI18n?.toEnglish(value) || value;
     return {
       ...item,
       section: item.section || sectionForKind(item.kind || item.category || "story"),
       layout: item.layout === "feature" ? "feature" : "standard",
-      title_ar: item.title_ar || toArabic(title),
-      title_en: item.title_en || toEnglish(title),
-      description_ar: item.description_ar || toArabic(description),
-      description_en: item.description_en || toEnglish(description),
-      eyebrow_ar: item.eyebrow_ar || toArabic(eyebrow),
-      eyebrow_en: item.eyebrow_en || toEnglish(eyebrow)
+      title_ar: localizedField(item, "title", title, "ar"),
+      title_en: localizedField(item, "title", title, "en"),
+      description_ar: localizedField(item, "description", description, "ar"),
+      description_en: localizedField(item, "description", description, "en"),
+      eyebrow_ar: localizedField(item, "eyebrow", eyebrow, "ar"),
+      eyebrow_en: localizedField(item, "eyebrow", eyebrow, "en")
     };
   }
 
   function displayText(item, field) {
-    const arabic = item[field + "_ar"] || item[field] || "";
-    const english = item[field + "_en"] || item[field] || arabic;
-    return window.HamadI18n?.getLanguage() === "en" ? (english || arabic) : (arabic || english);
+    const value = localizedField(item, field, item[field], currentLanguage());
+    if (value) return value;
+    return field === "title"
+      ? (currentLanguage() === "en" ? "Title translation not available yet" : "العنوان غير مترجم بعد")
+      : "";
   }
 
   function readDemoItems() {
