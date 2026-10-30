@@ -114,16 +114,82 @@ alter table public.school_content
   add constraint school_content_section_check
   check (section in ('', 'our-story', 'achievements', 'school-life', 'stories', 'gallery'));
 
--- Preserve existing records while providing fallback text in both languages.
+-- Preserve existing records without copying one language into the other.
+-- Populate only the field that matches the source text's writing system. If an
+-- earlier setup copied the same text into both fields, keep it in its detected
+-- language and clear only the duplicate opposite-language value.
 update public.school_content
-set title_ar = coalesce(nullif(title_ar, ''), title),
-    title_en = coalesce(nullif(title_en, ''), title),
-    eyebrow_ar = coalesce(nullif(eyebrow_ar, ''), eyebrow),
-    eyebrow_en = coalesce(nullif(eyebrow_en, ''), eyebrow),
-    description_ar = coalesce(nullif(description_ar, ''), description),
-    description_en = coalesce(nullif(description_en, ''), description)
-where title_ar = '' or title_en = '' or eyebrow_ar = '' or eyebrow_en = ''
-   or description_ar = '' or description_en = '';
+set
+  title_ar = case
+    when btrim(coalesce(title_ar, '')) <> btrim(coalesce(title_en, ''))
+         and btrim(coalesce(title_ar, '')) <> '' then title_ar
+    when btrim(coalesce(title_ar, '')) = btrim(coalesce(title_en, ''))
+         and btrim(coalesce(title_ar, '')) <> ''
+         and btrim(title_ar) ~ '[ء-ي]' and btrim(title_ar) !~ '[A-Za-z]' then title_ar
+    when btrim(coalesce(title_ar, '')) = btrim(coalesce(title_en, ''))
+         and btrim(coalesce(title_ar, '')) <> ''
+         and btrim(title_ar) ~ '[A-Za-z]' and btrim(title_ar) !~ '[ء-ي]' then ''
+    when btrim(coalesce(title_ar, '')) = ''
+         and btrim(coalesce(title, '')) ~ '[ء-ي]' and btrim(title) !~ '[A-Za-z]' then title
+    else title_ar
+  end,
+  title_en = case
+    when btrim(coalesce(title_ar, '')) = btrim(coalesce(title_en, ''))
+         and btrim(coalesce(title_en, '')) <> ''
+         and btrim(title_en) ~ '[ء-ي]' and btrim(title_en) !~ '[A-Za-z]' then ''
+    when btrim(coalesce(title_en, '')) <> '' then title_en
+    when btrim(coalesce(title_en, '')) = ''
+         and btrim(coalesce(title, '')) ~ '[A-Za-z]' and btrim(title) !~ '[ء-ي]' then title
+    else title_en
+  end,
+  eyebrow_ar = case
+    when btrim(coalesce(eyebrow_ar, '')) = btrim(coalesce(eyebrow_en, ''))
+         and btrim(coalesce(eyebrow_ar, '')) <> ''
+         and btrim(eyebrow_ar) ~ '[ء-ي]' and btrim(eyebrow_ar) !~ '[A-Za-z]' then eyebrow_ar
+    when btrim(coalesce(eyebrow_ar, '')) = btrim(coalesce(eyebrow_en, ''))
+         and btrim(coalesce(eyebrow_ar, '')) <> ''
+         and btrim(eyebrow_ar) ~ '[A-Za-z]' and btrim(eyebrow_ar) !~ '[ء-ي]' then ''
+    when btrim(coalesce(eyebrow_ar, '')) <> '' then eyebrow_ar
+    when btrim(coalesce(eyebrow_ar, '')) = ''
+         and btrim(coalesce(eyebrow, '')) ~ '[ء-ي]' and btrim(eyebrow) !~ '[A-Za-z]' then eyebrow
+    else eyebrow_ar
+  end,
+  eyebrow_en = case
+    when btrim(coalesce(eyebrow_ar, '')) = btrim(coalesce(eyebrow_en, ''))
+         and btrim(coalesce(eyebrow_en, '')) <> ''
+         and btrim(eyebrow_en) ~ '[ء-ي]' and btrim(eyebrow_en) !~ '[A-Za-z]' then ''
+    when btrim(coalesce(eyebrow_en, '')) <> '' then eyebrow_en
+    when btrim(coalesce(eyebrow_en, '')) = ''
+         and btrim(coalesce(eyebrow, '')) ~ '[A-Za-z]' and btrim(eyebrow) !~ '[ء-ي]' then eyebrow
+    else eyebrow_en
+  end,
+  description_ar = case
+    when btrim(coalesce(description_ar, '')) = btrim(coalesce(description_en, ''))
+         and btrim(coalesce(description_ar, '')) <> ''
+         and btrim(description_ar) ~ '[ء-ي]' and btrim(description_ar) !~ '[A-Za-z]' then description_ar
+    when btrim(coalesce(description_ar, '')) = btrim(coalesce(description_en, ''))
+         and btrim(coalesce(description_ar, '')) <> ''
+         and btrim(description_ar) ~ '[A-Za-z]' and btrim(description_ar) !~ '[ء-ي]' then ''
+    when btrim(coalesce(description_ar, '')) <> '' then description_ar
+    when btrim(coalesce(description_ar, '')) = ''
+         and btrim(coalesce(description, '')) ~ '[ء-ي]' and btrim(description) !~ '[A-Za-z]' then description
+    else description_ar
+  end,
+  description_en = case
+    when btrim(coalesce(description_ar, '')) = btrim(coalesce(description_en, ''))
+         and btrim(coalesce(description_en, '')) <> ''
+         and btrim(description_en) ~ '[ء-ي]' and btrim(description_en) !~ '[A-Za-z]' then ''
+    when btrim(coalesce(description_en, '')) <> '' then description_en
+    when btrim(coalesce(description_en, '')) = ''
+         and btrim(coalesce(description, '')) ~ '[A-Za-z]' and btrim(description) !~ '[ء-ي]' then description
+    else description_en
+  end
+where
+  title_ar = '' or title_en = '' or eyebrow_ar = '' or eyebrow_en = ''
+  or description_ar = '' or description_en = ''
+  or (title_ar = title_en and btrim(coalesce(title_ar, '')) <> '')
+  or (eyebrow_ar = eyebrow_en and btrim(coalesce(eyebrow_ar, '')) <> '')
+  or (description_ar = description_en and btrim(coalesce(description_ar, '')) <> '');
 
 -- Seed editable Our story cards with stable IDs; re-running this script does not overwrite edits.
 insert into public.school_content
