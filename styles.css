@@ -1655,7 +1655,7 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
              radial-gradient(ellipse at 92% 32%,rgba(255,230,164,.13),transparent 22rem);
 }
 .standalone-hero { padding-top:37px; padding-bottom:34px; }
-.back-home-link { gap:10px; margin-bottom:25px; padding:8px 12px; border:1px solid #e3edf4; border-radius:999px; background:rgba(255,255,255,.8); }
+.back-home-link { gap:10px; margin-bottom:25px; padding:8px 12px; border:1px solid #e3edf4; border-radius:999px; background:rgba(255,255,255,.8); transform:translateY(-12px); }
 .standalone-hero-grid { gap:clamp(25px,5vw,62px); min-height:350px; }
 .standalone-hero h1 { line-height:1.28; }
 .standalone-description { color:#687f93; font-size:14px; line-height:2.05; }
