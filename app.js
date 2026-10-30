@@ -100,7 +100,7 @@
       title: "Our mission", title_ar: "رسالتنا", title_en: "Our mission",
       eyebrow: "OUR MISSION", eyebrow_ar: "رسالتنا", eyebrow_en: "OUR MISSION",
       description_ar: "نعزّز التعاون بين الطلاب والمعلمين والأسر، ونحتفي بالاجتهاد والسلوك الإيجابي وكل خطوة نحو التقدّم.",
-      description_en: "We encourage collaboration among students, teachers and families, celebrating effort, positive character and every step forward.",
+      description_en: "We encourage collaboration among students, teachers and families, and celebrate effort, positive character and every step forward.",
       image_url: "", featured: true, published: true, order_index: 2
     },
     {
@@ -129,14 +129,16 @@
   const currentLanguage = () => window.HamadI18n?.getLanguage() === "en" ? "en" : "ar";
 
   function detectTextLanguage(value) {
-    const text = String(value ?? "");
+    // Keep standard product names, file formats and common technical acronyms language-neutral.
+    const text = String(value ?? "").replace(
+      /\b(?:Supabase|JPG|JPEG|PNG|WEBP|GIF|HTML|CSS|JavaScript|JS|API|URL|JSON|PDF|AI|STEM|ICT)\b/gi,
+      " "
+    );
     const arabicCount = (text.match(/[\u0600-\u06FF]/g) || []).length;
     const latinCount = (text.match(/[A-Za-z]/g) || []).length;
     if (!arabicCount && !latinCount) return "";
-    if (!arabicCount) return "en";
-    if (!latinCount) return "ar";
-    if (arabicCount === latinCount) return "mixed";
-    return arabicCount > latinCount ? "ar" : "en";
+    if (arabicCount && latinCount) return "mixed";
+    return arabicCount ? "ar" : "en";
   }
 
   function textForLanguage(value, language = currentLanguage()) {
