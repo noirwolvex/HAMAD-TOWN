@@ -99,6 +99,7 @@
     "We lead with kindness, respect and courage.": "نتميّز باللطف والاحترام والشجاعة.",
     "Growth": "التطوّر",
     "We celebrate progress at every step.": "نحتفي بكل خطوة نحو التقدّم.",
+    "01": "٠١",
     "02": "٠٢",
     "MOMENTS THAT MATTER": "لحظات تصنع الفرق",
     "Look what we've": "انظروا إلى ما",
