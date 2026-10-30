@@ -674,7 +674,8 @@
       "Selected image preview": "معاينة الصورة المحددة",
       "Return to the public website": "العودة إلى الموقع الرئيسي",
       "Switch language": "تغيير اللغة",
-      "Filter content by section": "تصفية المحتوى حسب القسم"
+      "Filter content by section": "تصفية المحتوى حسب القسم",
+      "Filter content by type": "تصفية حسب نوع المحتوى"
     },
     "placeholder": {
       "e.g. Academic year 2026": "مثال: العام الدراسي ٢٠٢٦",
