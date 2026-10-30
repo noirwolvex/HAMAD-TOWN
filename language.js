@@ -606,6 +606,7 @@
     "Help us collect the moments that make our school special. Add your photos and their descriptions through the school portal.": "ساعدنا في جمع اللحظات التي تميّز مدرستنا. أضف صورك ووصفها من خلال بوابة المدرسة.",
     "Add to the gallery": "أضف إلى المعرض",
     "Every idea opens a new horizon": "كل فكرة تفتح أفقًا جديدًا",
+    "Excellence.": "التميّز.",
     "LISTEN": "نستمع",
     "INSPIRE": "نلهم",
     "COLLECT": "نجمع",
@@ -706,6 +707,9 @@
   // Keep Arabic-to-English wording deterministic when several English phrases share one Arabic rendering.
   Object.assign(reverseTranslations, {
     "هل لديك إنجاز يستحق الاحتفاء؟": "Do you have an achievement worth celebrating?",
+    "معرض الصور": "Gallery",
+    "ننمو معًا": "Grow together",
+    "التميّز.": "Excellence."
     "لحظة تستحق الاحتفاء": "A moment to celebrate",
     "تفاصيل إضافية": "Additional details",
     "نتعلّم بهدف": "LEARN WITH PURPOSE",
