@@ -132,7 +132,10 @@
     const text = String(value ?? "");
     const arabicCount = (text.match(/[\u0600-\u06FF]/g) || []).length;
     const latinCount = (text.match(/[A-Za-z]/g) || []).length;
-    if (arabicCount === latinCount) return "";
+    if (!arabicCount && !latinCount) return "";
+    if (!arabicCount) return "en";
+    if (!latinCount) return "ar";
+    if (arabicCount === latinCount) return "mixed";
     return arabicCount > latinCount ? "ar" : "en";
   }
 
