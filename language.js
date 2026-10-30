@@ -26,6 +26,7 @@
     "Keep both language versions accurate and respect student privacy.": "احرص على دقة النصين وحماية خصوصية الطلاب.",
     "Both Arabic and English versions will be published.": "سيتم نشر النسختين العربية والإنجليزية.",
     "Please complete both Arabic and English titles and descriptions.": "يرجى إكمال العناوين والأوصاف باللغتين العربية والإنجليزية.",
+    "Please keep Arabic fields in Arabic and English fields in English.": "يرجى كتابة الحقول العربية بالعربية والحقول الإنجليزية بالإنجليزية.",
     "Switch language to English": "تغيير اللغة إلى الإنجليزية",
     "Discover the stories, achievements, activities and bright future of Hamad Town School.": "اكتشف قصص مدرسة مدينة حمد وإنجازاتها وأنشطتها ومستقبلها المشرق.",
     "Hamad Town School home": "الصفحة الرئيسية لمدرسة مدينة حمد",
