@@ -126,6 +126,42 @@
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
   })[char]);
 
+  const currentLanguage = () => window.HamadI18n?.getLanguage() === "en" ? "en" : "ar";
+
+  function detectTextLanguage(value) {
+    const text = String(value ?? "");
+    const arabicCount = (text.match(/[\u0600-\u06FF]/g) || []).length;
+    const latinCount = (text.match(/[A-Za-z]/g) || []).length;
+    if (arabicCount === latinCount) return "";
+    return arabicCount > latinCount ? "ar" : "en";
+  }
+
+  function textForLanguage(value, language = currentLanguage()) {
+    const text = String(value ?? "").trim();
+    if (!text) return "";
+    const sourceLanguage = detectTextLanguage(text);
+    if (!sourceLanguage || sourceLanguage === language) return text;
+
+    const translated = language === "ar"
+      ? window.HamadI18n?.toArabic(text)
+      : window.HamadI18n?.toEnglish(text);
+    const result = String(translated ?? "").trim();
+    if (!result || result === text) return "";
+    const resultLanguage = detectTextLanguage(result);
+    return !resultLanguage || resultLanguage === language ? result : "";
+  }
+
+  function localizedField(row, field, baseValue, language) {
+    const targetSuffix = language === "ar" ? "_ar" : "_en";
+    const otherSuffix = language === "ar" ? "_en" : "_ar";
+    const candidates = [row[field + targetSuffix], baseValue, row[field + otherSuffix]];
+    for (const candidate of candidates) {
+      const localized = textForLanguage(candidate, language);
+      if (localized) return localized;
+    }
+    return "";
+  }
+
   const contentById = new Map();
   let detailModal = null;
   let lastOpenedCard = null;
@@ -155,18 +191,18 @@
     const kind = row.kind || row.category || "story";
     const title = row.title || "";
     const description = row.description || "";
-    const eyebrow = row.eyebrow || row.label || kind.replace(/[-_]/g, " ");
+    const eyebrow = row.eyebrow || row.label || "";
     return {
       ...row,
       kind,
       section: row.section || inferSection(kind),
       layout: row.layout === "feature" ? "feature" : "standard",
-      title_ar: row.title_ar || window.HamadI18n?.toArabic(title) || title,
-      title_en: row.title_en || window.HamadI18n?.toEnglish(title) || title,
-      description_ar: row.description_ar || window.HamadI18n?.toArabic(description) || description,
-      description_en: row.description_en || window.HamadI18n?.toEnglish(description) || description,
-      eyebrow_ar: row.eyebrow_ar || window.HamadI18n?.toArabic(eyebrow) || eyebrow,
-      eyebrow_en: row.eyebrow_en || window.HamadI18n?.toEnglish(eyebrow) || eyebrow,
+      title_ar: localizedField(row, "title", title, "ar"),
+      title_en: localizedField(row, "title", title, "en"),
+      description_ar: localizedField(row, "description", description, "ar"),
+      description_en: localizedField(row, "description", description, "en"),
+      eyebrow_ar: localizedField(row, "eyebrow", eyebrow, "ar"),
+      eyebrow_en: localizedField(row, "eyebrow", eyebrow, "en"),
       description,
       image_url: row.image_url || row.imageUrl || "",
       eyebrow,
@@ -176,10 +212,11 @@
   };
 
   const displayText = (item, field) => {
-    const isEnglish = window.HamadI18n?.getLanguage() === "en";
-    const arabic = item[field + "_ar"] || item[field] || "";
-    const english = item[field + "_en"] || item[field] || arabic;
-    return isEnglish ? (english || arabic) : (arabic || english);
+    const value = localizedField(item, field, item[field], currentLanguage());
+    if (value) return value;
+    return field === "title"
+      ? (currentLanguage() === "en" ? "Title translation not available yet" : "العنوان غير مترجم بعد")
+      : "";
   };
 
   function readLocalItems() {
@@ -298,7 +335,8 @@
     const featuredMarkup = featuredEntries.map(item => {
       const image = safeImage(item.image_url);
       const title = displayText(item, "title");
-      const eyebrow = displayText(item, "eyebrow") || "OUR SCHOOL";
+      const eyebrow = displayText(item, "eyebrow") || textForLanguage("OUR SCHOOL");
+      const year = textForLanguage(item.year);
       return `<article class="story-feature-card reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">
         <div class="story-feature-media">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="story-feature-placeholder" data-icon="sparkles" aria-hidden="true"></div>`}
           <span class="story-feature-media-tag">${escapeHtml(eyebrow)}</span>
@@ -307,7 +345,7 @@
           <span class="story-feature-kicker">${escapeHtml(eyebrow)}</span>
           <h2>${escapeHtml(title)}</h2>
           <p>${escapeHtml(displayText(item, "description"))}</p>
-          ${item.year ? `<span class="story-feature-year">${escapeHtml(item.year)}</span>` : ""}
+          ${year ? `<span class="story-feature-year">${escapeHtml(year)}</span>` : ""}
           <span class="story-feature-accent" data-icon="sparkles" aria-hidden="true"></span>
         </div>
       </article>`;
@@ -460,7 +498,8 @@
       about: "محتوى تعريفي", achievement: "إنجاز", award: "جائزة", activity: "نشاط مدرسي",
       story: "قصة", teacher: "تكريم معلم", student: "تكريم طالب", event: "فعالية مدرسية", gallery: "صورة من المعرض"
     }[item.kind] || "محتوى مدرسي") });
-    if (item.year) meta.push({ label: isEnglish ? "School year" : "العام الدراسي", value: item.year });
+    const localizedYear = textForLanguage(item.year, isEnglish ? "en" : "ar");
+    if (localizedYear) meta.push({ label: isEnglish ? "School year" : "العام الدراسي", value: localizedYear });
     if (isAchievementItem(item)) meta.push(...achievementDetails(item));
     if (item.created_at) {
       const createdAt = new Date(item.created_at);
