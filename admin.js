@@ -25,14 +25,16 @@
   const messageForLanguage = (english, arabic) => currentLanguage() === "ar" ? arabic : english;
 
   function detectTextLanguage(value) {
-    const text = String(value ?? "");
+    // Keep standard product names, file formats and common technical acronyms language-neutral.
+    const text = String(value ?? "").replace(
+      /\b(?:Supabase|JPG|JPEG|PNG|WEBP|GIF|HTML|CSS|JavaScript|JS|API|URL|JSON|PDF|AI|STEM|ICT)\b/gi,
+      " "
+    );
     const arabicCount = (text.match(/[\u0600-\u06FF]/g) || []).length;
     const latinCount = (text.match(/[A-Za-z]/g) || []).length;
     if (!arabicCount && !latinCount) return "";
-    if (!arabicCount) return "en";
-    if (!latinCount) return "ar";
-    if (arabicCount === latinCount) return "mixed";
-    return arabicCount > latinCount ? "ar" : "en";
+    if (arabicCount && latinCount) return "mixed";
+    return arabicCount ? "ar" : "en";
   }
 
   function textForLanguage(value, language = currentLanguage()) {
@@ -523,6 +525,7 @@
       const titleEn = $("contentTitleEn").value.trim();
       const descriptionAr = $("contentDescription").value.trim();
       const descriptionEn = $("contentDescriptionEn").value.trim();
+      const achievementFields = readAchievementFields();
       const layout = $("contentSection").value === "our-story" ? $("contentLayout").value : "standard";
       const hasImage = Boolean($("contentImageUrl").value.trim() || pendingImageFile);
       if (layout === "feature" && !hasImage) {
@@ -533,6 +536,31 @@
         setMessage("Please complete both Arabic and English titles and descriptions.", true);
         return;
       }
+
+      const localizedInputs = [
+        { value: titleAr, language: "ar" },
+        { value: $("contentEyebrow").value.trim(), language: "ar" },
+        { value: descriptionAr, language: "ar" },
+        { value: titleEn, language: "en" },
+        { value: $("contentEyebrowEn").value.trim(), language: "en" },
+        { value: descriptionEn, language: "en" },
+        ...Object.entries(achievementFields)
+          .filter(([field]) => field.endsWith("_ar") || field.endsWith("_en"))
+          .map(([field, value]) => ({
+            value,
+            language: field.endsWith("_ar") ? "ar" : "en"
+          }))
+      ];
+      const hasWrongLanguage = localizedInputs.some(({ value, language }) => {
+        if (!String(value || "").trim()) return false;
+        const detected = detectTextLanguage(value);
+        return Boolean(detected && detected !== language);
+      });
+      if (hasWrongLanguage) {
+        setMessage("Please keep Arabic fields in Arabic and English fields in English.", true);
+        return;
+      }
+
       if (supabaseClient && !currentSession) {
         setMessage("Please sign in before publishing.", true);
         return;
@@ -544,7 +572,6 @@
         const id = $("contentId").value || "demo-" + Date.now();
         const existing = items.find(item => String(item.id) === String(id));
         const kind = $("contentKind").value;
-        const achievementFields = readAchievementFields();
         const defaultTypeEnglish = kinds[kind] || "School story";
         const defaultTypeArabic = window.HamadI18n?.toArabic(defaultTypeEnglish) || defaultTypeEnglish;
         const eyebrowAr = $("contentEyebrow").value.trim() || defaultTypeArabic;
