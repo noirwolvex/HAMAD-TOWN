@@ -22,6 +22,7 @@
   })[char]);
 
   const currentLanguage = () => window.HamadI18n?.getLanguage() === "en" ? "en" : "ar";
+  const messageForLanguage = (english, arabic) => currentLanguage() === "ar" ? arabic : english;
 
   function detectTextLanguage(value) {
     const text = String(value ?? "");
@@ -352,12 +353,12 @@
     $("achievementHighlights").value = record.achievement_highlights_ar || "";
     $("achievementHighlightsEn").value = record.achievement_highlights_en || "";
     $("contentYear").value = record.year || "";
-    $("contentTitle").value = record.title_ar || record.title || "";
-    $("contentTitleEn").value = record.title_en || record.title || "";
-    $("contentEyebrow").value = record.eyebrow_ar || record.eyebrow || "";
-    $("contentEyebrowEn").value = record.eyebrow_en || record.eyebrow || "";
-    $("contentDescription").value = record.description_ar || record.description || "";
-    $("contentDescriptionEn").value = record.description_en || record.description || "";
+    $("contentTitle").value = record.title_ar || "";
+    $("contentTitleEn").value = record.title_en || "";
+    $("contentEyebrow").value = record.eyebrow_ar || "";
+    $("contentEyebrowEn").value = record.eyebrow_en || "";
+    $("contentDescription").value = record.description_ar || "";
+    $("contentDescriptionEn").value = record.description_en || "";
     $("contentImageUrl").value = record.image_url || record.imageUrl || "";
     $("contentFeatured").checked = record.featured !== false;
     $("contentPublished").checked = record.published !== false;
@@ -442,14 +443,16 @@
       renderRecords();
       showToast("Content deleted.");
     } catch (error) {
-      showToast(error.message || "Could not delete this entry.");
+      console.error("Content deletion failed.", error);
+      showToast(messageForLanguage("Could not delete the content. Check permissions and your connection, then try again.", "تعذّر حذف المحتوى. تحقق من الصلاحيات والاتصال ثم حاول مرة أخرى."));
     }
   }
 
   async function loadBackendItems() {
     const { data, error } = await supabaseClient.from("school_content").select("*").order("order_index", { ascending: true });
     if (error) {
-      setMessage("Could not read the shared content library. " + error.message, true);
+      console.error("Shared content library could not be loaded.", error);
+      setMessage(messageForLanguage("Could not read the shared content library. Check the connection and database settings.", "تعذّرت قراءة مكتبة المحتوى المشتركة. تحقق من الاتصال وإعدادات قاعدة البيانات."), true);
       items = [];
     } else {
       items = (data || []).map(normalizeRecord);
@@ -572,7 +575,8 @@
         showToast(supabaseClient ? "Content saved to the shared school website." : "Saved in this browser. Connect Supabase to publish to everyone.");
       } catch (error) {
         console.error("Content save failed.", error);
-        setMessage(error.message || "The content could not be saved.", true);
+        console.error("Content save failed.", error);
+        setMessage(messageForLanguage("The content could not be saved. Check the fields and connection, then try again.", "تعذّر حفظ المحتوى. تحقق من الحقول والاتصال ثم حاول مرة أخرى."), true);
       } finally {
         setBusy(false);
       }
@@ -640,7 +644,8 @@
           try { await supabaseClient.auth.signOut(); } catch (_) {}
           currentSession = null;
         }
-        setMessage(error.message || "Sign-in failed.", true, "loginMessage");
+        console.error("School administrator sign-in failed.", error);
+        setMessage(messageForLanguage("Sign-in failed. Check your email address and password.", "تعذّر تسجيل الدخول. تحقق من البريد الإلكتروني وكلمة المرور."), true, "loginMessage");
       } finally {
         submit.disabled = false;
         submit.innerHTML = 'Sign in securely <span class="ui-icon-inline" data-icon="arrow-right" aria-hidden="true"></span>';
@@ -659,7 +664,8 @@
         $("signOutBtn").hidden = true;
         setMessage("You have been signed out.", false, "loginMessage");
       } catch (error) {
-        showToast(error.message || "Sign-out failed.");
+        console.error("School administrator sign-out failed.", error);
+        showToast(messageForLanguage("Sign-out failed. Please try again.", "تعذّر تسجيل الخروج. حاول مرة أخرى."));
       }
     });
   }
@@ -703,7 +709,8 @@
         try { await supabaseClient.auth.signOut(); } catch (_) {}
         currentSession = null;
       }
-      setMessage("Could not verify the current session: " + error.message, true, "loginMessage");
+      console.error("Current administrator session could not be verified.", error);
+      setMessage(messageForLanguage("Could not verify the current session. Please sign in again.", "تعذّر التحقق من الجلسة الحالية. يرجى تسجيل الدخول مجددًا."), true, "loginMessage");
     }
   });
 })();
