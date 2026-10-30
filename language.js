@@ -729,6 +729,10 @@
       Object.fromEntries(Object.entries(dictionary).map(([english, arabic]) => [arabic, english]))
     ])
   );
+  // Resolve the duplicated Arabic filter label to the wording used by the admin page.
+  Object.assign(reverseAttributeTranslations["aria-label"], {
+    "تصفية حسب نوع المحتوى": "Filter content by type"
+  });
 
   const originalText = new WeakMap();
   const originalAttrs = new WeakMap();
