@@ -709,7 +709,7 @@
     "هل لديك إنجاز يستحق الاحتفاء؟": "Do you have an achievement worth celebrating?",
     "معرض الصور": "Gallery",
     "ننمو معًا": "Grow together",
-    "التميّز.": "Excellence."
+    "التميّز.": "Excellence.",
     "لحظة تستحق الاحتفاء": "A moment to celebrate",
     "تفاصيل إضافية": "Additional details",
     "نتعلّم بهدف": "LEARN WITH PURPOSE",
