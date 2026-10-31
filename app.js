@@ -423,7 +423,7 @@
           '</div>' +
           '<h3>' + escapeHtml(title) + '</h3>' +
           (excerpt ? '<p>' + escapeHtml(excerpt) + '</p>' : '') +
-          '<span class="latest-achievement-footer"><span>' + escapeHtml(detailLabel) + '</span><span class="latest-achievement-arrow ui-icon-inline" data-icon="arrow-up-left" aria-hidden="true"></span></span>' +
+          '<span class="latest-achievement-footer"><span>' + escapeHtml(detailLabel) + '</span><span class="latest-achievement-arrow ui-icon-inline" data-icon="' + (isEnglish ? "arrow-up-right" : "arrow-up-left") + '" aria-hidden="true"></span></span>' +
         '</div>' +
       '</article>';
     }).join("");
