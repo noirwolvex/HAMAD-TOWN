@@ -364,9 +364,11 @@
   }
 
   function latestAchievementTime(item) {
-    const rawDate = String(item.created_at || item.achievement_date || "").trim();
-    const parsedDate = rawDate ? Date.parse(rawDate) : NaN;
-    if (Number.isFinite(parsedDate)) return parsedDate;
+    for (const candidate of [item.created_at, item.achievement_date]) {
+      const rawDate = String(candidate || "").trim();
+      const parsedDate = rawDate ? Date.parse(rawDate) : NaN;
+      if (Number.isFinite(parsedDate)) return parsedDate;
+    }
     const order = Number(item.order_index);
     return Number.isFinite(order) ? order : 0;
   }
@@ -423,7 +425,7 @@
           '</div>' +
           '<h3>' + escapeHtml(title) + '</h3>' +
           (excerpt ? '<p>' + escapeHtml(excerpt) + '</p>' : '') +
-          '<span class="latest-achievement-footer"><span>' + escapeHtml(detailLabel) + '</span><span class="latest-achievement-arrow ui-icon-inline" data-icon="' + (isEnglish ? "arrow-up-right" : "arrow-up-left") + '" aria-hidden="true"></span></span>' +
+          '<span class="latest-achievement-footer"><span>' + escapeHtml(detailLabel) + '</span><span class="latest-achievement-arrow ui-icon-inline" data-icon="' + (isEnglish ? "arrow-up-right" : "arrow-left") + '" aria-hidden="true"></span></span>' +
         '</div>' +
       '</article>';
     }).join("");
