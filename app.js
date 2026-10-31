@@ -363,6 +363,72 @@
     container.innerHTML = featuredMarkup + standardMarkup;
   }
 
+  function latestAchievementTime(item) {
+    const rawDate = String(item.created_at || item.achievement_date || "").trim();
+    const parsedDate = rawDate ? Date.parse(rawDate) : NaN;
+    if (Number.isFinite(parsedDate)) return parsedDate;
+    const order = Number(item.order_index);
+    return Number.isFinite(order) ? order : 0;
+  }
+
+  function renderLatestAchievements(items) {
+    const container = document.getElementById("latestAchievementsGrid");
+    if (!container) return;
+
+    const latest = items
+      .filter(item => isAchievementItem(item) && item.published !== false)
+      .slice()
+      .sort((a, b) => {
+        const dateDifference = latestAchievementTime(b) - latestAchievementTime(a);
+        return dateDifference || (Number(b.order_index) || 0) - (Number(a.order_index) || 0);
+      })
+      .slice(0, 3);
+
+    if (!latest.length) {
+      const emptyMessage = currentLanguage() === "en"
+        ? "The latest achievements will appear here soon."
+        : "ستظهر أحدث الإنجازات هنا قريبًا.";
+      container.innerHTML = '<div class="latest-achievements-empty" role="status">' + escapeHtml(emptyMessage) + '</div>';
+      return;
+    }
+
+    const isEnglish = currentLanguage() === "en";
+    const detailLabel = isEnglish ? "Explore details" : "اكتشف التفاصيل";
+    const numberLabels = isEnglish ? ["01", "02", "03"] : ["٠١", "٠٢", "٠٣"];
+
+    container.innerHTML = latest.map((item, index) => {
+      const title = displayText(item, "title");
+      const description = displayText(item, "description");
+      const excerpt = description.length > 176 ? description.slice(0, 173).trimEnd() + "…" : description;
+      const image = safeImage(item.image_url);
+      const eyebrow = displayText(item, "eyebrow");
+      const typeLabel = isEnglish
+        ? kindLabel(item.kind)
+        : (window.HamadI18n?.toArabic(kindLabel(item.kind)) || "إنجاز");
+      const dateSource = String(item.achievement_date || item.created_at || "").trim();
+      const dateLabel = dateSource ? formatAchievementDate(dateSource.slice(0, 10)) : "";
+      const media = image
+        ? '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(title) + '" loading="lazy">'
+        : '<div class="latest-achievement-placeholder" aria-hidden="true"><span class="ui-icon-inline" data-icon="' + kindSymbol(item.kind) + '"></span></div>';
+
+      return '<article class="latest-achievement-card reveal is-visible is-openable-card" role="button" tabindex="0" data-open-content data-content-id="' + escapeHtml(item.id) + '" aria-haspopup="dialog" aria-label="' + escapeHtml(title) + '">' +
+        '<div class="latest-achievement-media">' + media +
+          '<span class="latest-achievement-number">' + numberLabels[index] + '</span>' +
+          (eyebrow ? '<span class="latest-achievement-image-tag">' + escapeHtml(eyebrow) + '</span>' : '') +
+          '<span class="latest-achievement-image-shade" aria-hidden="true"></span>' +
+        '</div>' +
+        '<div class="latest-achievement-body">' +
+          '<div class="latest-achievement-meta"><span>' + escapeHtml(typeLabel) + '</span>' +
+            (dateLabel ? '<time>' + escapeHtml(dateLabel) + '</time>' : '') +
+          '</div>' +
+          '<h3>' + escapeHtml(title) + '</h3>' +
+          (excerpt ? '<p>' + escapeHtml(excerpt) + '</p>' : '') +
+          '<span class="latest-achievement-footer"><span>' + escapeHtml(detailLabel) + '</span><span class="latest-achievement-arrow ui-icon-inline" data-icon="arrow-up-left" aria-hidden="true"></span></span>' +
+        '</div>' +
+      '</article>';
+    }).join("");
+  }
+
   function renderAchievements(items) {
     const container = document.getElementById("achievementGrid");
     if (!container) return;
@@ -640,7 +706,7 @@
     setupMenu();
     setupReveal();
     setupContentDetails();
-    const hasContentContainer = ["storyContentGrid", "achievementGrid", "activityList", "storyGrid", "galleryGrid"]
+    const hasContentContainer = ["storyContentGrid", "achievementGrid", "latestAchievementsGrid", "activityList", "storyGrid", "galleryGrid"]
       .some(id => document.getElementById(id));
     if (!hasContentContainer) return;
     let currentItems = [];
@@ -649,6 +715,7 @@
       if (!itemsLoaded) return;
       renderAboutContent(currentItems);
       renderAchievements(currentItems);
+      renderLatestAchievements(currentItems);
       renderActivities(currentItems);
       renderStories(currentItems);
       renderGallery(currentItems);
@@ -663,6 +730,7 @@
       itemsLoaded = true;
       renderAboutContent(items);
       renderAchievements(items);
+      renderLatestAchievements(items);
       renderActivities(items);
       renderStories(items);
       renderGallery(items);
