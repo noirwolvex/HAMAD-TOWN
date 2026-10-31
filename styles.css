@@ -3258,3 +3258,357 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
 @media (max-width: 720px) {
   .brand-mark { width: 29px; height: 37px; flex-basis: 29px; }
 }
+
+
+/* HOMEPAGE — latest achievements showcase */
+.latest-achievements-section {
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+  padding:clamp(76px,8vw,112px) 0 clamp(82px,8vw,118px);
+  background:
+    radial-gradient(ellipse at 4% 12%,rgba(191,231,250,.34),transparent 28rem),
+    radial-gradient(ellipse at 96% 84%,rgba(246,218,155,.22),transparent 25rem),
+    linear-gradient(180deg,#f6fbff 0%,#fff 48%,#fbfdff 100%);
+}
+.latest-achievements-section::before,
+.latest-achievements-section::after {
+  content:"";
+  position:absolute;
+  z-index:-1;
+  pointer-events:none;
+  border:1px solid rgba(111,184,216,.2);
+  border-radius:50%;
+}
+.latest-achievements-section::before {
+  width:410px;
+  height:410px;
+  inset-inline-start:-235px;
+  top:14%;
+  box-shadow:0 0 0 42px rgba(190,229,247,.1),0 0 0 88px rgba(190,229,247,.07);
+}
+.latest-achievements-section::after {
+  width:310px;
+  height:310px;
+  inset-inline-end:-180px;
+  bottom:5%;
+  border-color:rgba(205,169,87,.2);
+  box-shadow:0 0 0 35px rgba(242,220,167,.08),0 0 0 72px rgba(242,220,167,.055);
+}
+.latest-achievements-inner { position:relative; z-index:1; }
+.latest-achievements-heading {
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:32px;
+  margin-bottom:38px;
+}
+.latest-achievements-heading-copy { max-width:760px; }
+.latest-achievements-kicker {
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  margin-bottom:15px;
+  color:#b08a35;
+  font:800 10px/1.4 var(--font-display);
+  letter-spacing:1.8px;
+}
+.latest-achievements-kicker-icon {
+  display:grid;
+  place-items:center;
+  width:29px;
+  height:29px;
+  border:1px solid rgba(202,165,75,.38);
+  border-radius:10px;
+  background:rgba(255,255,255,.8);
+  color:#b58d35;
+}
+.latest-achievements-kicker-icon .school-icon-svg { width:16px; height:16px; }
+.latest-achievements-heading h2 {
+  max-width:720px;
+  margin:0;
+  color:#1b354b;
+  font:800 clamp(31px,4vw,49px)/1.28 "Tajawal","Manrope",sans-serif;
+  letter-spacing:-1.45px;
+}
+.latest-achievements-heading h2 em {
+  color:#328bb5;
+  font-style:normal;
+}
+.latest-achievements-heading-copy > p {
+  max-width:620px;
+  margin:13px 0 0;
+  color:#72869a;
+  font-size:13px;
+  line-height:1.95;
+}
+.latest-achievements-view-all {
+  display:inline-flex;
+  flex:0 0 auto;
+  align-items:center;
+  justify-content:center;
+  gap:13px;
+  min-height:48px;
+  padding:0 19px;
+  border:1px solid #d9e8f1;
+  border-radius:999px;
+  background:rgba(255,255,255,.88);
+  color:#31546b;
+  font-size:11px;
+  font-weight:800;
+  box-shadow:0 7px 20px rgba(35,83,112,.045);
+  transition:transform .22s,border-color .22s,box-shadow .22s,color .22s;
+}
+.latest-achievements-view-all .ui-icon-inline {
+  width:17px;
+  height:17px;
+  color:#b58d35;
+}
+.latest-achievements-view-all:hover {
+  transform:translateY(-3px);
+  border-color:#b9d9e9;
+  color:#237ca7;
+  box-shadow:0 13px 28px rgba(35,83,112,.09);
+}
+.latest-achievements-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  align-items:stretch;
+  gap:23px;
+}
+.latest-achievement-card {
+  display:flex;
+  flex-direction:column;
+  min-width:0;
+  min-height:485px;
+  overflow:hidden;
+  border:1px solid #e2edf4;
+  border-radius:25px;
+  background:rgba(255,255,255,.96);
+  color:#1d374c;
+  box-shadow:0 15px 42px rgba(32,76,104,.07);
+  cursor:pointer;
+  transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease;
+}
+.latest-achievement-card:hover {
+  transform:translateY(-8px);
+  border-color:#c6e1ef;
+  box-shadow:0 25px 55px rgba(32,76,104,.13);
+}
+.latest-achievement-card:focus-visible {
+  outline:3px solid rgba(56,151,194,.45);
+  outline-offset:4px;
+}
+.latest-achievement-media {
+  position:relative;
+  isolation:isolate;
+  flex:0 0 auto;
+  height:265px;
+  overflow:hidden;
+  background:linear-gradient(135deg,#d8f1fb,#f8e9c5);
+}
+.latest-achievement-media > img {
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform .65s cubic-bezier(.2,.7,.2,1);
+}
+.latest-achievement-card:hover .latest-achievement-media > img { transform:scale(1.065); }
+.latest-achievement-placeholder {
+  display:grid;
+  width:100%;
+  height:100%;
+  place-items:center;
+  background:
+    radial-gradient(circle at 50% 45%,rgba(255,255,255,.82),transparent 27%),
+    linear-gradient(135deg,#c7eafa,#f5e9c9);
+  color:#397fa2;
+}
+.latest-achievement-placeholder .school-icon-svg { width:72px; height:72px; opacity:.78; }
+.latest-achievement-image-shade {
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(15,38,57,.2),transparent 36%,rgba(15,38,57,.12));
+}
+.latest-achievement-number {
+  position:absolute;
+  z-index:1;
+  inset-block-start:17px;
+  inset-inline-end:17px;
+  display:grid;
+  min-width:43px;
+  height:38px;
+  place-items:center;
+  padding:0 10px;
+  border:1px solid rgba(255,255,255,.7);
+  border-radius:13px;
+  background:rgba(255,255,255,.92);
+  color:#2c5872;
+  font:800 12px/1 var(--font-display);
+  box-shadow:0 6px 18px rgba(22,51,70,.12);
+  backdrop-filter:blur(10px);
+}
+.latest-achievement-image-tag {
+  position:absolute;
+  z-index:1;
+  inset-block-end:16px;
+  inset-inline-start:17px;
+  max-width:calc(100% - 92px);
+  overflow:hidden;
+  padding:8px 12px;
+  border:1px solid rgba(255,255,255,.45);
+  border-radius:999px;
+  background:rgba(20,43,61,.65);
+  color:#fff;
+  font-size:9px;
+  font-weight:800;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  backdrop-filter:blur(12px);
+}
+.latest-achievement-body {
+  display:flex;
+  flex:1;
+  flex-direction:column;
+  padding:21px 23px 20px;
+}
+.latest-achievement-meta {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  color:#8497a8;
+  font-size:9px;
+  font-weight:800;
+}
+.latest-achievement-meta > span {
+  overflow:hidden;
+  color:#b08a35;
+  letter-spacing:.55px;
+  text-overflow:ellipsis;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+.latest-achievement-meta time {
+  flex:0 0 auto;
+  color:#9aa9b6;
+  font-size:9px;
+  font-weight:600;
+}
+.latest-achievement-body h3 {
+  display:-webkit-box;
+  overflow:hidden;
+  margin:13px 0 9px;
+  color:#1d3b52;
+  font:800 clamp(20px,2vw,24px)/1.45 "Tajawal","Manrope",sans-serif;
+  letter-spacing:-.45px;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+.latest-achievement-body > p {
+  display:-webkit-box;
+  overflow:hidden;
+  margin:0;
+  color:#74889a;
+  font-size:11px;
+  line-height:2;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:3;
+}
+.latest-achievement-footer {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:auto;
+  padding-top:17px;
+  color:#398ab2;
+  font-size:10px;
+  font-weight:800;
+}
+.latest-achievement-arrow {
+  display:grid;
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  place-items:center;
+  border:1px solid #dcebf3;
+  border-radius:50%;
+  background:#f6fbfe;
+  color:#477f9b;
+  transition:transform .22s,background .22s,color .22s;
+}
+.latest-achievement-arrow .school-icon-svg { width:16px; height:16px; }
+.latest-achievement-card:hover .latest-achievement-arrow {
+  transform:translate(2px,-2px);
+  background:#eaf7fd;
+  color:#1c82b2;
+}
+.latest-achievements-loading,
+.latest-achievements-empty {
+  grid-column:1/-1;
+  display:grid;
+  min-height:170px;
+  place-items:center;
+  padding:28px;
+  border:1px dashed #cbdfea;
+  border-radius:22px;
+  background:rgba(255,255,255,.75);
+  color:#71899c;
+  font-size:12px;
+  line-height:1.9;
+  text-align:center;
+}
+@media (max-width:980px) {
+  .latest-achievements-heading { align-items:flex-start; }
+  .latest-achievements-grid { gap:17px; }
+  .latest-achievement-card { min-height:455px; }
+  .latest-achievement-media { height:225px; }
+  .latest-achievement-body { padding:19px 18px 18px; }
+  .latest-achievement-body h3 { font-size:21px; }
+}
+@media (max-width:720px) {
+  .latest-achievements-section { padding:66px 0 74px; }
+  .latest-achievements-heading { flex-direction:column; gap:19px; margin-bottom:25px; }
+  .latest-achievements-heading h2 { font-size:clamp(29px,7vw,39px); letter-spacing:-.8px; }
+  .latest-achievements-heading-copy > p { margin-top:9px; font-size:11px; }
+  .latest-achievements-view-all { min-height:43px; padding-inline:16px; }
+  .latest-achievements-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:13px; }
+  .latest-achievement-card { min-height:420px; border-radius:20px; }
+  .latest-achievement-card:nth-child(3) {
+    grid-column:1/-1;
+    width:calc(50% - 7px);
+    justify-self:center;
+  }
+  .latest-achievement-media { height:195px; }
+  .latest-achievement-number { inset-block-start:12px; inset-inline-end:12px; min-width:37px; height:33px; }
+  .latest-achievement-image-tag { inset-block-end:12px; inset-inline-start:12px; max-width:calc(100% - 70px); font-size:8px; }
+  .latest-achievement-body { padding:16px 15px 15px; }
+  .latest-achievement-body h3 { margin-top:10px; font-size:19px; }
+  .latest-achievement-body > p { font-size:10px; }
+  .latest-achievement-footer { padding-top:13px; font-size:9px; }
+}
+@media (max-width:520px) {
+  .latest-achievements-grid { grid-template-columns:1fr; }
+  .latest-achievement-card,
+  .latest-achievement-card:nth-child(3) {
+    grid-column:auto;
+    width:100%;
+    min-height:0;
+  }
+  .latest-achievement-media { height:235px; }
+  .latest-achievement-body { padding:19px 20px 18px; }
+  .latest-achievement-body h3 { font-size:22px; }
+  .latest-achievement-body > p { font-size:11px; }
+  .latest-achievement-meta { font-size:9px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .latest-achievement-card,
+  .latest-achievement-media > img,
+  .latest-achievement-arrow,
+  .latest-achievements-view-all { transition:none !important; }
+  .latest-achievement-card:hover { transform:none; }
+}
