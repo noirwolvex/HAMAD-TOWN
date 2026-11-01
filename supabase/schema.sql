@@ -259,6 +259,172 @@ $$;
 revoke all on function public.is_school_admin() from public;
 revoke all on function public.is_school_admin() from anon;
 grant execute on function public.is_school_admin() to authenticated;
+-- Visitor messages: public submissions, private administrator inbox.
+create table if not exists public.school_messages (
+  id uuid primary key default gen_random_uuid(),
+  visitor_name text not null default '',
+  visitor_email text not null default '',
+  visitor_phone text not null default '',
+  message text not null default '',
+  is_read boolean not null default false,
+  created_at timestamptz not null default now(),
+  constraint school_messages_name_length check (char_length(visitor_name) <= 120),
+  constraint school_messages_email_length check (char_length(visitor_email) <= 254),
+  constraint school_messages_email_format check (
+    visitor_email = '' or (
+      visitor_email !~ '[[:space:]]'
+      and visitor_email ~ '^[^@]+@[^@]+[.][^@]+
+
+grant select on public.school_content to anon, authenticated;
+grant insert, update, delete on public.school_content to authenticated;
+
+drop policy if exists "Published school content is public" on public.school_content;
+create policy "Published school content is public"
+on public.school_content
+for select
+to anon
+using (published = true);
+
+drop policy if exists "Authenticated users can read published content or admin drafts" on public.school_content;
+create policy "Authenticated users can read published content or admin drafts"
+on public.school_content
+for select
+to authenticated
+using (published = true or public.is_school_admin());
+
+drop policy if exists "School admins can insert content" on public.school_content;
+create policy "School admins can insert content"
+on public.school_content
+for insert
+to authenticated
+with check (public.is_school_admin());
+
+drop policy if exists "School admins can update content" on public.school_content;
+create policy "School admins can update content"
+on public.school_content
+for update
+to authenticated
+using (public.is_school_admin())
+with check (public.is_school_admin());
+
+drop policy if exists "School admins can delete content" on public.school_content;
+create policy "School admins can delete content"
+on public.school_content
+for delete
+to authenticated
+using (public.is_school_admin());
+
+create or replace function public.set_school_content_updated_at()
+returns trigger
+language plpgsql
+set search_path = public
+as $$
+begin
+  new.updated_at = now();
+  return new;
+end;
+$$;
+
+drop trigger if exists school_content_set_updated_at on public.school_content;
+create trigger school_content_set_updated_at
+before update on public.school_content
+for each row execute function public.set_school_content_updated_at();
+
+-- A public bucket serves approved photos. Only an authenticated school admin
+-- may upload/delete files, and uploads are placed in that user's folder.
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values (
+  'school-media',
+  'school-media',
+  true,
+  8388608,
+  array['image/jpeg', 'image/png', 'image/webp', 'image/gif']
+)
+on conflict (id) do update
+set public = excluded.public,
+    file_size_limit = excluded.file_size_limit,
+    allowed_mime_types = excluded.allowed_mime_types;
+
+drop policy if exists "School media is publicly readable" on storage.objects;
+create policy "School media is publicly readable"
+on storage.objects
+for select
+to anon, authenticated
+using (bucket_id = 'school-media');
+
+drop policy if exists "School admins can upload media" on storage.objects;
+create policy "School admins can upload media"
+on storage.objects
+for insert
+to authenticated
+with check (
+  bucket_id = 'school-media'
+  and public.is_school_admin()
+  and (storage.foldername(name))[1] = auth.uid()::text
+);
+
+drop policy if exists "School admins can delete their media" on storage.objects;
+create policy "School admins can delete their media"
+on storage.objects
+for delete
+to authenticated
+using (
+  bucket_id = 'school-media'
+  and public.is_school_admin()
+  and (storage.foldername(name))[1] = auth.uid()::text
+);
+
+-- SET UP THE FIRST ADMIN:
+-- 1. Create an Auth user in Supabase Dashboard -> Authentication -> Users.
+-- 2. Replace the example email and run the statement below.
+--
+-- insert into public.school_admins (user_id)
+-- select id from auth.users where email = 'admin@your-school.example'
+-- on conflict (user_id) do nothing;
+
+    )
+  ),
+  constraint school_messages_phone_length check (char_length(visitor_phone) <= 40),
+  constraint school_messages_message_length check (char_length(message) <= 3000)
+);
+
+alter table public.school_messages enable row level security;
+
+revoke all on table public.school_messages from public, anon, authenticated;
+grant insert (visitor_name, visitor_email, visitor_phone, message)
+  on table public.school_messages to anon;
+grant select on table public.school_messages to authenticated;
+grant update (is_read) on table public.school_messages to authenticated;
+
+drop policy if exists "Visitors can submit school messages" on public.school_messages;
+create policy "Visitors can submit school messages"
+on public.school_messages
+for insert
+to anon
+with check (is_read = false);
+
+drop policy if exists "School admins can read visitor messages" on public.school_messages;
+create policy "School admins can read visitor messages"
+on public.school_messages
+for select
+to authenticated
+using (public.is_school_admin());
+
+drop policy if exists "School admins can mark visitor messages read" on public.school_messages;
+create policy "School admins can mark visitor messages read"
+on public.school_messages
+for update
+to authenticated
+using (public.is_school_admin())
+with check (public.is_school_admin());
+
+create index if not exists school_messages_created_at_idx
+  on public.school_messages (created_at desc);
+
+create index if not exists school_messages_unread_created_at_idx
+  on public.school_messages (created_at desc)
+  where is_read = false;
+
 
 grant select on public.school_content to anon, authenticated;
 grant insert, update, delete on public.school_content to authenticated;
