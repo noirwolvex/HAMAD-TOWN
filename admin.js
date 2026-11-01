@@ -479,6 +479,21 @@
     const container = $("visitorMessagesList");
     if (!container) return;
 
+    if (!supabaseClient) {
+      visitorMessages = [];
+      const count = $("visitorMessageCount");
+      const unread = $("visitorUnreadCount");
+      if (count) count.textContent = "0";
+      if (unread) unread.textContent = messageForLanguage("0 unread", "٠ غير مقروءة");
+      container.innerHTML = '<div class="visitor-messages-empty">' +
+        escapeHtml(messageForLanguage(
+          "Connect Supabase to receive and review visitor messages.",
+          "اربط Supabase لاستقبال رسائل الزوار ومراجعتها."
+        )) +
+      '</div>';
+      return;
+    }
+
     const filter = $("visitorMessageFilter")?.value || "all";
     const unreadCount = visitorMessages.filter(message => !message.is_read).length;
     const count = $("visitorMessageCount");
