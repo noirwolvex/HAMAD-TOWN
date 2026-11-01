@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5fbff">
+  <meta name="description" content="Share a suggestion, idea or message with the Hamad Town School administration.">
+  <title>Contact the School | Hamad Town School</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="contact.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="icons.js" defer></script>
+  <script src="language.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="contact.js" defer></script>
+</head>
+<body data-page="contact">
+  <div class="ambient ambient-one" aria-hidden="true"></div>
+  <div class="ambient ambient-two" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Hamad Town School homepage">
+      <span class="brand-mark"><img class="brand-logo-image" src="assets/hamad-town-logo.svg" alt="" aria-hidden="true"></span>
+      <span class="brand-copy"><strong>مدينة حمد</strong><small>المدرسة · ننمو معًا</small></span>
+    </a>
+    <button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+      <a href="story.html"><span class="nav-icon" aria-hidden="true" data-icon="home"></span> Our story</a>
+      <a href="achievements.html"><span class="nav-icon" aria-hidden="true" data-icon="trophy"></span> Achievements</a>
+      <a href="school-life.html"><span class="nav-icon" aria-hidden="true" data-icon="calendar-days"></span> School life</a>
+      <a href="stories.html"><span class="nav-icon" aria-hidden="true" data-icon="book-open"></span> Stories</a>
+      <a href="gallery.html"><span class="nav-icon" aria-hidden="true" data-icon="images"></span> Gallery</a>
+      <a href="contact.html" aria-current="page"><span class="nav-icon" aria-hidden="true" data-icon="message-circle"></span> Contact us</a>
+    </nav>
+    <div class="header-actions"><button class="language-toggle" id="languageToggle" type="button" aria-label="Switch language to English" lang="en">English</button><a class="nav-cta" href="admin.html">School portal <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a></div>
+  </header>
+
+  <main class="contact-main">
+    <section class="contact-hero section-shell">
+      <div class="contact-hero-copy reveal">
+        <span class="contact-kicker"><span class="live-dot"></span> YOUR VOICE MATTERS</span>
+        <h1>Every idea can help<br><em>our school grow.</em></h1>
+        <p>Have a suggestion, a thought to share, or a message for the school administration? We would love to hear from you.</p>
+        <div class="contact-optional-note"><span class="ui-icon-inline" data-icon="shield-check" aria-hidden="true"></span><span>Every field is optional. Share only the details you feel comfortable providing.</span></div>
+      </div>
+      <div class="contact-hero-art reveal reveal-delay" aria-hidden="true">
+        <div class="contact-art-orbit contact-art-orbit-one"></div>
+        <div class="contact-art-orbit contact-art-orbit-two"></div>
+        <div class="contact-art-spark contact-art-spark-one">✳</div>
+        <div class="contact-art-spark contact-art-spark-two">✦</div>
+        <div class="contact-art-card">
+          <span class="contact-art-icon" data-icon="message-circle"></span>
+          <span class="contact-art-label">A NOTE TO OUR SCHOOL</span>
+          <strong>Ideas make<br>great things possible.</strong>
+          <span class="contact-art-line"></span>
+          <span class="contact-art-caption">Hamad Town School · Community</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-content section-shell" aria-labelledby="contactFormTitle">
+      <aside class="contact-aside reveal">
+        <span class="contact-aside-icon" data-icon="sparkles" aria-hidden="true"></span>
+        <span class="contact-aside-eyebrow">A BETTER SCHOOL, TOGETHER</span>
+        <h2>Your voice<br><em>makes a difference.</em></h2>
+        <p>Use this space to send a suggestion, share an idea, or leave a note for the administration. Your message will be delivered to the school's private admin inbox.</p>
+        <div class="contact-aside-points">
+          <div><span class="contact-point-icon" data-icon="lightbulb" aria-hidden="true"></span><span><b>Ideas</b><small>Share something that could make school life even better.</small></span></div>
+          <div><span class="contact-point-icon" data-icon="heart" aria-hidden="true"></span><span><b>Feedback</b><small>Tell us what is working well or what we can improve.</small></span></div>
+          <div><span class="contact-point-icon" data-icon="mail" aria-hidden="true"></span><span><b>Messages</b><small>Send a note directly to the school administration.</small></span></div>
+        </div>
+        <div class="contact-privacy"><span class="ui-icon-inline" data-icon="lock-keyhole" aria-hidden="true"></span><span>Your contact details are visible only to authorised school administrators.</span></div>
+      </aside>
+
+      <div class="contact-form-panel reveal">
+        <div class="contact-form-heading">
+          <span class="contact-form-step">01 <i>/</i> 01</span>
+          <span class="contact-form-kicker">SEND A MESSAGE</span>
+          <h2 id="contactFormTitle">Write to the administration.</h2>
+          <p>Fill in as much or as little as you like. No field is required.</p>
+        </div>
+        <form class="visitor-message-form" id="visitorMessageForm" autocomplete="on">
+          <div class="contact-form-row">
+            <label for="visitorName">Your name <span>Optional</span></label>
+            <input id="visitorName" name="visitor_name" type="text" maxlength="120" autocomplete="name" placeholder="Your name">
+          </div>
+          <div class="contact-form-row contact-form-row-two">
+            <label for="visitorEmail">Email address <span>Optional</span></label>
+            <input id="visitorEmail" name="visitor_email" type="email" maxlength="254" autocomplete="email" placeholder="you@example.com">
+          </div>
+          <div class="contact-form-row">
+            <label for="visitorPhone">Phone number <span>Optional</span></label>
+            <input id="visitorPhone" name="visitor_phone" type="tel" maxlength="40" autocomplete="tel" placeholder="+973">
+          </div>
+          <div class="contact-form-row">
+            <label for="visitorMessage">Your message <span>Optional</span></label>
+            <textarea id="visitorMessage" name="message" rows="6" maxlength="3000" placeholder="Write your suggestion or message here..."></textarea>
+            <span class="contact-field-hint">Up to 3,000 characters.</span>
+          </div>
+          <div class="contact-honeypot" aria-hidden="true">
+            <label for="contactWebsite">Leave this field empty</label>
+            <input id="contactWebsite" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <button class="button button-dark contact-submit" id="contactSubmitBtn" type="submit">
+            <span class="ui-icon-inline" data-icon="send" aria-hidden="true"></span>
+            Send message
+            <span class="ui-icon-inline contact-submit-arrow" data-icon="arrow-up-right" aria-hidden="true"></span>
+          </button>
+          <p class="contact-status" id="contactFormStatus" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-main section-shell">
+      <a class="brand brand-footer" href="index.html"><span class="brand-mark"><img class="brand-logo-image" src="assets/hamad-town-logo.svg" alt="" aria-hidden="true"></span><span class="brand-copy"><strong>مدينة حمد</strong><small>المدرسة · ننمو معًا</small></span></a>
+      <p>Celebrating our community.<br>Inspiring what comes next.</p>
+      <div class="footer-links"><a href="story.html">Our story</a><a href="achievements.html">Achievements</a><a href="school-life.html">School life</a><a href="stories.html">Stories</a><a href="gallery.html">Gallery</a><a href="contact.html">Contact us</a><a href="admin.html">School portal <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a></div>
+    </div>
+    <div class="footer-bottom section-shell"><span>© <span id="yearNow"></span> Hamad Town School</span><span>Made with pride, for our school community <b class="ui-icon-inline" data-icon="sparkles" aria-hidden="true"></b></span></div>
+  </footer>
+  <div class="toast" id="siteToast" role="status" aria-live="polite"></div>
+</body>
+</html>
