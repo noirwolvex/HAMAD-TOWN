@@ -421,9 +421,6 @@ with check (public.is_school_admin());
 create index if not exists school_messages_created_at_idx
   on public.school_messages (created_at desc);
 
-create index if not exists school_messages_unread_created_at_idx
-  on public.school_messages (created_at desc)
-  where is_read = false;
 
 
 grant select on public.school_content to anon, authenticated;
