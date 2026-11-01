@@ -14,12 +14,13 @@ New school content is entered in both Arabic and English from the admin portal. 
 - `school-life.html` — the dedicated school activities, clubs and events page.
 - `stories.html` — stories from students, teachers and the school community.
 - `gallery.html` — the dedicated school photo gallery.
+- `contact.html`, `contact.css`, `contact.js` — optional visitor contact form that sends suggestions and messages to the private school admin inbox.
 - `language.js` — Arabic/English switcher, RTL/LTR layout handling and translations.
 - `styles.css` — responsive design system, motion, icon cards, page layouts and mobile navigation.
 - `app.js` — renders published achievements, activities, stories and gallery entries on their own pages.
-- `admin.html`, `admin.css`, `admin.js` — content editor, image preview/upload, drafts, publish toggles, filters, editing/deleting and JSON export.
+- `admin.html`, `admin.css`, `admin.js` — content editor, image preview/upload, drafts, publish toggles, filters, editing/deleting, JSON export and a private visitor-message inbox.
 - `config.js` — optional Supabase project configuration.
-- `supabase/schema.sql` — database tables, admin allow-list, row-level security and image bucket policies.
+- `supabase/schema.sql` — database tables, admin allow-list, visitor-message inbox, row-level security and image bucket policies.
 
 Demo imagery and example stories are placeholders. Replace them with school-approved photos, verified achievements and accurate information before the public launch.
 
@@ -49,6 +50,8 @@ Do not treat demo mode as an authenticated production admin system.
 ### Shared publishing with Supabase
 
 The repository's `config.js` is connected to the active Supabase project **HAMAD TOWN**. It uses a browser-safe publishable key; do not replace it with a service-role or secret key. The live project has the schema from `supabase/schema.sql`, row-level security policies, and the `school-media` image bucket applied.
+
+The public `contact.html` form inserts visitor messages into `public.school_messages`. All four fields (name, email, phone and message) are optional. Anonymous visitors may submit messages only; only users listed in `public.school_admins` can read messages or mark them as read in the admin portal. Re-run the updated `supabase/schema.sql` on other environments to create this table and its policies.
 
 To create the first school administrator:
 
