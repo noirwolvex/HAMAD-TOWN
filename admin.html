@@ -51,6 +51,30 @@
         <article class="metric-card"><span class="metric-icon metric-gold" data-icon="trophy" aria-hidden="true"></span><div><span>منشور</span><strong id="publishedCount">0</strong></div></article>
         <article class="metric-card"><span class="metric-icon metric-purple" data-icon="clock" aria-hidden="true"></span><div><span>مسودات</span><strong id="draftCount">0</strong></div></article>
       </section>
+      <section class="visitor-inbox panel" id="visitorMessagesPanel" aria-labelledby="visitorMessagesTitle">
+        <div class="panel-heading visitor-inbox-heading">
+          <div>
+            <span class="mini-label">COMMUNITY VOICES</span>
+            <h2 id="visitorMessagesTitle">Visitor messages <span class="entry-count" id="visitorMessageCount">0</span></h2>
+            <p class="visitor-inbox-description">Suggestions and notes sent by visitors through the public website.</p>
+          </div>
+          <div class="visitor-inbox-controls">
+            <select id="visitorMessageFilter" aria-label="Filter visitor messages">
+              <option value="all">All messages</option>
+              <option value="unread">Unread</option>
+              <option value="read">Read</option>
+            </select>
+            <button class="icon-button" id="refreshVisitorMessages" type="button" title="Refresh messages" aria-label="Refresh messages"><span class="ui-icon-inline" data-icon="refresh-cw" aria-hidden="true"></span></button>
+          </div>
+        </div>
+        <div class="visitor-messages-list" id="visitorMessagesList" aria-live="polite">
+          <div class="loading-state">Loading visitor messages…</div>
+        </div>
+        <div class="visitor-inbox-footer">
+          <span><span class="portal-dot"></span> Only authorised school administrators can view these messages.</span>
+          <span id="visitorUnreadCount">0 unread</span>
+        </div>
+      </section>
       <div class="admin-columns">
         <section class="editor-panel panel">
           <div class="panel-heading"><div><span class="mini-label">محرر المحتوى</span><h2 id="editorTitle">إضافة قصة جديدة</h2></div><span class="editor-step">01 <i>/</i> ٠٢</span></div>
