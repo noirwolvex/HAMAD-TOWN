@@ -10,6 +10,7 @@
     : null;
 
   let items = [];
+  let visitorMessages = [];
   let currentSession = null;
   let pendingImageFile = null;
   let pendingImageData = "";
@@ -465,6 +466,153 @@
     renderRecords();
   }
 
+  function formatVisitorMessageDate(value) {
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "";
+    return new Intl.DateTimeFormat(currentLanguage() === "en" ? "en" : "ar", {
+      dateStyle: "medium",
+      timeStyle: "short"
+    }).format(date);
+  }
+
+  function renderVisitorMessages() {
+    const container = $("visitorMessagesList");
+    if (!container) return;
+
+    const filter = $("visitorMessageFilter")?.value || "all";
+    const unreadCount = visitorMessages.filter(message => !message.is_read).length;
+    const count = $("visitorMessageCount");
+    const unread = $("visitorUnreadCount");
+    if (count) count.textContent = String(visitorMessages.length);
+    if (unread) unread.textContent = messageForLanguage(
+      unreadCount + (unreadCount === 1 ? " unread" : " unread"),
+      unreadCount + " غير مقروءة"
+    );
+
+    const filtered = visitorMessages.filter(message => {
+      if (filter === "unread") return !message.is_read;
+      if (filter === "read") return Boolean(message.is_read);
+      return true;
+    });
+
+    if (!filtered.length) {
+      const empty = visitorMessages.length
+        ? messageForLanguage("No messages match this filter.", "لا توجد رسائل مطابقة لهذا التصفية.")
+        : messageForLanguage("No visitor messages yet. Messages sent from the Contact us page will appear here.", "لا توجد رسائل من الزوار بعد. ستظهر هنا الرسائل المرسلة من صفحة تواصل معنا.");
+      container.innerHTML = '<div class="visitor-messages-empty">' + escapeHtml(empty) + '</div>';
+      return;
+    }
+
+    const isEnglish = currentLanguage() === "en";
+    container.innerHTML = filtered.map(message => {
+      const name = String(message.visitor_name || "").trim() ||
+        (isEnglish ? "Anonymous visitor" : "زائر بدون اسم");
+      const email = String(message.visitor_email || "").trim();
+      const phone = String(message.visitor_phone || "").trim();
+      const phoneHref = phone.replace(/[^0-9+*#,;]/g, "");
+      const body = String(message.message || "").trim();
+      const date = formatVisitorMessageDate(message.created_at);
+      const isRead = Boolean(message.is_read);
+      const statusLabel = isRead ? (isEnglish ? "Read" : "مقروءة") : (isEnglish ? "New" : "جديدة");
+      const toggleLabel = isRead ? (isEnglish ? "Mark as unread" : "تعليم كغير مقروءة") : (isEnglish ? "Mark as read" : "تعليم كمقروءة");
+      const contactLinks = [
+        email ? '<a href="mailto:' + escapeHtml(email) + '">' + escapeHtml(email) + '</a>' : "",
+        phoneHref ? '<a href="tel:' + escapeHtml(phoneHref) + '">' + escapeHtml(phone) + '</a>' : ""
+      ].filter(Boolean).join("");
+      const noContact = isEnglish ? "No contact details provided" : "لم تُضف بيانات للتواصل";
+      const noMessage = isEnglish ? "No written message was included." : "لم يتم إرفاق نص للرسالة.";
+      const avatar = isEnglish ? "V" : "ز";
+
+      return '<article class="visitor-message-card ' + (isRead ? "is-read" : "is-unread") + '">' +
+        '<div class="visitor-message-top">' +
+          '<div class="visitor-message-person"><span class="visitor-message-avatar" aria-hidden="true">' + avatar + '</span><div><h3>' + escapeHtml(name) + '</h3><time datetime="' + escapeHtml(message.created_at || "") + '">' + escapeHtml(date) + '</time></div></div>' +
+          '<span class="visitor-message-status ' + (isRead ? "" : "is-new") + '">' + statusLabel + '</span>' +
+        '</div>' +
+        '<div class="visitor-message-contacts">' + (contactLinks || '<span class="visitor-message-no-text">' + escapeHtml(noContact) + '</span>') + '</div>' +
+        '<p class="visitor-message-body' + (body ? "" : " visitor-message-no-text") + '">' + escapeHtml(body || noMessage) + '</p>' +
+        '<div class="visitor-message-actions"><button type="button" data-action="toggle-visitor-message" data-id="' + escapeHtml(message.id) + '" data-read="' + (isRead ? "true" : "false") + '"><span class="ui-icon-inline" data-icon="' + (isRead ? "refresh-cw" : "check") + '" aria-hidden="true"></span>' + escapeHtml(toggleLabel) + '</button></div>' +
+      '</article>';
+    }).join("");
+  }
+
+  async function loadVisitorMessages() {
+    const container = $("visitorMessagesList");
+    if (!container) return;
+    if (!supabaseClient || !currentSession) {
+      visitorMessages = [];
+      renderVisitorMessages();
+      return;
+    }
+
+    container.innerHTML = '<div class="loading-state">' +
+      escapeHtml(messageForLanguage("Loading visitor messages…", "جارٍ تحميل رسائل الزوار…")) +
+      '</div>';
+
+    try {
+      const { data, error } = await supabaseClient
+        .from("school_messages")
+        .select("id, visitor_name, visitor_email, visitor_phone, message, is_read, created_at")
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      visitorMessages = Array.isArray(data) ? data : [];
+      renderVisitorMessages();
+    } catch (error) {
+      console.error("Visitor messages could not be loaded.", error);
+      visitorMessages = [];
+      container.innerHTML = '<div class="visitor-messages-empty">' +
+        escapeHtml(messageForLanguage(
+          "Could not load visitor messages. Check the database table and administrator permissions.",
+          "تعذّر تحميل رسائل الزوار. تحقق من جدول قاعدة البيانات وصلاحيات الإدارة."
+        )) +
+      '</div>';
+      const count = $("visitorMessageCount");
+      const unread = $("visitorUnreadCount");
+      if (count) count.textContent = "0";
+      if (unread) unread.textContent = messageForLanguage("0 unread", "٠ غير مقروءة");
+    }
+  }
+
+  function setupVisitorMessages() {
+    $("visitorMessageFilter")?.addEventListener("change", renderVisitorMessages);
+    $("refreshVisitorMessages")?.addEventListener("click", loadVisitorMessages);
+    $("visitorMessagesList")?.addEventListener("click", async event => {
+      const button = event.target.closest('button[data-action="toggle-visitor-message"]');
+      if (!button || !supabaseClient || !currentSession) return;
+
+      const id = button.dataset.id;
+      const nextRead = button.dataset.read !== "true";
+      if (!id) return;
+      button.disabled = true;
+      try {
+        const { data, error } = await supabaseClient
+          .from("school_messages")
+          .update({ is_read: nextRead })
+          .eq("id", id)
+          .select("id, is_read")
+          .maybeSingle();
+        if (error) throw error;
+        if (!data) throw new Error("The message could not be found or updated.");
+        visitorMessages = visitorMessages.map(message =>
+          String(message.id) === String(id) ? { ...message, is_read: data.is_read } : message
+        );
+        renderVisitorMessages();
+        showToast(messageForLanguage(
+          nextRead ? "Message marked as read." : "Message marked as unread.",
+          nextRead ? "تم تعليم الرسالة كمقروءة." : "تم تعليم الرسالة كغير مقروءة."
+        ));
+      } catch (error) {
+        console.error("Visitor message status update failed.", error);
+        showToast(messageForLanguage(
+          "Could not update the message status. Check your connection and try again.",
+          "تعذّر تحديث حالة الرسالة. تحقق من الاتصال وحاول مرة أخرى."
+        ));
+      } finally {
+        if (button.isConnected) button.disabled = false;
+      }
+    });
+  }
+
   function showWorkspace(isDemo) {
     $("backendLogin").hidden = true;
     $("adminWorkspace").hidden = false;
@@ -668,6 +816,7 @@
 
         showWorkspace(false);
         await loadBackendItems();
+        await loadVisitorMessages();
         showToast("Signed in securely. School admin access verified.");
       } catch (error) {
         if (currentSession) {
@@ -689,6 +838,7 @@
         if (error) throw error;
         currentSession = null;
         items = [];
+        visitorMessages = [];
         $("adminWorkspace").hidden = true;
         $("backendLogin").hidden = false;
         $("signOutBtn").hidden = true;
@@ -707,12 +857,14 @@
     syncAchievementFields();
     setupForm();
     setupAuth();
-    window.addEventListener("hamad-language-change", renderRecords);
+    setupVisitorMessages();
+    window.addEventListener("hamad-language-change", () => { renderRecords(); renderVisitorMessages(); });
 
     if (!supabaseClient) {
       showWorkspace(true);
       items = readDemoItems();
       renderRecords();
+      renderVisitorMessages();
       return;
     }
 
@@ -733,6 +885,7 @@
         }
         showWorkspace(false);
         await loadBackendItems();
+        await loadVisitorMessages();
       }
     } catch (error) {
       if (currentSession) {
