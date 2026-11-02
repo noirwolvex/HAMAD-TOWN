@@ -684,7 +684,8 @@
       achievements: "achievements.html",
       "school-life": "school-life.html",
       stories: "stories.html",
-      gallery: "gallery.html"
+      gallery: "gallery.html",
+      contact: "contact.html"
     })[document.body.dataset.page || "home"];
     nav.querySelectorAll("a").forEach(link => {
       if (link.getAttribute("href") === pageHref) {
