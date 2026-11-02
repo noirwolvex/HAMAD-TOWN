@@ -14,6 +14,7 @@ New school content is entered in both Arabic and English from the admin portal. 
 - `school-life.html` — the dedicated school activities, clubs and events page.
 - `stories.html` — stories from students, teachers and the school community.
 - `gallery.html` — the dedicated school photo gallery.
+- `cinematic-intro.css`, `cinematic-intro.js` — one-time cinematic welcome on public pages, using the official school emblem, animated lighting and an original Web Audio soundtrack.
 - `contact.html`, `contact.css`, `contact.js` — optional visitor contact form that sends suggestions and messages to the private school admin inbox.
 - `language.js` — Arabic/English switcher, RTL/LTR layout handling and translations.
 - `styles.css` — responsive design system, motion, icon cards, page layouts and mobile navigation.
@@ -27,6 +28,8 @@ Demo imagery and example stories are placeholders. Replace them with school-appr
 ## Run the site locally
 
 For predictable behavior with local assets and external fonts/images, serve the folder through a local web server rather than opening files directly. From this folder, for example:
+
+The cinematic welcome appears once per browser after the first visit. The visual sequence starts automatically; visitors can tap **Play cinematic sound** to enable its original soundtrack (browser audio policies require a user gesture), or skip the intro. To preview it again during development, run `localStorage.removeItem("hamad-town-cinematic-intro-v1")` in the browser console and reload.
 
 ```bash
 python -m http.server 8000
