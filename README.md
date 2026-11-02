@@ -14,7 +14,7 @@ New school content is entered in both Arabic and English from the admin portal. 
 - `school-life.html` — the dedicated school activities, clubs and events page.
 - `stories.html` — stories from students, teachers and the school community.
 - `gallery.html` — the dedicated school photo gallery.
-- `cinematic-intro.css`, `cinematic-intro.js` — cinematic welcome on every public page load (including browser refreshes), using the official school emblem, animated lighting and an original Web Audio soundtrack.
+- `cinematic-intro.css`, `cinematic-intro.js` — cinematic welcome on the first visit and on manual refreshes; internal page navigation and browser back/forward do not replay it. Uses the official school emblem, animated lighting and an original Web Audio soundtrack.
 - `contact.html`, `contact.css`, `contact.js` — optional visitor contact form that sends suggestions and messages to the private school admin inbox.
 - `language.js` — Arabic/English switcher, RTL/LTR layout handling and translations.
 - `styles.css` — responsive design system, motion, icon cards, page layouts and mobile navigation.
@@ -29,7 +29,7 @@ Demo imagery and example stories are placeholders. Replace them with school-appr
 
 For predictable behavior with local assets and external fonts/images, serve the folder through a local web server rather than opening files directly. From this folder, for example:
 
-The cinematic welcome appears automatically on every full load of a public page, including when a visitor refreshes the page. The visual sequence starts automatically; visitors can tap **Play cinematic sound** to enable its original soundtrack (browser audio policies require a user gesture), or skip the intro. The school admin page is excluded.
+The cinematic welcome appears automatically when a visitor first opens a public page and whenever they manually refresh it. Moving between pages inside the school website, or using browser back/forward, does not replay the intro. The visual sequence starts automatically; visitors can tap **Play cinematic sound** to enable its original soundtrack (browser audio policies require a user gesture), or skip the intro. The school admin page is excluded.
 
 ```bash
 python -m http.server 8000
