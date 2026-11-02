@@ -1,3 +1,5 @@
+body.cinema-intro-active { overflow:hidden !important; height:100vh; }
+
 /* Cinematic school welcome — original, CSS-driven intro. */
 .cinema-intro {
   --cinema-gold:#dfbd72;
