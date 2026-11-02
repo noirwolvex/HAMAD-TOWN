@@ -14,8 +14,6 @@
     }
   } catch (_) {}
 
-  if (skipIntro) return;
-
   let internalNavigationPending = false;
   document.addEventListener("click", event => {
     if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -42,6 +40,9 @@
       sessionStorage.setItem(NAVIGATION_SKIP_KEY, "1");
     } catch (_) {}
   }, { once: true });
+
+  // Keep tracking internal navigation even on pages where the intro is skipped.
+  if (skipIntro) return;
 
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
 
