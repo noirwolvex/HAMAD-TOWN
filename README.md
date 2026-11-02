@@ -18,12 +18,17 @@ New school content is entered in both Arabic and English from the admin portal. 
 - `contact.html`, `contact.css`, `contact.js` — optional visitor contact form that sends suggestions and messages to the private school admin inbox.
 - `language.js` — Arabic/English switcher, RTL/LTR layout handling and translations.
 - `styles.css` — responsive design system, motion, icon cards, page layouts and mobile navigation.
+- `mobile.css` — dedicated phone and small-screen presentation layer for all public pages and the admin portal; it is loaded after existing styles and leaves desktop layouts intact.
 - `app.js` — renders published achievements, activities, stories and gallery entries on their own pages.
 - `admin.html`, `admin.css`, `admin.js` — content editor, image preview/upload, drafts, publish toggles, filters, editing/deleting, JSON export and a private visitor-message inbox.
 - `config.js` — optional Supabase project configuration.
 - `supabase/schema.sql` — database tables, admin allow-list, visitor-message inbox, row-level security and image bucket policies.
 
 Demo imagery and example stories are placeholders. Replace them with school-approved photos, verified achievements and accurate information before the public launch.
+
+## Mobile experience
+
+The site keeps its existing features and desktop layout. A separate `mobile.css` layer is loaded last on every page, improving navigation, spacing, card layouts, reading sizes, touch targets, detail dialogs, forms and the admin editor on phones. The stylesheet is limited to small-screen media queries, so desktop presentation and the existing HTML, JavaScript and Supabase behavior remain in place.
 
 ## Run the site locally
 
