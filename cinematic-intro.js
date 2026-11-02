@@ -1,7 +1,48 @@
 (() => {
   "use strict";
 
-  // Show the cinematic welcome on every full page load, including refreshes.
+  // Show the intro on a fresh visit or manual refresh, but not after
+  // navigating between pages inside the same website.
+  const NAVIGATION_SKIP_KEY = "hamad-town-cinematic-navigation-skip-v1";
+  const navigationEntry = window.performance?.getEntriesByType?.("navigation")?.[0];
+  let skipIntro = navigationEntry?.type === "back_forward";
+
+  try {
+    if (sessionStorage.getItem(NAVIGATION_SKIP_KEY) === "1") {
+      sessionStorage.removeItem(NAVIGATION_SKIP_KEY);
+      skipIntro = true;
+    }
+  } catch (_) {}
+
+  if (skipIntro) return;
+
+  let internalNavigationPending = false;
+  document.addEventListener("click", event => {
+    if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    const target = event.target instanceof Element ? event.target : event.target?.parentElement;
+    const link = target?.closest?.("a[href]");
+    if (!link || link.hasAttribute("download") || (link.target && link.target.toLowerCase() !== "_self")) return;
+
+    let destination;
+    try {
+      destination = new URL(link.href, window.location.href);
+    } catch (_) {
+      return;
+    }
+
+    if (destination.origin !== window.location.origin) return;
+    if (destination.pathname === window.location.pathname && destination.search === window.location.search) return;
+    internalNavigationPending = true;
+  }, true);
+
+  window.addEventListener("pagehide", () => {
+    if (!internalNavigationPending) return;
+    try {
+      sessionStorage.setItem(NAVIGATION_SKIP_KEY, "1");
+    } catch (_) {}
+  }, { once: true });
+
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
 
   const particlePositions = [
