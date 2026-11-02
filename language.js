@@ -33,6 +33,7 @@
     "Open navigation": "فتح القائمة",
     "Close navigation": "إغلاق القائمة",
     "Main navigation": "القائمة الرئيسية",
+    "Home": "الصفحة الرئيسية",
     "School life": "الحياة المدرسية",
     "Gallery": "معرض الصور",
     "School portal": "بوابة المدرسة",
