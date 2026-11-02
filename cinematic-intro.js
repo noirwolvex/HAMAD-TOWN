@@ -1,18 +1,8 @@
 (() => {
   "use strict";
 
-  const SEEN_KEY = "hamad-town-cinematic-intro-v1";
+  // Show the cinematic welcome on every full page load, including refreshes.
   const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches === true;
-
-  try {
-    if (localStorage.getItem(SEEN_KEY) === "seen") return;
-    localStorage.setItem(SEEN_KEY, "seen");
-  } catch (_) {
-    try {
-      if (sessionStorage.getItem(SEEN_KEY) === "seen") return;
-      sessionStorage.setItem(SEEN_KEY, "seen");
-    } catch (_) {}
-  }
 
   const particlePositions = [
     [12,24,3,"#e5c37b"],[20,70,2,"#a9dff0"],[29,16,2,"#ffffff"],[36,83,3,"#e5c37b"],
