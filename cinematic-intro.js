@@ -165,6 +165,8 @@
     });
     soundButton.setAttribute("aria-label", copy.soundLabel);
     skipButton.setAttribute("aria-label", copy.skipLabel);
+    const emblem = intro.querySelector(".cinema-emblem");
+    if (emblem) emblem.alt = en ? "Hamad Town School emblem" : "شعار مدرسة مدينة حمد";
     intro.setAttribute("aria-label", en ? "Hamad Town School cinematic welcome" : "المقدمة السينمائية لمدرسة مدينة حمد");
   }
 
@@ -266,6 +268,11 @@
         osc.start(start);
         osc.stop(start + .8);
       }
+
+      // A warm low-register foundation gives the opening reveal more cinematic weight.
+      voice(38,now + .08,3.7,{
+        wave:"sine",volume:.082,attack:.8,release:1.25,cutoff:180
+      });
 
       const chords = [
         {at:.1,notes:[50,57,62,66,69]},
