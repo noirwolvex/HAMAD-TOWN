@@ -65,25 +65,56 @@
     <section class="cinema-intro" id="cinematicIntro" role="dialog" aria-modal="true" aria-label="Hamad Town School cinematic welcome">
       <div class="cinema-letterbox cinema-letterbox-top"></div>
       <div class="cinema-letterbox cinema-letterbox-bottom"></div>
+      <div class="cinema-frame" aria-hidden="true">
+        <i class="cinema-frame-corner cinema-frame-corner-one"></i>
+        <i class="cinema-frame-corner cinema-frame-corner-two"></i>
+        <i class="cinema-frame-corner cinema-frame-corner-three"></i>
+        <i class="cinema-frame-corner cinema-frame-corner-four"></i>
+        <span class="cinema-frame-topline"></span>
+      </div>
+      <div class="cinema-topline" aria-hidden="true">
+        <span class="cinema-topline-mark">HT</span>
+        <span class="cinema-topline-copy" data-cinema="topline">A SCHOOL OF POSSIBILITY</span>
+        <span class="cinema-topline-index">01 <i></i> 01</span>
+      </div>
+      <div class="cinema-atmosphere" aria-hidden="true">
+        <span class="cinema-shooting-star cinema-shooting-star-one"></span>
+        <span class="cinema-shooting-star cinema-shooting-star-two"></span>
+        <span class="cinema-shooting-star cinema-shooting-star-three"></span>
+      </div>
+      <div class="cinema-aperture" aria-hidden="true">
+        <span class="cinema-aperture-ring cinema-aperture-ring-one"></span>
+        <span class="cinema-aperture-ring cinema-aperture-ring-two"></span>
+        <span class="cinema-aperture-core"></span>
+      </div>
       <div class="cinema-stars" aria-hidden="true"></div>
       <div class="cinema-aurora cinema-aurora-blue" aria-hidden="true"></div>
       <div class="cinema-aurora cinema-aurora-gold" aria-hidden="true"></div>
       <div class="cinema-light-beam" aria-hidden="true"></div>
+      <div class="cinema-light-beam cinema-light-beam-secondary" aria-hidden="true"></div>
       <div class="cinema-orbit cinema-orbit-one" aria-hidden="true"></div>
       <div class="cinema-orbit cinema-orbit-two" aria-hidden="true"></div>
+      <div class="cinema-orbit cinema-orbit-three" aria-hidden="true"></div>
       <div class="cinema-particles" aria-hidden="true">${particles}</div>
       <div class="cinema-content">
         <p class="cinema-eyebrow" data-cinema="eyebrow">A PLACE TO LEARN · A FUTURE TO SHAPE</p>
         <div class="cinema-emblem-stage">
+          <span class="cinema-stage-ring cinema-stage-ring-outer" aria-hidden="true"></span>
+          <span class="cinema-stage-ring cinema-stage-ring-inner" aria-hidden="true"></span>
+          <span class="cinema-stage-crosshair" aria-hidden="true"></span>
           <span class="cinema-emblem-halo" aria-hidden="true"></span>
           <span class="cinema-emblem-light" aria-hidden="true"></span>
+          <span class="cinema-logo-floor" aria-hidden="true"></span>
           <img class="cinema-emblem" src="assets/hamad-town-logo.svg" alt="Hamad Town School emblem" fetchpriority="high">
+          <span class="cinema-emblem-sweep" aria-hidden="true"></span>
+          <span class="cinema-logo-glint" aria-hidden="true"></span>
         </div>
         <div class="cinema-title-wrap">
           <span class="cinema-school-label" data-cinema="schoolLabel">HAMAD TOWN SCHOOL</span>
           <h1 class="cinema-school-name" data-cinema="schoolName">HAMAD TOWN</h1>
           <div class="cinema-title-rule" aria-hidden="true"></div>
           <p class="cinema-tagline" data-cinema="tagline">Grow together. Dream beyond.</p>
+          <div class="cinema-values" data-cinema="values">LEARN · LEAD · SHINE</div>
         </div>
         <div class="cinema-ornament" aria-hidden="true"><i></i><span></span><span></span><span></span><i></i></div>
       </div>
@@ -118,9 +149,11 @@
     const en = isEnglish();
     const copy = {
       eyebrow: en ? "A PLACE TO LEARN · A FUTURE TO SHAPE" : "هنا يبدأ التعلّم · وهنا يُصنع المستقبل",
+      topline: en ? "A SCHOOL OF POSSIBILITY" : "مدرسة تصنع الإمكانات",
       schoolLabel: en ? "HAMAD TOWN SCHOOL" : "مدرسة مدينة حمد",
       schoolName: en ? "HAMAD TOWN" : "مدينة حمد",
       tagline: en ? "Grow together. Dream beyond." : "ننمو معًا… ونحلم بلا حدود.",
+      values: en ? "LEARN · LEAD · SHINE" : "نتعلّم · نقود · نتألّق",
       soundLabel: soundStarted
         ? (en ? "Cinematic music is playing" : "الموسيقى السينمائية تعمل")
         : (en ? "Play cinematic sound" : "تشغيل الموسيقى السينمائية"),
@@ -309,7 +342,7 @@
           isEnglish() ? "Tap to enable sound" : "اضغط لتفعيل الصوت";
       });
       clearTimeout(finishTimer);
-      finishTimer = window.setTimeout(finishIntro,9200);
+      finishTimer = window.setTimeout(finishIntro,9900);
     } catch (error) {
       console.warn("Cinematic intro audio could not start.",error);
       soundButton.querySelector("[data-cinema='soundLabel']").textContent =
@@ -347,5 +380,5 @@
   window.addEventListener("hamad-language-change",updateCopy);
   updateCopy();
 
-  finishTimer = window.setTimeout(finishIntro,reduceMotion ? 2300 : 8700);
+  finishTimer = window.setTimeout(finishIntro,reduceMotion ? 2300 : 9600);
 })();
