@@ -14,7 +14,7 @@ New school content is entered in both Arabic and English from the admin portal. 
 - `school-life.html` — the dedicated school activities, clubs and events page.
 - `stories.html` — stories from students, teachers and the school community.
 - `gallery.html` — the dedicated school photo gallery.
-- `cinematic-intro.css`, `cinematic-intro.js` — cinematic welcome on the first visit and on manual refreshes; internal page navigation and browser back/forward do not replay it. Uses the official school emblem, animated lighting and an original Web Audio soundtrack.
+- `cinematic-intro.css`, `cinematic-intro.js` — cinematic welcome on the first visit and on manual refreshes; internal page navigation and browser back/forward do not replay it. Features a layered aperture reveal, precision light sweeps, animated orbital rings, a framed emblem stage, bilingual identity reveal and an original Web Audio soundtrack.
 - `contact.html`, `contact.css`, `contact.js` — optional visitor contact form that sends suggestions and messages to the private school admin inbox.
 - `language.js` — Arabic/English switcher, RTL/LTR layout handling and translations.
 - `styles.css` — responsive design system, motion, icon cards, page layouts and mobile navigation.
