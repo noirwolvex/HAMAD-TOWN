@@ -78,3 +78,14 @@ html[dir=rtl] .spec-guide-accordion>summary,html[dir=rtl] .spec-guide-content,ht
 @media(max-width:900px){.spec-guide-track-notes{grid-template-columns:repeat(2,minmax(0,1fr))}.spec-guide-scholarship-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.spec-guide-scholarship-grid .spec-guide-mini-card:last-child{grid-column:1/-1}}
 @media(max-width:650px){.spec-detailed-guide{padding-block:20px 42px}.spec-guide-accordion>summary{min-height:60px;padding:12px;font-size:13px}.spec-guide-content{padding:12px}.spec-guide-two-col,.spec-guide-track-notes,.spec-guide-scholarship-grid{grid-template-columns:minmax(0,1fr)}.spec-guide-scholarship-grid .spec-guide-mini-card:last-child{grid-column:auto}.spec-guide-weight-grid{grid-template-columns:1fr}.spec-guide-weight{min-height:0}.spec-guide-facts-grid{grid-template-columns:1fr}.spec-guide-disclaimer{font-size:9px}.spec-guide-institution-head{align-items:flex-start;flex-direction:column}.spec-guide-fact strong{font-size:20px}}
 @media(prefers-reduced-motion:reduce){.spec-guide-accordion,.spec-guide-accordion>summary{scroll-behavior:auto;transition:none}}
+
+/* Verified performance statistics and qualitative pathway comparison */
+.spec-performance-stats{margin:12px 0 14px}
+.spec-performance-table{min-width:720px}
+.spec-performance-table td a{color:#3985a8;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.spec-performance-caution{margin-top:14px}
+.spec-performance-track-notes .spec-guide-mini-card{display:flex;flex-direction:column;gap:8px}
+.spec-performance-track-notes .spec-guide-label{display:block;color:#8f7338;font-size:8px;font-weight:800;letter-spacing:.08em}
+.spec-performance-track-notes .spec-guide-mini-card h3{margin:0}
+.spec-performance-track-notes .spec-guide-mini-card p{margin:0}
+@media(max-width:650px){.spec-performance-stats{gap:8px}.spec-performance-table{min-width:690px}}
