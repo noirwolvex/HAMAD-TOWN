@@ -881,7 +881,7 @@
     "title": {
       "Hamad Town School — A Place to Shine": "مدرسة مدينة حمد — حيث يتألّق الجميع",
       "Export all content as JSON": "تصدير المحتوى بصيغة JSON"
-    }
+    },
     "Specializations": "التخصصات",
     "Specializations | Hamad Town School": "التخصصات | مدرسة مدينة حمد",
     "Back to the homepage": "العودة إلى الصفحة الرئيسية",
