@@ -1002,6 +1002,9 @@
     "Your future starts with an informed choice.": "مستقبلك يبدأ باختيار واعٍ.",
     "06 / STUDY PATHWAYS": "٠٦ / المسارات الدراسية",
     "Explore the scientific, commercial and literary pathways and what each can offer.": "تعرّف على المسارات العلمية والتجارية والأدبية وما يقدّمه كل مسار.",
+  };
+
+  Object.assign(translations, {
     "BAHRAIN SECONDARY SYSTEM": "نظام المرحلة الثانوية في البحرين",
     "A closer look at the system": "نظرة أعمق إلى النظام",
     "and your next steps.": "وخطوتك القادمة.",
@@ -1135,7 +1138,7 @@
     "Law": "القانون",
     "90% and above": "نسبة 90% فأكثر",
     "75% and above": "نسبة 75% فأكثر",
-  };
+  });
 
   const reverseTranslations = Object.fromEntries(
     Object.entries(translations).map(([english, arabic]) => [arabic, english])
