@@ -14,6 +14,7 @@ New school content is entered in both Arabic and English from the admin portal. 
 - `school-life.html` — the dedicated school activities, clubs and events page.
 - `stories.html` — stories from students, teachers and the school community.
 - `gallery.html` — the dedicated school photo gallery.
+- `specializations.html`, `specializations.css` — a bilingual guide to the scientific, commercial and literary secondary-school tracks, with pathway indicators and examples of university programmes.
 - `cinematic-intro.css`, `cinematic-intro.js` — cinematic welcome on the first visit and on manual refreshes; internal page navigation and browser back/forward do not replay it. Features a layered aperture reveal, precision light sweeps, animated orbital rings, a framed emblem stage, bilingual identity reveal and an original Web Audio soundtrack.
 - `contact.html`, `contact.css`, `contact.js` — optional visitor contact form that sends suggestions and messages to the private school admin inbox.
 - `language.js` — Arabic/English switcher, RTL/LTR layout handling and translations.
@@ -23,6 +24,8 @@ New school content is entered in both Arabic and English from the admin portal. 
 - `admin.html`, `admin.css`, `admin.js` — content editor, image preview/upload, drafts, publish toggles, filters, editing/deleting, JSON export and a private visitor-message inbox.
 - `config.js` — optional Supabase project configuration.
 - `supabase/schema.sql` — database tables, admin allow-list, visitor-message inbox, row-level security and image bucket policies.
+
+The specializations page shows pathway-structure indicators rather than school enrolment, average-grade or pass-rate figures. Add school-specific statistics only after the school confirms the numbers.
 
 Demo imagery and example stories are placeholders. Replace them with school-approved photos, verified achievements and accurate information before the public launch.
 

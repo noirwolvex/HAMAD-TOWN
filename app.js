@@ -678,11 +678,27 @@
       toggle.setAttribute("aria-expanded", String(open));
       toggle.setAttribute("aria-label", window.HamadI18n?.t(open ? "Close navigation" : "Open navigation") || (open ? "Close navigation" : "Open navigation"));
     });
+    const schoolLifeLink = nav.querySelector('a[href="school-life.html"]');
+    if (schoolLifeLink && !nav.querySelector('a[href="specializations.html"]')) {
+      const specializationsLink = document.createElement("a");
+      specializationsLink.href = "specializations.html";
+      specializationsLink.innerHTML = '<span class="nav-icon" aria-hidden="true" data-icon="graduation-cap"></span> Specializations';
+      schoolLifeLink.insertAdjacentElement("afterend", specializationsLink);
+    }
+    const footerLinks = document.querySelector(".footer-links");
+    const footerSchoolLifeLink = footerLinks?.querySelector('a[href="school-life.html"]');
+    if (footerSchoolLifeLink && !footerLinks.querySelector('a[href="specializations.html"]')) {
+      const footerSpecializationsLink = document.createElement("a");
+      footerSpecializationsLink.href = "specializations.html";
+      footerSpecializationsLink.textContent = "Specializations";
+      footerSchoolLifeLink.insertAdjacentElement("afterend", footerSpecializationsLink);
+    }
     const pageHref = ({
       home: "index.html",
       story: "story.html",
       achievements: "achievements.html",
       "school-life": "school-life.html",
+      specializations: "specializations.html",
       stories: "stories.html",
       gallery: "gallery.html",
       contact: "contact.html"
