@@ -105,7 +105,7 @@
           <span class="cinema-emblem-halo" aria-hidden="true"></span>
           <span class="cinema-emblem-light" aria-hidden="true"></span>
           <span class="cinema-logo-floor" aria-hidden="true"></span>
-          <img class="cinema-emblem" src="assets/hamad-town-logo.svg" alt="Hamad Town School emblem" fetchpriority="high">
+          <img class="cinema-emblem" src="assets/hamad-town-official-crest.jpg?v=20261110-crest-jpg" alt="Hamad Town School emblem" fetchpriority="high">
           <span class="cinema-emblem-sweep" aria-hidden="true"></span>
           <span class="cinema-logo-glint" aria-hidden="true"></span>
         </div>
