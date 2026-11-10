@@ -115,8 +115,8 @@
       id: "seed-about-journey", kind: "about", section: "our-story",
       title: "Our journey continues", title_ar: "رحلتنا مستمرة", title_en: "Our journey continues",
       eyebrow: "EVERY STUDENT IS PART OF THE STORY", eyebrow_ar: "كل طالب جزء من الحكاية", eyebrow_en: "EVERY STUDENT IS PART OF THE STORY",
-      description_ar: "مدرسة مدينة حمد مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.",
-      description_en: "Hamad Town School is a community built around knowledge, curiosity and respect. We believe every student can grow and help shape a bright future.",
+      description_ar: "مدرسة مدينة حمد الثانوية للبنين مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.",
+      description_en: "Hamad Town Secondary Boys School is a community built around knowledge, curiosity and respect. We believe every student can grow and help shape a bright future.",
       image_url: "", featured: true, published: true, order_index: 4
     }
   ];
@@ -481,7 +481,7 @@
       const image = safeImage(item.image_url);
       if (index === 2 && !image) {
         const title = displayText(item, "title");
-        return `<figure class="gallery-tile gallery-tile-blue is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="gallery-note"><span class="ui-icon-inline" data-icon="sparkles" aria-hidden="true"></span><b>${escapeHtml(title)}</b><small>${escapeHtml(displayText(item, "eyebrow") || "HAMAD TOWN SCHOOL")}</small></div><figcaption>${escapeHtml(title)} <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></figcaption></figure>`;
+        return `<figure class="gallery-tile gallery-tile-blue is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}"><div class="gallery-note"><span class="ui-icon-inline" data-icon="sparkles" aria-hidden="true"></span><b>${escapeHtml(title)}</b><small>${escapeHtml(displayText(item, "eyebrow") || "HAMAD TOWN SECONDARY BOYS SCHOOL")}</small></div><figcaption>${escapeHtml(title)} <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></figcaption></figure>`;
       }
       const title = displayText(item, "title");
       return `<figure class="gallery-tile ${classes[index % classes.length] || ""} is-openable-card" role="button" tabindex="0" data-open-content data-content-id="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-label="${escapeHtml(title)}">${image ? `<img src="${escapeHtml(image)}" alt="${escapeHtml(title)}" loading="lazy">` : `<div class="gallery-note"><span class="ui-icon-inline" data-icon="sparkles" aria-hidden="true"></span><b>${escapeHtml(title)}</b></div>`}<figcaption>${escapeHtml(title)} <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></figcaption></figure>`;
