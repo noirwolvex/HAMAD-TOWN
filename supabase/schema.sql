@@ -1,4 +1,4 @@
--- Hamad Town School CMS: shared publishing schema for Supabase
+-- Hamad Town Secondary Boys School CMS: shared publishing schema for Supabase
 -- Run this file in Supabase Dashboard -> SQL Editor.
 -- It is safe to re-run: tables, policies and trigger are created idempotently.
 
@@ -216,9 +216,9 @@ values
    '', true, true, 3),
   ('10000000-0000-4000-8000-000000000004', 'about', 'our-story', 'Our journey continues', 'رحلتنا مستمرة', 'Our journey continues',
    'EVERY STUDENT IS PART OF THE STORY', 'كل طالب جزء من الحكاية', 'EVERY STUDENT IS PART OF THE STORY', '',
-   'مدرسة مدينة حمد مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.',
-   'مدرسة مدينة حمد مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.',
-   'Hamad Town School is a community built around knowledge, curiosity and respect. We believe every student can grow and help shape a bright future.',
+   'مدرسة مدينة حمد الثانوية للبنين مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.',
+   'مدرسة مدينة حمد الثانوية للبنين مجتمع يجمع بين المعرفة والفضول والاحترام، ويؤمن بأن لكل طالب قدرة على النمو وصناعة مستقبل مشرق.',
+   'Hamad Town Secondary Boys School is a community built around knowledge, curiosity and respect. We believe every student can grow and help shape a bright future.',
    '', true, true, 4)
 on conflict (id) do nothing;
 
