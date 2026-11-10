@@ -24,6 +24,8 @@
     clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
     "lock-keyhole": '<rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/><circle cx="12" cy="15" r="1"/><path d="M12 16v2"/>',
     search: '<circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/>',
+    newspaper: '<path d="M4 4h13a2 2 0 0 1 2 2v14H5a2 2 0 0 1-2-2V6a2 2 0 0 1 1-2Z"/><path d="M7 8h8M7 12h8M7 16h5"/><path d="M19 8h2v10a2 2 0 0 1-2 2"/>',
+    "arrow-up-left": '<path d="M17 17 7 7M8 7h9v9"/>',
     download: '<path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 17v4h14v-4"/>',
     upload: '<path d="M12 16V4m-5 5 5-5 5 5"/><path d="M5 16v5h14v-5"/>',
     x: '<path d="m18 6-12 12M6 6l12 12"/>',
