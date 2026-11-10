@@ -1,4 +1,4 @@
-# Hamad Town School Website
+# Hamad Town Secondary Boys School Website
 
 A responsive school-story website made with plain HTML, CSS and JavaScript. The visual direction uses **gold, baby blue and white**, with gentle movement, editorial-style layouts, achievement cards, activities, community stories, a photo gallery and a dedicated content-management portal.
 
