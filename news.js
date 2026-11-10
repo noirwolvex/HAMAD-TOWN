@@ -5,7 +5,7 @@ const client=canConnect?window.supabase.createClient(config.supabaseUrl,config.s
 const $=id=>document.getElementById(id),labels={all:"All news",event:"School event",activity:"Activity",announcement:"School announcement",update:"School update",achievement:"Student achievement",award:"Award",story:"School story"};
 let records=[],filter="all",search="";
 const language=()=>window.HamadI18n?.getLanguage()==="en"?"en":"ar",t=k=>window.HamadI18n?.t(k)||k;
-const field=(r,k)=>String(r[k+"_"+language()]||r[k]||r[k+(language()==="ar"?"_en":"_ar")]||"").trim();
+const field=(r,k)=>{const lang=language(),localized=String(r[k+"_"+lang]||"").trim(),legacy=String(r[k]||"").trim();if(localized)return localized;if(!legacy)return "";const hasArabic=/[\u0600-\u06FF]/.test(legacy);return lang==="ar"?(hasArabic?legacy:""):(hasArabic?"":legacy);};
 const category=r=>t(labels[r.kind]||"News and updates");
 const safeImage=v=>/^(https:\/\/|\.\/|\/)/i.test(String(v||"").trim())?String(v).trim():"";
 const node=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=value;return n;};
