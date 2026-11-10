@@ -62,7 +62,7 @@
   ).join("");
 
   const markup = `
-    <section class="cinema-intro" id="cinematicIntro" role="dialog" aria-modal="true" aria-label="Hamad Town School cinematic welcome">
+    <section class="cinema-intro" id="cinematicIntro" role="dialog" aria-modal="true" aria-label="Hamad Town Secondary Boys School cinematic welcome">
       <div class="cinema-letterbox cinema-letterbox-top"></div>
       <div class="cinema-letterbox cinema-letterbox-bottom"></div>
       <div class="cinema-frame" aria-hidden="true">
@@ -105,13 +105,13 @@
           <span class="cinema-emblem-halo" aria-hidden="true"></span>
           <span class="cinema-emblem-light" aria-hidden="true"></span>
           <span class="cinema-logo-floor" aria-hidden="true"></span>
-          <img class="cinema-emblem" src="assets/hamad-town-official-crest.jpg?v=20261110-crest-jpg" alt="Hamad Town School emblem" fetchpriority="high">
+          <img class="cinema-emblem" src="assets/hamad-town-official-crest.jpg?v=20261110-crest-jpg" alt="Hamad Town Secondary Boys School emblem" fetchpriority="high">
           <span class="cinema-emblem-sweep" aria-hidden="true"></span>
           <span class="cinema-logo-glint" aria-hidden="true"></span>
         </div>
         <div class="cinema-title-wrap">
-          <span class="cinema-school-label" data-cinema="schoolLabel">HAMAD TOWN SCHOOL</span>
-          <h1 class="cinema-school-name" data-cinema="schoolName">HAMAD TOWN</h1>
+          <span class="cinema-school-label" data-cinema="schoolLabel">OFFICIAL SCHOOL PORTAL</span>
+          <h1 class="cinema-school-name" data-cinema="schoolName">HAMAD TOWN SECONDARY BOYS SCHOOL</h1>
           <div class="cinema-title-rule" aria-hidden="true"></div>
           <p class="cinema-tagline" data-cinema="tagline">Grow together. Dream beyond.</p>
           <div class="cinema-values" data-cinema="values">LEARN · LEAD · SHINE</div>
@@ -150,8 +150,8 @@
     const copy = {
       eyebrow: en ? "A PLACE TO LEARN · A FUTURE TO SHAPE" : "هنا يبدأ التعلّم · وهنا يُصنع المستقبل",
       topline: en ? "A SCHOOL OF POSSIBILITY" : "مدرسة تصنع الإمكانات",
-      schoolLabel: en ? "HAMAD TOWN SCHOOL" : "مدرسة مدينة حمد",
-      schoolName: en ? "HAMAD TOWN" : "مدينة حمد",
+      schoolLabel: en ? "OFFICIAL SCHOOL PORTAL" : "بوابة المدرسة الرسمية",
+      schoolName: en ? "HAMAD TOWN SECONDARY BOYS SCHOOL" : "مدرسة مدينة حمد الثانوية للبنين",
       tagline: en ? "Grow together. Dream beyond." : "ننمو معًا… ونحلم بلا حدود.",
       values: en ? "LEARN · LEAD · SHINE" : "نتعلّم · نقود · نتألّق",
       soundLabel: soundStarted
@@ -166,8 +166,8 @@
     soundButton.setAttribute("aria-label", copy.soundLabel);
     skipButton.setAttribute("aria-label", copy.skipLabel);
     const emblem = intro.querySelector(".cinema-emblem");
-    if (emblem) emblem.alt = en ? "Hamad Town School emblem" : "شعار مدرسة مدينة حمد";
-    intro.setAttribute("aria-label", en ? "Hamad Town School cinematic welcome" : "المقدمة السينمائية لمدرسة مدينة حمد");
+    if (emblem) emblem.alt = en ? "Hamad Town Secondary Boys School emblem" : "شعار مدرسة مدينة حمد الثانوية للبنين";
+    intro.setAttribute("aria-label", en ? "Hamad Town Secondary Boys School cinematic welcome" : "المقدمة السينمائية لمدرسة مدينة حمد الثانوية للبنين");
   }
 
   function midiFrequency(note) {
