@@ -900,6 +900,11 @@ body.cinema-intro-active {
 
 .cinema-emblem {
   z-index:2;
+  padding:6px;
+  border:1px solid rgba(231,198,128,.72);
+  border-radius:18px;
+  background:linear-gradient(145deg,#fff 0%,#fffaf0 100%);
+  box-shadow:0 0 0 5px rgba(231,198,128,.09),0 15px 34px rgba(0,0,0,.3);
   height:clamp(125px,18vw,178px);
   filter:drop-shadow(0 0 9px rgba(226,106,68,.18))
     drop-shadow(0 0 22px rgba(230,192,118,.2))
