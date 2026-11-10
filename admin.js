@@ -67,7 +67,7 @@
   const kinds = {
     about: "School identity", achievement: "Student achievement", award: "Award",
     activity: "Activity", story: "School story", teacher: "Teacher spotlight",
-    student: "Student spotlight", event: "School event", gallery: "Gallery photo"
+    student: "Student spotlight", event: "School event", gallery: "Gallery photo", announcement: "School announcement", update: "School update"
   };
   const sectionLabels = {
     "our-story": "Our story", achievements: "Achievements",
@@ -78,12 +78,13 @@
     achievements: ["achievement", "award"],
     "school-life": ["activity", "event"],
     stories: ["story", "teacher", "student"],
-    gallery: ["gallery"]
+    gallery: ["gallery"],
+    news: ["event", "activity", "announcement", "update", "story", "achievement", "award"]
   };
   const kindSections = {
     about: "our-story", achievement: "achievements", award: "achievements",
     activity: "school-life", event: "school-life", story: "stories",
-    teacher: "stories", student: "stories", gallery: "gallery"
+    teacher: "stories", student: "stories", gallery: "gallery", announcement: "news", update: "news"
   };
 
   function sectionForKind(kind) {
