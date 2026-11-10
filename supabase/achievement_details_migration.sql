@@ -1,4 +1,4 @@
--- Add expanded bilingual achievement metadata to an existing Hamad Town CMS.
+-- Add expanded bilingual achievement metadata to an existing Hamad Town Secondary Boys School CMS.
 -- Safe to apply more than once; existing achievement records are preserved.
 alter table public.school_content
   add column if not exists achievement_level_ar text not null default '',
