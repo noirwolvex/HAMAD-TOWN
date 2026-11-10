@@ -1,5 +1,5 @@
 /*
- * Hamad Town — dedicated mobile presentation layer.
+ * Hamad Town Secondary Boys School — dedicated mobile presentation layer.
  * Loaded after the existing desktop, page and admin stylesheets.
  * All rules are scoped to small viewports; desktop layouts remain untouched.
  */
@@ -1627,4 +1627,37 @@
   .menu-toggle span {
     transition: none !important;
   }
+}
+
+
+/* Keep the full official school name readable on narrow screens. */
+@media screen and (max-width: 760px) {
+  .site-header .brand-copy {
+    max-width: clamp(108px, 31vw, 158px);
+    min-width: 0;
+  }
+  .site-header .brand-copy strong {
+    display: block;
+    max-width: 100%;
+    font-size: clamp(8px, 2.35vw, 10px);
+    line-height: 1.25;
+    letter-spacing: 0;
+    white-space: normal;
+  }
+  .admin-header .brand-copy {
+    max-width: clamp(104px, 30vw, 150px);
+    min-width: 0;
+  }
+  .admin-header .brand-copy strong {
+    display: block;
+    max-width: 100%;
+    font-size: clamp(8px, 2.2vw, 10px);
+    line-height: 1.2;
+    white-space: normal;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .site-header .brand-copy { max-width: 106px; }
+  .admin-header .brand-copy { max-width: 101px; }
 }
