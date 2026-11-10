@@ -1530,3 +1530,38 @@ html[dir="rtl"] .cinema-values {
     transform:translateX(-50%);
   }
 }
+
+
+/* Official school name: preserve the complete title at every viewport size. */
+.cinema-title-wrap {
+  width: min(90vw, 1080px);
+  max-width: min(90vw, 1080px);
+}
+.cinema-school-name {
+  max-width: 100%;
+  font-size: clamp(30px, 5.7vw, 58px);
+  line-height: 1.22;
+  white-space: normal;
+  text-wrap: balance;
+}
+html[lang="en"] .cinema-school-name {
+  font-size: clamp(23px, 4.1vw, 48px);
+  letter-spacing: clamp(.4px, .4vw, 3px);
+}
+@media (max-width: 720px) {
+  .cinema-title-wrap {
+    width: 90vw;
+    max-width: 90vw;
+  }
+  .cinema-school-name {
+    font-size: clamp(25px, 7.2vw, 43px);
+  }
+  html[lang="en"] .cinema-school-name {
+    font-size: clamp(21px, 5.8vw, 34px);
+    letter-spacing: clamp(.3px, .25vw, 1.5px);
+  }
+}
+@media (max-width: 400px) {
+  .cinema-school-name { font-size: clamp(23px, 6.4vw, 30px); }
+  html[lang="en"] .cinema-school-name { font-size: clamp(20px, 5.8vw, 27px); }
+}
