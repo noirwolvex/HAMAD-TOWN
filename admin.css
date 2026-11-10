@@ -404,3 +404,6 @@ html[dir="rtl"] .visitor-message-card.is-unread { box-shadow:inset -3px 0 0 #70b
   .visitor-inbox-controls select { flex:1; }
   .visitor-inbox-footer { flex-direction:column; gap:7px; }
 }
+
+/* News section publishing controls */
+#contentSection option[value="news"],#filterSection option[value="news"]{font-weight:700}
