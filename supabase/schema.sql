@@ -91,7 +91,7 @@ alter table public.school_content
 alter table public.school_content drop constraint if exists school_content_kind_check;
 alter table public.school_content
   add constraint school_content_kind_check
-  check (kind in ('about', 'achievement', 'award', 'activity', 'story', 'teacher', 'student', 'event', 'gallery'));
+  check (kind in ('about', 'achievement', 'award', 'activity', 'story', 'teacher', 'student', 'event', 'gallery', 'announcement', 'update'));
 
 -- Assign existing records to their public section while preserving their content and IDs.
 update public.school_content
@@ -112,7 +112,7 @@ where section = '';
 alter table public.school_content drop constraint if exists school_content_section_check;
 alter table public.school_content
   add constraint school_content_section_check
-  check (section in ('', 'our-story', 'achievements', 'school-life', 'stories', 'gallery'));
+  check (section in ('', 'our-story', 'achievements', 'school-life', 'stories', 'gallery', 'news'));
 
 -- Preserve existing records without copying one language into the other.
 -- Populate only the field that matches the source text's writing system. If an
