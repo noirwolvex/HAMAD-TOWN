@@ -1,0 +1,29 @@
+(() => {
+"use strict";
+const config=window.SCHOOL_CONFIG||{},canConnect=Boolean(config.supabaseUrl&&config.supabaseAnonKey&&window.supabase?.createClient);
+const client=canConnect?window.supabase.createClient(config.supabaseUrl,config.supabaseAnonKey):null,KEY="hamad-town-school-content-v1";
+const $=id=>document.getElementById(id),labels={all:"All news",event:"School event",activity:"Activity",announcement:"School announcement",update:"School update",achievement:"Student achievement",award:"Award",story:"School story"};
+let records=[],filter="all",search="";
+const language=()=>window.HamadI18n?.getLanguage()==="en"?"en":"ar",t=k=>window.HamadI18n?.t(k)||k;
+const field=(r,k)=>String(r[k+"_"+language()]||r[k]||r[k+(language()==="ar"?"_en":"_ar")]||"").trim();
+const category=r=>t(labels[r.kind]||"News and updates");
+const safeImage=v=>/^(https:\/\/|\.\/|\/)/i.test(String(v||"").trim())?String(v).trim():"";
+const node=(tag,cls,value)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(value!==undefined)n.textContent=value;return n;};
+function date(r){const d=new Date(r.created_at||r.updated_at||"");return Number.isNaN(d.getTime())?"":new Intl.DateTimeFormat(language()==="en"?"en":"ar",{dateStyle:"long"}).format(d);}
+function media(url,cls){const box=node("div",cls),src=safeImage(url);if(src){const img=node("img");img.src=src;img.alt="";img.loading="lazy";img.onerror=()=>placeholder(box);box.append(img);}else placeholder(box);return box;}
+function placeholder(box){const p=node("div","news-image-placeholder"),icon=node("span");icon.dataset.icon="newspaper";icon.setAttribute("aria-hidden","true");p.append(icon);box.replaceChildren(p);}
+function details(r){$("newsDialogCategory").textContent=category(r);$("newsDialogDate").textContent=date(r);$("newsDialogTitle").textContent=field(r,"title");$("newsDialogDescription").textContent=field(r,"description");const m=$("newsDialogMedia");m.replaceChildren();const src=safeImage(r.image_url);if(src){const img=node("img");img.src=src;img.alt=field(r,"title");m.append(img);}else placeholder(m);$("newsDetailDialog").showModal();}
+function card(r,hero=false){const c=node("article",hero?"news-feature-card":"news-card");c.tabIndex=0;c.setAttribute("role","button");c.setAttribute("aria-haspopup","dialog");c.setAttribute("aria-label",field(r,"title"));c.addEventListener("click",()=>details(r));c.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();details(r);}});
+const copy=node("div",hero?"news-feature-copy":"news-card-copy"),tag=node("span","news-card-category",category(r));copy.append(tag);const when=date(r);if(when)copy.append(node("time","news-card-date",when));copy.append(node("h3","",field(r,"title")),node("p","",field(r,"description")));
+const link=node("span","news-read-link",t("Read full story")),arrow=node("span","ui-icon-inline");arrow.dataset.icon=language()==="ar"?"arrow-up-left":"arrow-up-right";arrow.setAttribute("aria-hidden","true");link.append(" ",arrow);copy.append(link);c.append(media(r.image_url,hero?"news-feature-media":"news-card-media"),copy);return c;}
+function render(){const rows=records.filter(r=>(filter==="all"||r.kind===filter)&&[field(r,"title"),field(r,"description"),category(r)].join(" ").toLocaleLowerCase().includes(search));$("newsCount").querySelector("strong").textContent=String(rows.length);const featured=$("newsFeatured"),grid=$("newsGrid"),empty=$("newsEmpty");featured.replaceChildren();grid.replaceChildren();
+if(!rows.length){featured.hidden=true;grid.hidden=true;empty.hidden=false;empty.querySelector("h3").textContent=search||filter!=="all"?t("No results for this filter"):t("No news published yet");empty.querySelector("p").textContent=search||filter!=="all"?t("Clear filters"):t("New school updates will appear here as soon as the administration publishes them.");return;}
+empty.hidden=true;featured.hidden=false;grid.hidden=false;featured.append(card(rows[0],true));rows.slice(1).forEach((r,i)=>{const c=card(r);c.style.animationDelay=Math.min(i*55,330)+"ms";grid.append(c);});}
+async function load(){ $("newsError").hidden=true;$("newsEmpty").hidden=true;$("newsFeatured").hidden=false;$("newsFeatured").innerHTML='<div class="news-loading"><span class="news-loader"></span><p>Loading the latest updates…</p></div>';
+try{if(client){const {data,error}=await client.from("school_content").select("*").eq("section","news").eq("published",true).order("created_at",{ascending:false});if(error)throw error;records=Array.isArray(data)?data:[];}else{const raw=localStorage.getItem(KEY);records=raw?JSON.parse(raw).filter(r=>r.section==="news"&&r.published!==false):[];}records.sort((a,b)=>new Date(b.created_at||b.updated_at||0)-new Date(a.created_at||a.updated_at||0));render();}
+catch(e){console.error("School news could not be loaded.",e);$("newsFeatured").hidden=true;$("newsGrid").hidden=true;$("newsEmpty").hidden=true;$("newsError").hidden=false;}}
+function init(){$("newsFilters").addEventListener("click",e=>{const b=e.target.closest("[data-filter]");if(!b)return;filter=b.dataset.filter;document.querySelectorAll(".news-filter").forEach(x=>{const active=x===b;x.classList.toggle("is-active",active);x.setAttribute("aria-pressed",String(active));});render();});
+$("newsSearch").addEventListener("input",e=>{search=e.target.value.trim().toLocaleLowerCase();render();});$("newsRetry").addEventListener("click",load);$("newsDialogClose").addEventListener("click",()=>$("newsDetailDialog").close());$("newsDetailDialog").addEventListener("click",e=>{if(e.target===$("newsDetailDialog"))$("newsDetailDialog").close();});
+window.addEventListener("hamad-language-change",()=>{document.querySelectorAll(".news-filter").forEach(b=>b.textContent=t(labels[b.dataset.filter]||"All news"));render();});load();}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",init,{once:true});else init();
+})();
