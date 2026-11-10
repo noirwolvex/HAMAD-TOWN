@@ -1242,6 +1242,8 @@
     "News editor": "محرر الأخبار",
     "Add a new school update": "إضافة خبر أو تحديث جديد",
     "Choose Latest news to publish an item on the public news page.": "اختر الأخبار الحديثة لنشر المحتوى في صفحة الأخبار العامة.",
+    "News": "الأخبار",
+    "School story": "خبر مدرسي",
   });
 
   const reverseTranslations = Object.fromEntries(
