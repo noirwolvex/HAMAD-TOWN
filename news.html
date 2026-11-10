@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#f5fbff">
+<meta name="description" content="The latest news, events, activities and important updates from Hamad Town Secondary Boys School.">
+<title>Latest News | Hamad Town Secondary Boys School</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=20261110-nav-plain"><link rel="stylesheet" href="news.css?v=20261110-news-v1">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script src="config.js"></script><script src="icons.js" defer></script><script src="language.js?v=20261110-news-v1" defer></script><script src="app.js?v=20261110-school-name" defer></script><script src="news.js?v=20261110-news-v1" defer></script><link rel="stylesheet" href="mobile.css?v=20261110-nav-plain">
+</head>
+<body data-page="news">
+<div class="ambient ambient-one" aria-hidden="true"></div><div class="ambient ambient-two" aria-hidden="true"></div>
+<header class="site-header">
+<a class="brand" href="index.html" aria-label="Hamad Town Secondary Boys School home"><span class="brand-mark"><img class="brand-logo-image" src="assets/hamad-town-official-crest.jpg?v=20261110-crest-jpg" alt="" aria-hidden="true"></span><span class="brand-copy"><strong>HAMAD TOWN SECONDARY BOYS SCHOOL</strong><small>SCHOOL · GROW TOGETHER</small></span></a>
+<button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
+<nav class="main-nav" id="mainNav" aria-label="Main navigation">
+<a href="index.html"><span class="nav-icon" aria-hidden="true" data-icon="school"></span> Home</a>
+<a href="story.html"><span class="nav-icon" aria-hidden="true" data-icon="home"></span> Our story</a>
+<a href="achievements.html"><span class="nav-icon" aria-hidden="true" data-icon="trophy"></span> Achievements</a>
+<a href="specializations.html"><span class="nav-icon" aria-hidden="true" data-icon="graduation-cap"></span> Specializations</a>
+<a href="school-life.html"><span class="nav-icon" aria-hidden="true" data-icon="calendar-days"></span> School life</a>
+<a href="news.html" aria-current="page"><span class="nav-icon" aria-hidden="true" data-icon="newspaper"></span> Latest news</a>
+<a href="stories.html"><span class="nav-icon" aria-hidden="true" data-icon="book-open"></span> Stories</a>
+<a href="gallery.html"><span class="nav-icon" aria-hidden="true" data-icon="images"></span> Gallery</a>
+<a href="contact.html"><span class="nav-icon" aria-hidden="true" data-icon="message-circle"></span> Contact us</a>
+</nav><div class="header-actions"><button class="language-toggle" id="languageToggle" type="button" aria-label="Switch language to Arabic" lang="en">العربية</button></div>
+</header>
+<main class="inner-page-main news-page">
+<section class="section-shell news-hero"><a class="back-home-link" href="index.html"><span class="ui-icon-inline" data-icon="arrow-left" aria-hidden="true"></span> Back to the homepage</a>
+<div class="news-hero-grid"><div class="news-hero-copy reveal"><span class="news-eyebrow"><span class="news-pulse"></span> SCHOOL NEWSROOM</span><h1>Latest news.<br><em>Every moment matters.</em></h1><p>Discover what is happening at Hamad Town Secondary Boys School. Browse the latest events, activities, announcements and important school updates.</p><div class="news-hero-meta"><span data-icon="calendar-days" aria-hidden="true"></span> News and updates <i></i><span data-icon="school" aria-hidden="true"></span> Our school community</div></div>
+<div class="news-hero-art reveal" aria-hidden="true"><div class="news-art-ring news-art-ring-one"></div><div class="news-art-ring news-art-ring-two"></div><div class="news-art-card"><span data-icon="newspaper"></span><small>HAMAD TOWN</small><strong>NEWS<br>DESK</strong><i></i><b>STORIES THAT CONNECT US</b></div><span class="news-art-orb news-art-orb-one"></span><span class="news-art-orb news-art-orb-two"></span></div></div></section>
+<section class="section-shell news-content-section"><div class="news-section-heading"><div><span class="news-kicker">LATEST UPDATES</span><h2>News from <em>our community.</em></h2><p>School moments, important notices and stories worth sharing.</p></div><div class="news-count" id="newsCount"><strong>—</strong><span>News</span></div></div>
+<div class="news-toolbar"><div class="news-filters" id="newsFilters" role="group" aria-label="Filter news">
+<button type="button" class="news-filter is-active" data-filter="all" aria-pressed="true">All news</button><button type="button" class="news-filter" data-filter="event" aria-pressed="false">School event</button><button type="button" class="news-filter" data-filter="activity" aria-pressed="false">Activity</button><button type="button" class="news-filter" data-filter="announcement" aria-pressed="false">School announcement</button><button type="button" class="news-filter" data-filter="update" aria-pressed="false">School update</button><button type="button" class="news-filter" data-filter="achievement" aria-pressed="false">Student achievement</button></div>
+<label class="news-search"><span data-icon="search" aria-hidden="true"></span><input id="newsSearch" type="search" placeholder="Search news" aria-label="Search news"></label></div>
+<div id="newsFeatured" class="news-featured" aria-live="polite"><div class="news-loading"><span class="news-loader"></span><p>Loading the latest updates…</p></div></div><div class="news-grid" id="newsGrid" aria-live="polite"></div>
+<div class="news-empty" id="newsEmpty" hidden><span data-icon="newspaper" aria-hidden="true"></span><h3>No news published yet</h3><p>New school updates will appear here as soon as the administration publishes them.</p></div>
+<div class="news-error" id="newsError" hidden role="alert"><h3>Could not load school news</h3><p>Please try again in a moment.</p><button class="button button-outline" id="newsRetry" type="button">Try again</button></div></section>
+<section class="section-shell news-bottom-cta"><div><span class="news-kicker">STAY CONNECTED</span><h2>Every update brings <em>us closer.</em></h2><p>Explore more of the school community and the experiences that shape it.</p></div><a class="button button-dark" href="school-life.html">Explore school life <span class="ui-icon-inline" data-icon="arrow-up-right" aria-hidden="true"></span></a></section></main>
+<dialog class="news-dialog" id="newsDetailDialog" aria-labelledby="newsDialogTitle"><button class="news-dialog-close" id="newsDialogClose" type="button" aria-label="Close details"><span data-icon="x" aria-hidden="true"></span></button><div class="news-dialog-media" id="newsDialogMedia"></div><div class="news-dialog-copy"><span class="news-dialog-category" id="newsDialogCategory"></span><time id="newsDialogDate"></time><h2 id="newsDialogTitle"></h2><div class="news-dialog-description" id="newsDialogDescription"></div><span class="news-dialog-source">Published by the school administration</span></div></dialog>
+<footer class="site-footer"><div class="section-shell footer-main"><a class="brand" href="index.html"><span class="brand-mark"><img class="brand-logo-image" src="assets/hamad-town-official-crest.jpg?v=20261110-crest-jpg" alt="" aria-hidden="true"></span><span class="brand-copy"><strong>HAMAD TOWN SECONDARY BOYS SCHOOL</strong><small>SCHOOL · GROW TOGETHER</small></span></a><p>Learning, curiosity and community — growing together at Hamad Town Secondary Boys School.</p><nav class="footer-links" aria-label="Footer navigation"><a href="index.html">Home</a><a href="news.html">Latest news</a><a href="school-life.html">School life</a><a href="contact.html">Contact us</a></nav></div><div class="section-shell footer-bottom"><span>© <span id="yearNow"></span> Hamad Town Secondary Boys School</span><span>GROW TOGETHER · SHINE TOGETHER</span></div></footer>
+</body></html>
