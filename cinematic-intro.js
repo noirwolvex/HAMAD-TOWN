@@ -105,6 +105,14 @@
           <span class="cinema-emblem-halo" aria-hidden="true"></span>
           <span class="cinema-emblem-light" aria-hidden="true"></span>
           <span class="cinema-logo-floor" aria-hidden="true"></span>
+          <svg class="cinema-learning-seal" viewBox="0 0 360 116" aria-hidden="true" focusable="false">
+            <path class="cinema-book-outline" pathLength="1" d="M180 96 C145 70 108 62 58 69 L58 22 C108 15 146 30 180 56 C214 30 252 15 302 22 L302 69 C252 62 215 70 180 96 Z"/>
+            <path class="cinema-book-spine" pathLength="1" d="M180 56 L180 96"/>
+            <path class="cinema-book-left-page" pathLength="1" d="M77 34 C115 30 145 42 166 58 M77 48 C113 45 141 55 163 69"/>
+            <path class="cinema-book-right-page" pathLength="1" d="M283 34 C245 30 215 42 194 58 M283 48 C247 45 219 55 197 69"/>
+            <path class="cinema-book-rise" pathLength="1" d="M180 40 L180 17 M168 46 L151 27 M192 46 L209 27"/>
+            <path class="cinema-book-base" pathLength="1" d="M94 82 C128 80 153 91 180 106 C207 91 232 80 266 82"/>
+          </svg>
           <img class="cinema-emblem" src="assets/hamad-town-official-crest.jpg?v=20261110-crest-jpg" alt="Hamad Town Secondary Boys School emblem" fetchpriority="high">
           <span class="cinema-emblem-sweep" aria-hidden="true"></span>
           <span class="cinema-logo-glint" aria-hidden="true"></span>
@@ -349,7 +357,7 @@
           isEnglish() ? "Tap to enable sound" : "اضغط لتفعيل الصوت";
       });
       clearTimeout(finishTimer);
-      finishTimer = window.setTimeout(finishIntro,9900);
+      finishTimer = window.setTimeout(finishIntro,9600);
     } catch (error) {
       console.warn("Cinematic intro audio could not start.",error);
       soundButton.querySelector("[data-cinema='soundLabel']").textContent =
