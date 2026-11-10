@@ -71,7 +71,7 @@
   };
   const sectionLabels = {
     "our-story": "Our story", achievements: "Achievements",
-    "school-life": "School life", stories: "Stories", gallery: "Gallery"
+    "school-life": "School life", stories: "Stories", gallery: "Gallery", news: "Latest news"
   };
   const sectionKinds = {
     "our-story": ["about"],
