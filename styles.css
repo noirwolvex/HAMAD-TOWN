@@ -3225,7 +3225,7 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
 }
 
 
-/* OFFICIAL HAMAD TOWN SCHOOL CREST */
+/* OFFICIAL HAMAD TOWN SECONDARY BOYS SCHOOL CREST */
 .brand-mark {
   position: relative;
   top: -8px;
@@ -3614,3 +3614,10 @@ html[dir="rtl"] .section-link-go, html[dir="rtl"] body[data-page="home"] .sectio
   .latest-achievements-view-all { transition:none !important; }
   .latest-achievement-card:hover { transform:none; }
 }
+
+ 
+/* Official school name sizing */
+.brand-copy { min-width: 0; max-width: min(25vw, 280px); }
+.brand-copy strong { white-space: normal; line-height: 1.18; overflow-wrap: normal; }
+.admin-header .brand-copy { min-width: 0; max-width: min(25vw, 280px); }
+.admin-header .brand-copy strong { white-space: normal; line-height: 1.18; }
