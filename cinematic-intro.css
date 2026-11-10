@@ -1565,3 +1565,207 @@ html[lang="en"] .cinema-school-name {
   .cinema-school-name { font-size: clamp(23px, 6.4vw, 30px); }
   html[lang="en"] .cinema-school-name { font-size: clamp(20px, 5.8vw, 27px); }
 }
+
+
+/* CINEMATIC ACADEMIC REFINEMENT — an open-book seal and a measured identity reveal. */
+.cinema-intro {
+  --cinema-gold:#e7c77f;
+  --cinema-blue:#9bdcf3;
+  background:
+    radial-gradient(ellipse at 50% 43%,rgba(44,105,133,.34) 0%,rgba(10,35,52,.18) 38%,transparent 68%),
+    radial-gradient(ellipse at 50% 100%,rgba(190,150,76,.12),transparent 48%),
+    linear-gradient(145deg,#030b14 0%,#081a29 42%,#0a2232 62%,#040d17 100%);
+}
+.cinema-intro::before {
+  opacity:.16;
+  background-size:72px 72px;
+  animation-duration:34s;
+}
+.cinema-intro::after {
+  background:
+    radial-gradient(ellipse at center,transparent 32%,rgba(1,7,13,.25) 70%,rgba(1,6,12,.88) 100%),
+    linear-gradient(90deg,rgba(2,8,14,.28),transparent 24%,transparent 76%,rgba(2,8,14,.28));
+}
+
+/* Retire the space-themed star and orbital layers; the crest becomes the focal point. */
+.cinema-stars,
+.cinema-shooting-star,
+.cinema-orbit,
+.cinema-aperture {
+  display:none !important;
+}
+.cinema-aurora {
+  opacity:.095;
+  filter:blur(88px);
+}
+.cinema-light-beam {
+  animation-duration:4.9s;
+}
+.cinema-light-beam-secondary {
+  opacity:.7;
+  animation-duration:4.2s;
+}
+.cinema-particle {
+  animation-duration:5.6s;
+  opacity:.5;
+}
+
+.cinema-emblem-stage {
+  margin-bottom:clamp(13px,2.1vh,23px);
+}
+.cinema-learning-seal {
+  position:absolute;
+  z-index:1;
+  left:50%;
+  bottom:-2%;
+  width:clamp(220px,29vw,292px);
+  height:auto;
+  overflow:visible;
+  opacity:0;
+  pointer-events:none;
+  filter:drop-shadow(0 0 9px rgba(150,211,233,.14));
+  transform:translateX(-50%) translateY(12px) scale(.94);
+  animation:cinema-book-stage-enter 1.25s .32s cubic-bezier(.18,.72,.25,1) forwards;
+}
+.cinema-learning-seal path {
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  stroke-dasharray:1;
+  stroke-dashoffset:1;
+}
+.cinema-book-outline {
+  stroke:rgba(230,197,125,.78);
+  stroke-width:1.7;
+  animation:cinema-book-engrave 1.7s .48s ease forwards;
+}
+.cinema-book-spine {
+  stroke:rgba(236,213,163,.58);
+  stroke-width:1.35;
+  animation:cinema-book-engrave 1.15s .82s ease forwards;
+}
+.cinema-book-left-page,
+.cinema-book-right-page {
+  stroke:rgba(147,211,234,.66);
+  stroke-width:1.35;
+  animation:cinema-book-engrave 1.55s .9s ease forwards;
+}
+.cinema-book-rise {
+  stroke:rgba(230,197,125,.7);
+  stroke-width:1.45;
+  animation:cinema-book-engrave 1.25s 1.18s ease forwards;
+}
+.cinema-book-base {
+  stroke:rgba(147,211,234,.48);
+  stroke-width:1.2;
+  animation:cinema-book-engrave 1.45s 1.32s ease forwards;
+}
+.cinema-emblem-halo {
+  border-color:rgba(236,203,132,.58);
+  box-shadow:0 0 30px rgba(225,187,103,.19),0 0 76px rgba(99,193,225,.075),inset 0 0 38px rgba(98,190,225,.09);
+}
+.cinema-emblem {
+  animation:cinema-logo-reveal 1.85s .95s cubic-bezier(.16,.82,.24,1) forwards,
+    cinema-logo-float 5.2s 3s ease-in-out infinite;
+}
+
+.cinema-title-wrap {
+  animation-delay:3.18s;
+}
+.cinema-title-rule::after {
+  animation-delay:4.02s;
+}
+.cinema-tagline {
+  animation-delay:4.2s;
+}
+.cinema-values {
+  animation-delay:4.72s;
+}
+.cinema-ornament {
+  animation-delay:4.88s;
+}
+.cinema-controls {
+  animation:cinema-controls-enter .9s 4.62s ease forwards;
+}
+.cinema-progress::after {
+  animation-duration:9.6s;
+}
+
+@keyframes cinema-book-stage-enter {
+  to { opacity:.82; transform:translateX(-50%) translateY(0) scale(1); }
+}
+@keyframes cinema-book-engrave {
+  0% { opacity:0; stroke-dashoffset:1; }
+  18% { opacity:.65; }
+  100% { opacity:.82; stroke-dashoffset:0; }
+}
+
+@media (max-width:600px) {
+  .cinema-learning-seal {
+    width:clamp(205px,61vw,245px);
+    bottom:-1%;
+  }
+  .cinema-content {
+    padding-top:56px;
+    padding-bottom:82px;
+  }
+  .cinema-emblem-stage {
+    margin-bottom:10px;
+  }
+  .cinema-title-wrap {
+    width:90vw;
+    max-width:90vw;
+  }
+  .cinema-school-name {
+    font-size:clamp(29px,8.2vw,44px);
+    line-height:1.28;
+  }
+  html[lang="en"] .cinema-school-name {
+    font-size:clamp(22px,6.1vw,35px);
+    letter-spacing:clamp(.2px,.22vw,1.4px);
+  }
+  .cinema-controls {
+    bottom:max(14px,env(safe-area-inset-bottom));
+    gap:9px;
+  }
+}
+@media (max-width:380px), (max-height:640px) and (max-width:600px) {
+  .cinema-learning-seal {
+    width:192px;
+  }
+  .cinema-content {
+    padding-top:48px;
+    padding-bottom:72px;
+  }
+  .cinema-school-name {
+    font-size:clamp(26px,7.6vw,34px);
+  }
+  html[lang="en"] .cinema-school-name {
+    font-size:clamp(20px,5.7vw,27px);
+  }
+}
+@media (max-height:520px) and (orientation:landscape) {
+  .cinema-learning-seal {
+    width:180px;
+    bottom:-4%;
+  }
+  .cinema-content {
+    padding-top:43px;
+    padding-bottom:55px;
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .cinema-learning-seal,
+  .cinema-learning-seal path {
+    animation:none !important;
+  }
+  .cinema-learning-seal {
+    opacity:.82;
+    filter:none;
+    transform:translateX(-50%);
+  }
+  .cinema-learning-seal path {
+    opacity:.82;
+    stroke-dashoffset:0;
+  }
+}
